@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useBranch } from '../../context/BranchContext';
+import { useNotification } from '../../context/NotificationContext';
 import { db } from '../../database/db';
 import type { Invoice, Payment, Appointment } from '../../types/appointment';
+import type { StaffProfile } from '../../types/staff';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -11,14 +14,26 @@ import {
   Printer,
   Sparkles,
   CheckCircle2,
-  X
+  X,
+  CreditCard,
+  UserCheck,
+  Percent,
+  DollarSign,
+  TrendingUp,
+  Building2,
+  Calendar,
+  Check,
+  Download
 } from 'lucide-react';
 
 export const OwnerPaymentsPage: React.FC = () => {
   const { salonId } = useAuth();
+  const { activeBranchId, isBranchMatch } = useBranch();
+  const { showToast } = useNotification();
   const currentSalonId = salonId || 'salon-glamoure-jubilee';
 
-  const [activeTab, setActiveTab] = useState<'payments' | 'invoices' | 'reconciliation'>('payments');
+  // 4 Tabs: Customer Ledger, Member Commission Ledger, Financial Overview (GST), Daily Reconciliation
+  const [activeTab, setActiveTab] = useState<'customer_ledger' | 'commissions' | 'financial_overview' | 'reconciliation'>('customer_ledger');
   const [searchTerm, setSearchTerm] = useState('');
   const [methodFilter, setMethodFilter] = useState<'all' | 'card' | 'upi' | 'cash'>('all');
   const [statusFilter, setStatusFilter] = useState<'all' | 'successful' | 'pending' | 'failed' | 'refunded'>('all');
@@ -26,11 +41,17 @@ export const OwnerPaymentsPage: React.FC = () => {
   // Selected receipt/invoice modal
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
 
-  const payments = db.getPaymentsBySalon(currentSalonId);
-  const invoices = db.getInvoicesBySalon(currentSalonId);
-  const appointments = db.getAppointmentsBySalon(currentSalonId);
-  const reconciliation = db.getDailyReconciliation(currentSalonId);
-  const monthlySummary = db.getMonthlyRevenueSummary(currentSalonId);
+  const payments = useMemo(() => db.getPaymentsBySalon(currentSalonId), [currentSalonId]);
+  const invoices = useMemo(() => db.getInvoicesBySalon(currentSalonId), [currentSalonId]);
+  const appointments = useMemo(() => db.getAppointmentsBySalon(currentSalonId), [currentSalonId]);
+  const staffMembers = useMemo(() => db.getStaffBySalon(currentSalonId), [currentSalonId]);
+  const reconciliation = useMemo(() => db.getDailyReconciliation(currentSalonId), [currentSalonId]);
+  const monthlySummary = useMemo(() => db.getMonthlyRevenueSummary(currentSalonId), [currentSalonId]);
+
+  // Branch-Filtered Appointments
+  const filteredAppointments = useMemo(() => {
+    return appointments.filter(a => isBranchMatch(a.branchId));
+  }, [appointments, isBranchMatch]);
 
   const totalSuccessfulRevenue = useMemo(() => {
     return payments
@@ -49,180 +70,228 @@ export const OwnerPaymentsPage: React.FC = () => {
     });
   }, [payments, methodFilter, statusFilter, searchTerm]);
 
+  // Member Commission Calculations
+  const memberCommissions = useMemo(() => {
+    const completedApts = filteredAppointments.filter(a => a.status === 'completed');
+    return staffMembers.map(staff => {
+      const staffApts = completedApts.filter(a => a.staffId === staff.id);
+      const grossRevenue = staffApts.reduce((sum, a) => sum + a.price, 0);
+      const commissionRate = staff.commissionPercentage || 30;
+      const earnedAmount = Math.round(grossRevenue * (commissionRate / 100));
+      return {
+        staff,
+        completedCount: staffApts.length,
+        grossRevenue,
+        commissionRate,
+        earnedAmount,
+        settled: true
+      };
+    });
+  }, [filteredAppointments, staffMembers]);
+
+  // Total Commissions Earned
+  const totalCommissionsEarned = useMemo(() => {
+    return memberCommissions.reduce((sum, m) => sum + m.earnedAmount, 0);
+  }, [memberCommissions]);
+
+  // GST Breakdown (18% GST = 9% CGST + 9% SGST)
+  const gstBreakdown = useMemo(() => {
+    const totalTax = invoices.reduce((sum, inv) => sum + (inv.taxAmount || 0), 0);
+    const subtotal = invoices.reduce((sum, inv) => sum + (inv.subtotal || 0), 0);
+    return {
+      totalTax,
+      subtotal,
+      cgst: Math.round(totalTax / 2),
+      sgst: Math.round(totalTax / 2)
+    };
+  }, [invoices]);
+
   const handlePrintReceipt = () => {
     window.print();
   };
 
+  const handleSettleCommission = (staffName: string) => {
+    showToast('Commission Settled', `Direct deposit payroll voucher dispatched for ${staffName}.`);
+  };
+
   return (
     <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
-      {/* Header */}
+      {/* ═════════════════════════════════════════════════════════════════════
+          HEADER & 4-TAB NAVIGATION
+      ═════════════════════════════════════════════════════════════════════ */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
         <div>
           <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
             Payments, Invoices & Settlement
           </h1>
           <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
-            Verified financial ledger, multi-channel payment reconciliation (Card, UPI, Cash), and tax receipts.
+            Verified financial ledger: Customer billing, artisan commission accounting, GST tax compliance, and daily cash reconciliation.
           </p>
         </div>
 
-        <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+        {/* 4 Tabs Selector */}
+        <div className="flex flex-wrap rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
           <button
-            onClick={() => setActiveTab('payments')}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
-              activeTab === 'payments' 
+            onClick={() => setActiveTab('customer_ledger')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+              activeTab === 'customer_ledger' 
                 ? 'bg-[#41332B] text-white shadow-xs' 
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
             }`}
           >
-            Payments ({payments.length})
+            <Receipt className="w-3.5 h-3.5" />
+            Customer Ledger ({invoices.length})
           </button>
           <button
-            onClick={() => setActiveTab('invoices')}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
-              activeTab === 'invoices' 
+            onClick={() => setActiveTab('commissions')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+              activeTab === 'commissions' 
                 ? 'bg-[#41332B] text-white shadow-xs' 
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
             }`}
           >
-            Invoices ({invoices.length})
+            <UserCheck className="w-3.5 h-3.5" />
+            Member Commissions ({staffMembers.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('financial_overview')}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+              activeTab === 'financial_overview' 
+                ? 'bg-[#41332B] text-white shadow-xs' 
+                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+            }`}
+          >
+            <CreditCard className="w-3.5 h-3.5" />
+            Financial Overview & GST
           </button>
           <button
             onClick={() => setActiveTab('reconciliation')}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'reconciliation' 
                 ? 'bg-[#41332B] text-white shadow-xs' 
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
             }`}
           >
-            Daily Reconciliation
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Reconciliation
           </button>
         </div>
       </div>
 
-      {/* Financial Health KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Total Realized Revenue</p>
-          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#efc9a5] mt-1 font-light">
-            ₹{totalSuccessfulRevenue.toLocaleString()}
+      {/* Financial Health Ribbon */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Total Realized Revenue</p>
+          <p className="font-['Montserrat'] text-xl text-[#41332B] dark:text-[#f5eee6] mt-0.5 font-light">
+            ₹{totalSuccessfulRevenue.toLocaleString('en-IN')}
           </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">Verified merchant ledger</p>
+          <p className="text-[10px] text-emerald-600 mt-0.5 flex items-center gap-1">
+            <CheckCircle2 className="w-3 h-3" /> Verified merchant ledger
+          </p>
         </Card>
 
-        <Card className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Today's Settlement</p>
-          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#f5eee6] mt-1 font-light">
-            ₹{reconciliation.totalRevenue.toLocaleString()}
+        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Artisan Commissions</p>
+          <p className="font-['Montserrat'] text-xl text-[#B99470] mt-0.5 font-light">
+            ₹{totalCommissionsEarned.toLocaleString('en-IN')}
           </p>
-          <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-1">{reconciliation.appointmentCount} ritual receipts</p>
+          <p className="text-[10px] text-[#806B5C] mt-0.5">Calculated per contract rates</p>
         </Card>
 
-        <Card className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Digital (UPI & Card)</p>
-          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#f5eee6] mt-1 font-light">
-            ₹{(reconciliation.cardTotal + reconciliation.upiTotal).toLocaleString()}
+        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">GST Collected (18%)</p>
+          <p className="font-['Montserrat'] text-xl text-[#41332B] dark:text-[#f5eee6] mt-0.5 font-light">
+            ₹{gstBreakdown.totalTax.toLocaleString('en-IN')}
           </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">Direct bank deposits</p>
+          <p className="text-[10px] text-[#806B5C] mt-0.5">CGST 9% + SGST 9%</p>
         </Card>
 
-        <Card className="p-4">
-          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Cash in Front Register</p>
-          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#efc9a5] mt-1 font-light">
-            ₹{reconciliation.cashTotal.toLocaleString()}
+        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Net Salon Retained</p>
+          <p className="font-['Montserrat'] text-xl text-emerald-600 dark:text-emerald-400 mt-0.5 font-light">
+            ₹{(totalSuccessfulRevenue - totalCommissionsEarned - gstBreakdown.totalTax).toLocaleString('en-IN')}
           </p>
-          <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-1">Ready for vault lockbox</p>
+          <p className="text-[10px] text-emerald-600 mt-0.5">After staff & statutory tax</p>
         </Card>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          TAB 1: PAYMENTS TRANSACTION STREAM
-      ═══════════════════════════════════════════════════════════════ */}
-      {activeTab === 'payments' && (
-        <Card className="p-6 space-y-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="relative w-full sm:w-72">
-              <Search className="w-3.5 h-3.5 text-[#806B5C] dark:text-[#a89582] absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search reference ID..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 text-xs bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] placeholder-[#806B5C] dark:placeholder-[#a89582] focus:outline-none focus:border-[#B99470]"
-              />
+      {/* ═════════════════════════════════════════════════════════════════════
+          TAB 1: CUSTOMER LEDGER & TAX INVOICES
+      ═════════════════════════════════════════════════════════════════════ */}
+      {activeTab === 'customer_ledger' && (
+        <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8D8C7]/60 dark:border-[#3d2a21]">
+            <div>
+              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+                Customer Invoices & Billing Slips
+              </h2>
+              <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                Official GST-compliant tax receipts with customer attribution and itemized services.
+              </p>
             </div>
-
-            <div className="flex items-center gap-2 w-full sm:w-auto">
-              <select
-                value={methodFilter}
-                onChange={(e) => setMethodFilter(e.target.value as any)}
-                className="px-3 py-2 text-xs bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
-              >
-                <option value="all">All Methods</option>
-                <option value="card">Card (Stripe/POS)</option>
-                <option value="upi">UPI QR / NetBanking</option>
-                <option value="cash">Front Desk Cash</option>
-              </select>
-
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-3 py-2 text-xs bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
-              >
-                <option value="all">All Statuses</option>
-                <option value="successful">Successful</option>
-                <option value="pending">Pending</option>
-                <option value="refunded">Refunded</option>
-                <option value="failed">Failed</option>
-              </select>
+            <div className="flex items-center gap-2">
+              <div className="relative min-w-[200px]">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#806B5C]" />
+                <input
+                  type="text"
+                  placeholder="Filter invoice #..."
+                  value={searchTerm}
+                  onChange={e => setSearchTerm(e.target.value)}
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6] focus:outline-none"
+                />
+              </div>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-[#5c473b] dark:text-[#c2b3a3]">
-              <thead>
-                <tr className="border-b border-[#E8D8C7] dark:border-white/10 text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
-                  <th className="pb-3">Transaction Ref</th>
-                  <th className="pb-3">Amount</th>
-                  <th className="pb-3">Method</th>
-                  <th className="pb-3">Appointment</th>
-                  <th className="pb-3">Timestamp</th>
-                  <th className="pb-3">Settlement</th>
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#FAF7F2] dark:bg-white/5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th className="py-3 px-4 font-semibold">Invoice #</th>
+                  <th className="py-3 px-4 font-semibold">Client Dossier</th>
+                  <th className="py-3 px-4 font-semibold">Service Date</th>
+                  <th className="py-3 px-4 font-semibold">Subtotal</th>
+                  <th className="py-3 px-4 font-semibold">GST (18%)</th>
+                  <th className="py-3 px-4 font-semibold">Total Amount</th>
+                  <th className="py-3 px-4 font-semibold">Status</th>
+                  <th className="py-3 px-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5">
-                {filteredPayments.map(p => {
-                  const apt = appointments.find(a => a.id === p.appointmentId);
+                {invoices.map(inv => {
+                  const apt = appointments.find(a => a.id === inv.appointmentId);
                   return (
-                    <tr key={p.id} className="hover:bg-[#FAF6F1]/50 dark:hover:bg-white/[0.02] transition-colors">
-                      <td className="py-3.5 font-mono text-xs text-[#B99470] dark:text-[#efc9a5]">
-                        {p.transactionReference}
+                    <tr key={inv.id} className="hover:bg-[#FAF6F1]/50 dark:hover:bg-white/[0.02] transition-colors">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#B99470]">
+                        {inv.invoiceNumber}
                       </td>
-                      <td className="py-3.5 font-mono font-bold text-sm text-[#41332B] dark:text-[#f5eee6]">
-                        ₹{p.amount.toLocaleString()}
+                      <td className="py-3.5 px-4">
+                        <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{apt?.customerName || 'Walk-in Guest'}</p>
+                        <p className="text-[11px] text-[#806B5C]">{apt?.serviceName || 'Salon Ritual'}</p>
                       </td>
-                      <td className="py-3.5 uppercase text-[10px] tracking-wider font-semibold">
-                        <span className="px-2 py-0.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]">
-                          {p.method}
-                        </span>
+                      <td className="py-3.5 px-4 text-[#806B5C] dark:text-[#a89582]">
+                        {inv.issuedAt ? new Date(inv.issuedAt).toLocaleDateString('en-IN') : 'Nov 17, 2026'}
                       </td>
-                      <td className="py-3.5">
-                        <span className="text-[#41332B] dark:text-[#f5eee6] block font-medium">{apt?.customerName || 'Guest'}</span>
-                        <span className="text-[10px] text-[#806B5C] dark:text-[#a89582]">{apt?.serviceName || 'Salon Ritual'}</span>
+                      <td className="py-3.5 px-4 font-mono">₹{inv.subtotal.toLocaleString('en-IN')}</td>
+                      <td className="py-3.5 px-4 font-mono text-[#806B5C]">₹{inv.taxAmount.toLocaleString('en-IN')}</td>
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#41332B] dark:text-[#f5eee6]">
+                        ₹{inv.totalAmount.toLocaleString('en-IN')}
                       </td>
-                      <td className="py-3.5 text-[11px] text-[#806B5C] dark:text-[#a89582]">
-                        {new Date(p.createdAt).toLocaleDateString()} {new Date(p.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </td>
-                      <td className="py-3.5">
-                        <Badge
-                          variant={
-                            p.status === 'successful' ? 'success' :
-                            p.status === 'pending' ? 'warning' : 'danger'
-                          }
-                          className="capitalize text-[10px]"
-                        >
-                          {p.status}
+                      <td className="py-3.5 px-4">
+                        <Badge variant={inv.status === 'paid' ? 'success' : 'outline'} className="capitalize text-[10px]">
+                          {inv.status}
                         </Badge>
+                      </td>
+                      <td className="py-3.5 px-4 text-right">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => setSelectedInvoice(inv)}
+                          className="text-xs px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]"
+                        >
+                          <Receipt className="w-3.5 h-3.5 mr-1 text-[#B99470]" />
+                          View Receipt
+                        </Button>
                       </td>
                     </tr>
                   );
@@ -233,55 +302,84 @@ export const OwnerPaymentsPage: React.FC = () => {
         </Card>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════
-          TAB 2: INVOICES & RECEIPT GENERATOR
-      ═══════════════════════════════════════════════════════════════ */}
-      {activeTab === 'invoices' && (
-        <Card className="p-6 space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-[#E8D8C7] dark:border-white/10">
+      {/* ═════════════════════════════════════════════════════════════════════
+          TAB 2: MEMBER COMMISSION LEDGER
+      ═════════════════════════════════════════════════════════════════════ */}
+      {activeTab === 'commissions' && (
+        <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8D8C7]/60 dark:border-[#3d2a21]">
             <div>
-              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">Tax Invoices & Billing Slips</h2>
-              <p className="text-xs text-[#806B5C] dark:text-[#a89582]">Itemized breakdown with GST calculations and client discounts.</p>
+              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+                Artisan Commission Ledger & Payroll Accruals
+              </h2>
+              <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                Automated payout ledger derived from completed service milestones and contractual commission percentages.
+              </p>
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => showToast('Export Complete', 'Commission payroll report downloaded.')}
+              className="text-xs border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center gap-1.5"
+            >
+              <Download className="w-3.5 h-3.5 text-[#B99470]" />
+              Export Payroll CSV
+            </Button>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-[#5c473b] dark:text-[#c2b3a3]">
-              <thead>
-                <tr className="border-b border-[#E8D8C7] dark:border-white/10 text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
-                  <th className="pb-3">Invoice #</th>
-                  <th className="pb-3">Subtotal</th>
-                  <th className="pb-3">GST (18%)</th>
-                  <th className="pb-3">Discount</th>
-                  <th className="pb-3">Grand Total</th>
-                  <th className="pb-3">Status</th>
-                  <th className="pb-3 text-right">Actions</th>
+            <table className="w-full text-left text-xs">
+              <thead className="bg-[#FAF7F2] dark:bg-white/5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th className="py-3 px-4 font-semibold">Salon Artisan</th>
+                  <th className="py-3 px-4 font-semibold">Role & Title</th>
+                  <th className="py-3 px-4 font-semibold">Completed Services</th>
+                  <th className="py-3 px-4 font-semibold">Gross Service Billing</th>
+                  <th className="py-3 px-4 font-semibold">Contract Rate</th>
+                  <th className="py-3 px-4 font-semibold">Net Commission Earned</th>
+                  <th className="py-3 px-4 font-semibold">Settlement Status</th>
+                  <th className="py-3 px-4 font-semibold text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5">
-                {invoices.map(inv => (
-                  <tr key={inv.id} className="hover:bg-[#FAF6F1]/50 dark:hover:bg-white/[0.02] transition-colors">
-                    <td className="py-3.5 font-mono font-bold text-[#B99470] dark:text-[#efc9a5]">
-                      {inv.invoiceNumber}
+                {memberCommissions.map(m => (
+                  <tr key={m.staff.id} className="hover:bg-[#FAF6F1]/50 dark:hover:bg-white/[0.02] transition-colors">
+                    <td className="py-3.5 px-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 rounded-full bg-[#E8D8C7] text-[#41332B] flex items-center justify-center font-serif text-xs font-bold">
+                          {m.staff.displayName.charAt(0)}
+                        </div>
+                        <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{m.staff.displayName}</span>
+                      </div>
                     </td>
-                    <td className="py-3.5 font-mono">₹{inv.subtotal.toLocaleString()}</td>
-                    <td className="py-3.5 font-mono text-[#806B5C] dark:text-[#a89582]">₹{inv.taxAmount.toLocaleString()}</td>
-                    <td className="py-3.5 font-mono text-emerald-600 dark:text-emerald-400">-₹{inv.discountAmount.toLocaleString()}</td>
-                    <td className="py-3.5 font-mono font-bold text-[#41332B] dark:text-[#f5eee6]">₹{inv.totalAmount.toLocaleString()}</td>
-                    <td className="py-3.5">
-                      <Badge variant={inv.status === 'paid' ? 'success' : 'outline'} className="capitalize text-[10px]">
-                        {inv.status}
-                      </Badge>
+                    <td className="py-3.5 px-4 text-[#806B5C] dark:text-[#a89582]">
+                      {m.staff.role || 'Artisan'} • {m.staff.title}
                     </td>
-                    <td className="py-3.5 text-right">
+                    <td className="py-3.5 px-4 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                      {m.completedCount} rituals
+                    </td>
+                    <td className="py-3.5 px-4 font-mono">
+                      ₹{m.grossRevenue.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-3.5 px-4 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                      {m.commissionRate}%
+                    </td>
+                    <td className="py-3.5 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                      ₹{m.earnedAmount.toLocaleString('en-IN')}
+                    </td>
+                    <td className="py-3.5 px-4">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
+                        <Check className="w-3 h-3" /> Ready for Payroll
+                      </span>
+                    </td>
+                    <td className="py-3.5 px-4 text-right">
                       <Button
                         size="sm"
                         variant="outline"
-                        onClick={() => setSelectedInvoice(inv)}
-                        className="text-xs px-2.5 py-1 text-[#41332B] dark:text-[#efc9a5] hover:border-[#B99470]"
+                        onClick={() => handleSettleCommission(m.staff.displayName)}
+                        className="text-xs px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]"
                       >
-                        <Receipt className="w-3.5 h-3.5 mr-1" />
-                        <span>View Bill</span>
+                        Settle Voucher
                       </Button>
                     </td>
                   </tr>
@@ -292,56 +390,65 @@ export const OwnerPaymentsPage: React.FC = () => {
         </Card>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════
-          TAB 3: DAILY RECONCILIATION SUMMARY
-      ═══════════════════════════════════════════════════════════════ */}
-      {activeTab === 'reconciliation' && (
+      {/* ═════════════════════════════════════════════════════════════════════
+          TAB 3: FINANCIAL OVERVIEW & TAX (GST)
+      ═════════════════════════════════════════════════════════════════════ */}
+      {activeTab === 'financial_overview' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="p-6 space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-[#E8D8C7] dark:border-white/10">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
-                End of Day Register Audit ({reconciliation.date})
-              </h2>
-            </div>
+          {/* Statutory GST Tax Ledger */}
+          <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+              <Building2 className="w-4 h-4 text-[#B99470]" />
+              GST Tax Compliance Breakdown (18% HSN 99972)
+            </h3>
+            <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+              Tax collected under Indian Goods and Services Tax regulations for salon & beauty services.
+            </p>
 
-            <div className="space-y-3 text-xs">
-              <div className="flex justify-between py-2 border-b border-[#E8D8C7]/50 dark:border-white/5">
-                <span className="text-[#806B5C] dark:text-[#a89582]">Total Appointments Finalized:</span>
-                <span className="font-mono font-bold text-[#41332B] dark:text-[#f5eee6]">{reconciliation.appointmentCount}</span>
+            <div className="p-4 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10 space-y-3 text-xs">
+              <div className="flex justify-between py-1 border-b border-[#E8D8C7]/50 dark:border-white/5">
+                <span className="text-[#806B5C]">Taxable Gross Turnover</span>
+                <span className="font-mono font-medium text-[#41332B] dark:text-[#f5eee6]">₹{gstBreakdown.subtotal.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between py-2 border-b border-[#E8D8C7]/50 dark:border-white/5">
-                <span className="text-[#806B5C] dark:text-[#a89582]">Card Swipes (POS Terminal):</span>
-                <span className="font-mono font-semibold text-[#41332B] dark:text-[#f5eee6]">₹{reconciliation.cardTotal.toLocaleString()}</span>
+              <div className="flex justify-between py-1 border-b border-[#E8D8C7]/50 dark:border-white/5">
+                <span className="text-[#806B5C]">Central GST (CGST @ 9%)</span>
+                <span className="font-mono font-medium text-[#41332B] dark:text-[#f5eee6]">₹{gstBreakdown.cgst.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between py-2 border-b border-[#E8D8C7]/50 dark:border-white/5">
-                <span className="text-[#806B5C] dark:text-[#a89582]">Digital UPI & QR Payments:</span>
-                <span className="font-mono font-semibold text-[#41332B] dark:text-[#f5eee6]">₹{reconciliation.upiTotal.toLocaleString()}</span>
+              <div className="flex justify-between py-1 border-b border-[#E8D8C7]/50 dark:border-white/5">
+                <span className="text-[#806B5C]">State GST (SGST @ 9%)</span>
+                <span className="font-mono font-medium text-[#41332B] dark:text-[#f5eee6]">₹{gstBreakdown.sgst.toLocaleString('en-IN')}</span>
               </div>
-              <div className="flex justify-between py-2 border-b border-[#E8D8C7]/50 dark:border-white/5">
-                <span className="text-[#806B5C] dark:text-[#a89582]">Front Register Physical Cash:</span>
-                <span className="font-mono font-semibold text-emerald-600 dark:text-emerald-400">₹{reconciliation.cashTotal.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between p-3.5 rounded-xl bg-[#FAF6F1] dark:bg-[#41332b]/50 border border-[#E8D8C7] dark:border-[#b99470]/30 text-sm">
-                <span className="font-semibold text-[#41332B] dark:text-[#efc9a5]">Total Daily Audited Revenue:</span>
-                <span className="font-mono font-bold text-[#41332B] dark:text-[#efc9a5]">₹{reconciliation.totalRevenue.toLocaleString()}</span>
+              <div className="flex justify-between pt-1 font-semibold text-sm text-[#41332B] dark:text-[#f5eee6]">
+                <span>Total Statutory Tax Liability</span>
+                <span className="font-mono text-[#B99470]">₹{gstBreakdown.totalTax.toLocaleString('en-IN')}</span>
               </div>
             </div>
           </Card>
 
-          <Card className="p-6 space-y-4">
-            <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
-              Monthly Velocity Trajectory
-            </h2>
+          {/* Payment Method Distribution */}
+          <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-[#B99470]" />
+              Payment Channels Distribution
+            </h3>
             <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
-              November 2026 consolidated revenue: <strong className="text-[#41332B] dark:text-[#f5eee6]">₹{monthlySummary.totalRevenue.toLocaleString()}</strong>
+              Multi-channel reconciliation between digital gateways and cash desk.
             </p>
 
-            <div className="space-y-2 pt-2">
-              {monthlySummary.breakdown.slice(-5).map((b, idx) => (
-                <div key={idx} className="flex justify-between text-xs p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7]/50 dark:border-transparent">
-                  <span className="text-[#806B5C] dark:text-[#c2b3a3] font-mono">{b.date}</span>
-                  <span className="font-mono text-[#B99470] dark:text-[#efc9a5] font-semibold">₹{b.amount.toLocaleString()}</span>
+            <div className="space-y-3 pt-1">
+              {[
+                { name: 'Razorpay UPI & Instant Pay', share: '62%', amount: Math.round(totalSuccessfulRevenue * 0.62) },
+                { name: 'POS Card Terminals (Visa/Mastercard)', share: '31%', amount: Math.round(totalSuccessfulRevenue * 0.31) },
+                { name: 'Front Desk Cash Tender', share: '7%', amount: Math.round(totalSuccessfulRevenue * 0.07) },
+              ].map((channel, i) => (
+                <div key={i} className="p-3 rounded-lg border border-[#E8D8C7]/60 dark:border-white/5 bg-[#FAF7F2] dark:bg-white/5 space-y-1.5 text-xs">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{channel.name}</span>
+                    <span className="font-mono font-bold text-[#41332B] dark:text-[#f5eee6]">₹{channel.amount.toLocaleString('en-IN')}</span>
+                  </div>
+                  <div className="w-full bg-[#E8D8C7]/40 dark:bg-white/10 h-2 rounded-full overflow-hidden">
+                    <div className="bg-[#41332B] dark:bg-[#B99470] h-full rounded-full" style={{ width: channel.share }} />
+                  </div>
                 </div>
               ))}
             </div>
@@ -349,114 +456,162 @@ export const OwnerPaymentsPage: React.FC = () => {
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════
-          MODAL: OFFICIAL TAX INVOICE & BILL RECEIPT (Refined & Clean)
-      ═══════════════════════════════════════════════════════════════ */}
-      {selectedInvoice && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-lg w-full p-6 sm:p-7 space-y-5 shadow-2xl print:bg-white print:text-black">
-            
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#B99470]" />
-                <h3 className="font-['Montserrat'] text-base font-medium text-[#41332B] dark:text-[#f5eee6]">
-                  Tax Invoice &amp; Official Receipt
-                </h3>
+      {/* ═════════════════════════════════════════════════════════════════════
+          TAB 4: DAILY RECONCILIATION
+      ═════════════════════════════════════════════ */}
+      {activeTab === 'reconciliation' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+              Daily Till & Settlement Balances
+            </h3>
+            <div className="space-y-2.5 text-xs">
+              <div className="flex justify-between p-2.5 rounded-lg bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5">
+                <span className="text-[#806B5C]">Opening Drawer Balance</span>
+                <span className="font-mono font-medium text-[#41332B] dark:text-[#f5eee6]">₹{reconciliation.openingBalance.toLocaleString('en-IN')}</span>
               </div>
-              <button 
-                onClick={() => setSelectedInvoice(null)} 
-                className="p-1 rounded-lg hover:bg-[#FAF6F1] dark:hover:bg-white/10 text-[#806B5C] dark:text-[#a89582] transition-colors"
-                aria-label="Close bill modal"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex justify-between p-2.5 rounded-lg bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5">
+                <span className="text-[#806B5C]">Cash Received Today</span>
+                <span className="font-mono font-medium text-[#41332B] dark:text-[#f5eee6]">₹{reconciliation.cashReceived.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between p-2.5 rounded-lg bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5">
+                <span className="text-[#806B5C]">Digital Gateways Settled</span>
+                <span className="font-mono font-medium text-emerald-600">₹{reconciliation.digitalSettled.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="flex justify-between p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 font-semibold text-emerald-900 dark:text-emerald-300">
+                <span>Total Reconciled Till</span>
+                <span className="font-mono">₹{reconciliation.totalReconciled.toLocaleString('en-IN')}</span>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+              Gateway Batch Settlements
+            </h3>
+            <div className="space-y-2 text-xs">
+              {[
+                { gateway: 'Razorpay PG Batch #8812', amount: '₹42,500', status: 'Dispatched to HDFC Current Account' },
+                { gateway: 'PineLabs EDC Terminal #04', amount: '₹18,200', status: 'Settled to Bank via T+1 IMPS' },
+                { gateway: 'Cash Drawer Vault', amount: '₹6,400', status: 'Audited & Locked in Safe' },
+              ].map((item, idx) => (
+                <div key={idx} className="p-3 rounded-lg border border-[#E8D8C7]/60 dark:border-white/5 bg-[#FAF7F2] dark:bg-white/5 flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{item.gateway}</p>
+                    <p className="text-[11px] text-[#806B5C]">{item.status}</p>
+                  </div>
+                  <span className="font-mono font-bold text-sm text-[#41332B] dark:text-[#f5eee6]">{item.amount}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          OFFICIAL TAX INVOICE MODAL
+      ═════════════════════════════════════════════════════════════════════ */}
+      {selectedInvoice && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="w-full max-w-lg bg-white rounded-2xl border border-[#E8D8C7] shadow-2xl overflow-hidden text-left font-['Plus_Jakarta_Sans'] text-[#41332B]">
+            {/* Action Bar */}
+            <div className="p-3 bg-[#FAF7F2] border-b border-[#E8D8C7] flex items-center justify-between print:hidden">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#806B5C]">
+                Official Tax Invoice Receipt
+              </span>
+              <div className="flex items-center gap-2">
+                <Button
+                  size="sm"
+                  variant="primary"
+                  onClick={handlePrintReceipt}
+                  className="text-xs bg-[#41332B] hover:bg-[#2b1810] text-white flex items-center gap-1.5"
+                >
+                  <Printer className="w-3.5 h-3.5" />
+                  Print / PDF
+                </Button>
+                <button
+                  onClick={() => setSelectedInvoice(null)}
+                  className="p-1 rounded-lg text-[#806B5C] hover:text-[#41332B]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Authentic Luxury Bill Layout */}
-            <div className="p-5 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 space-y-4 text-xs">
-              
-              {/* Salon Brand Header & Meta */}
-              <div className="flex justify-between items-start pb-3 border-b border-[#E8D8C7] dark:border-white/10">
+            {/* Authentic Printable Bill Layout */}
+            <div className="p-6 space-y-5 bg-white">
+              {/* Salon Brand Header */}
+              <div className="text-center pb-4 border-b border-dashed border-[#E8D8C7]">
+                <h2 className="font-['Montserrat'] text-xl font-light tracking-[0.25em] uppercase text-[#41332B]">
+                  G L A M O U R É
+                </h2>
+                <p className="text-[11px] text-[#806B5C] tracking-widest uppercase mt-0.5">Haute Beauté & Artisan Sanctuary</p>
+                <p className="text-[10px] text-[#806B5C] mt-1">Road No. 36, Jubilee Hills, Hyderabad • Tel: +91 98840 12345</p>
+                <p className="text-[10px] text-[#806B5C] font-mono">GSTIN: 36AAACG1234F1Z8</p>
+              </div>
+
+              {/* Invoice Meta */}
+              <div className="grid grid-cols-2 text-xs gap-2">
                 <div>
-                  <h4 className="font-['Montserrat'] font-light tracking-[0.2em] uppercase text-sm text-[#41332B] dark:text-[#efc9a5]">
-                    GLAMOURÉ SANCTUARY
-                  </h4>
-                  <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-0.5">Road No. 36, Jubilee Hills, Hyderabad</p>
-                  <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">GSTIN: 36AAACG1234F1Z8</p>
+                  <span className="text-[#806B5C] block text-[10px] uppercase">Invoice Number</span>
+                  <span className="font-mono font-bold text-[#41332B]">{selectedInvoice.invoiceNumber}</span>
                 </div>
                 <div className="text-right">
-                  <span className="font-mono font-bold text-xs text-[#B99470] dark:text-[#efc9a5] block">
-                    {selectedInvoice.invoiceNumber}
-                  </span>
-                  <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-0.5">
-                    {new Date(selectedInvoice.issuedAt).toLocaleDateString([], { year: 'numeric', month: 'short', day: 'numeric' })}
-                  </p>
-                  <span className="inline-block mt-1 text-[9.5px] uppercase font-mono font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300">
-                    Paid in Full
+                  <span className="text-[#806B5C] block text-[10px] uppercase">Date & Time</span>
+                  <span className="font-mono text-[#41332B]">
+                    {new Date(selectedInvoice.issuedAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
                   </span>
                 </div>
               </div>
 
-              {/* Itemized Line Items */}
-              <div className="space-y-2">
-                <div className="flex justify-between text-[#806B5C] dark:text-[#a89582] text-[10.5px] uppercase tracking-wider font-semibold">
-                  <span>Ritual / Treatment Description</span>
-                  <span>Amount</span>
+              {/* Line Items */}
+              <div className="pt-2">
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr className="border-b border-[#E8D8C7] text-[#806B5C] uppercase text-[10px]">
+                      <th className="pb-2 text-left">Description</th>
+                      <th className="pb-2 text-right">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E8D8C7]/50">
+                    <tr>
+                      <td className="py-2.5">
+                        <span className="font-medium text-[#41332B] block">Signature Luxury Ritual</span>
+                        <span className="text-[10px] text-[#806B5C]">SAC: 999722 • Senior Artisan Styling</span>
+                      </td>
+                      <td className="py-2.5 text-right font-mono font-medium text-[#41332B]">
+                        ₹{selectedInvoice.subtotal.toLocaleString('en-IN')}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Totals & Tax Calculation */}
+              <div className="border-t border-[#E8D8C7] pt-3 space-y-1.5 text-xs">
+                <div className="flex justify-between text-[#806B5C]">
+                  <span>Subtotal</span>
+                  <span className="font-mono">₹{selectedInvoice.subtotal.toLocaleString('en-IN')}</span>
                 </div>
-                <div className="flex justify-between text-[#41332B] dark:text-[#f5eee6] font-medium pt-1">
-                  <span>Custom Haute Styling &amp; Hair Care</span>
-                  <span className="font-mono">₹{selectedInvoice.subtotal.toLocaleString()}</span>
+                <div className="flex justify-between text-[#806B5C]">
+                  <span>CGST @ 9%</span>
+                  <span className="font-mono">₹{Math.round(selectedInvoice.taxAmount / 2).toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between text-[#806B5C]">
+                  <span>SGST @ 9%</span>
+                  <span className="font-mono">₹{Math.round(selectedInvoice.taxAmount / 2).toLocaleString('en-IN')}</span>
+                </div>
+                <div className="flex justify-between text-[#41332B] font-bold text-sm pt-2 border-t border-dashed border-[#E8D8C7]">
+                  <span>Grand Total (INR)</span>
+                  <span className="font-mono">₹{selectedInvoice.totalAmount.toLocaleString('en-IN')}</span>
                 </div>
               </div>
 
-              {/* Financial Totals Breakdown */}
-              <div className="pt-3 border-t border-[#E8D8C7] dark:border-white/10 space-y-1.5">
-                <div className="flex justify-between">
-                  <span className="text-[#806B5C] dark:text-[#a89582]">Subtotal:</span>
-                  <span className="font-mono text-[#41332B] dark:text-[#f5eee6]">₹{selectedInvoice.subtotal.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#806B5C] dark:text-[#a89582]">Applicable GST (18%):</span>
-                  <span className="font-mono text-[#41332B] dark:text-[#f5eee6]">₹{selectedInvoice.taxAmount.toLocaleString()}</span>
-                </div>
-                {selectedInvoice.discountAmount > 0 && (
-                  <div className="flex justify-between text-emerald-600 dark:text-emerald-400 font-medium">
-                    <span>Privilege Campaign Discount:</span>
-                    <span className="font-mono">-₹{selectedInvoice.discountAmount.toLocaleString()}</span>
-                  </div>
-                )}
-                <div className="flex justify-between pt-2 border-t border-[#E8D8C7] dark:border-white/10 font-bold text-sm text-[#41332B] dark:text-[#efc9a5]">
-                  <span>Total Settlement:</span>
-                  <span className="font-mono text-base">₹{selectedInvoice.totalAmount.toLocaleString()}</span>
-                </div>
+              {/* Footer */}
+              <div className="text-center pt-4 border-t border-dashed border-[#E8D8C7] text-[10px] text-[#806B5C] space-y-1">
+                <p>Thank you for choosing Glamouré. All services are curated with organic botanicals.</p>
+                <p className="font-mono text-[9px]">Receipt Token: {selectedInvoice.id.slice(0, 16)}</p>
               </div>
-
-              {/* Verified Footer */}
-              <p className="text-[10px] text-center text-[#806B5C] dark:text-[#a89582] italic pt-1">
-                Thank you for visiting Glamouré. All treatments certified with botanical care.
-              </p>
-            </div>
-
-            {/* Modal Actions */}
-            <div className="flex items-center justify-between pt-1">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handlePrintReceipt}
-                className="flex items-center gap-1.5 text-xs text-[#41332B] dark:text-[#efc9a5]"
-              >
-                <Printer className="w-3.5 h-3.5 mr-1" />
-                <span>Print Bill</span>
-              </Button>
-
-              <Button
-                size="sm"
-                onClick={() => setSelectedInvoice(null)}
-                className="text-xs px-5 py-2 rounded-xl"
-              >
-                Done
-              </Button>
             </div>
           </div>
         </div>

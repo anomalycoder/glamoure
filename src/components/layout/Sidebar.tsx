@@ -5,25 +5,22 @@ import { useUiTheme } from '../ui/ThemeContext';
 import { 
   LayoutDashboard, 
   Calendar, 
-  CalendarDays,
+  CalendarDays, 
   Users, 
   Scissors, 
-  UserCheck, 
-  Building2,
-  Clock3,
   CreditCard, 
   Package, 
-  Tag,
-  Star,
+  Tag, 
   TrendingUp, 
-  Sparkles,
-  Brain,
   Settings, 
   LogOut,
   ArrowLeft,
   ChevronLeft,
   ChevronRight,
-  Search
+  Search,
+  Video,
+  Clock,
+  Bell
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
@@ -33,29 +30,39 @@ export const Sidebar: React.FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [navSearch, setNavSearch] = useState('');
 
-  // Exactly 15 Owner Navigation items in precise order specified by Phase 3 Section 2
+  const isMember = role === 'salon_member';
+
+  // Section 4 Standardized Owner Navigation (11 clean, unified menu entries)
   const ownerNavItems = [
     { label: 'Overview', to: '/owner/dashboard', icon: LayoutDashboard },
     { label: 'Appointments', to: '/owner/appointments', icon: Calendar },
     { label: 'Calendar', to: '/owner/calendar', icon: CalendarDays },
-    { label: 'Customers', to: '/owner/customers', icon: Users },
-    { label: 'Services', to: '/owner/services', icon: Scissors },
-    { label: 'Team Members', to: '/owner/team', icon: UserCheck },
-    { label: 'Branches', to: '/owner/branches', icon: Building2 },
-    { label: 'Walk-ins & Queue', to: '/owner/queue', icon: Clock3 },
-    { label: 'Payments & Billing', to: '/owner/payments', icon: CreditCard },
+    { label: 'Members & Customers', to: '/owner/people', icon: Users },
+    { label: 'Services & Pricing', to: '/owner/services', icon: Scissors },
+    { label: 'Payments & Ledger', to: '/owner/payments', icon: CreditCard },
+    { label: 'Analytics', to: '/owner/reports', icon: TrendingUp },
     { label: 'Inventory', to: '/owner/inventory', icon: Package },
-    { label: 'Offers & Discounts', to: '/owner/offers', icon: Tag },
-    { label: 'Reviews', to: '/owner/reviews', icon: Star },
-    { label: 'Reports & Analytics', to: '/owner/reports', icon: TrendingUp },
-    { label: 'AI Scheduling', to: '/owner/ai-scheduling', icon: Sparkles },
-    { label: 'Intelligence Engine', to: '/owner/intelligence', icon: Brain },
-    { label: 'Business Settings', to: '/owner/settings', icon: Settings },
+    { label: 'Live Monitor', to: '/owner/live-monitor', icon: Video },
+    { label: 'Offers & Promotions', to: '/owner/offers', icon: Tag },
+    { label: 'Salon Settings', to: '/owner/settings', icon: Settings },
   ];
 
+  // Section 4 Standardized Member Navigation
+  const memberNavItems = [
+    { label: 'Overview', to: '/member/dashboard', icon: LayoutDashboard },
+    { label: 'My Appointments', to: '/member/appointments', icon: Calendar },
+    { label: 'Calendar', to: '/member/calendar', icon: CalendarDays },
+    { label: 'My Customers', to: '/member/customers', icon: Users },
+    { label: 'My Schedule', to: '/member/availability', icon: Clock },
+    { label: 'My Performance', to: '/member/performance', icon: TrendingUp },
+    { label: 'Notifications', to: '/member/notifications', icon: Bell },
+  ];
+
+  const activeNavItems = isMember ? memberNavItems : ownerNavItems;
+
   const filteredItems = navSearch.trim()
-    ? ownerNavItems.filter(item => item.label.toLowerCase().includes(navSearch.toLowerCase()))
-    : ownerNavItems;
+    ? activeNavItems.filter(item => item.label.toLowerCase().includes(navSearch.toLowerCase()))
+    : activeNavItems;
 
   return (
     <aside 
@@ -64,7 +71,7 @@ export const Sidebar: React.FC = () => {
       } h-screen sticky top-0 flex flex-col justify-between select-none shrink-0 transition-all duration-300 ease-in-out z-30 border-r ${
         isDark 
           ? 'bg-[#201511] text-[#f5eee6] border-[#3a2820] shadow-2xl' 
-          : 'bg-white text-[#41332B] border-[#E8D8C7] shadow-sm'
+          : 'bg-white text-[#41332B] border-[#E8D8C7] shadow-xs'
       }`}
     >
       <div className="flex flex-col h-full min-h-0">
@@ -82,7 +89,7 @@ export const Sidebar: React.FC = () => {
               <p className={`font-['Plus_Jakarta_Sans'] text-[9px] uppercase tracking-[0.24em] mt-1 font-medium truncate ${
                 isDark ? 'text-[#d8c3a8]/80' : 'text-[#806B5C]'
               }`}>
-                Salon Owner Portal
+                {isMember ? 'Artisan Workspace' : 'Salon Operating Platform'}
               </p>
             </Link>
           ) : (
@@ -131,7 +138,7 @@ export const Sidebar: React.FC = () => {
           </div>
         )}
 
-        {/* 15 Navigation Items with Active Indicators */}
+        {/* Navigation Items with Active Indicators */}
         <nav className="flex-1 overflow-y-auto p-2.5 space-y-1 custom-scrollbar">
           {filteredItems.map(item => {
             const Icon = item.icon;
@@ -139,14 +146,14 @@ export const Sidebar: React.FC = () => {
               <NavLink
                 key={item.to}
                 to={item.to}
-                end={item.to === '/owner/dashboard'}
+                end={item.to === '/owner/dashboard' || item.to === '/member/dashboard'}
                 title={isCollapsed ? item.label : undefined}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3 py-2.5 rounded-xl font-['Plus_Jakarta_Sans'] text-[12.5px] font-medium transition-all group relative ${
                     isActive
                       ? isDark
-                        ? 'bg-[#41332B] text-[#efc9a5] shadow-sm font-semibold border-l-2 border-[#b99470]'
-                        : 'bg-[#41332B] text-[#F5EFE7] shadow-sm font-semibold border-l-2 border-[#B99470]'
+                        ? 'bg-[#41332B] text-[#efc9a5] shadow-xs font-semibold border-l-2 border-[#b99470]'
+                        : 'bg-[#41332B] text-[#F5EFE7] shadow-xs font-semibold border-l-2 border-[#B99470]'
                       : isDark
                         ? 'text-[#c2b3a3] hover:text-[#f5eee6] hover:bg-white/5'
                         : 'text-[#806B5C] hover:text-[#41332B] hover:bg-[#FAF6F1]'
@@ -173,18 +180,18 @@ export const Sidebar: React.FC = () => {
                   ? 'bg-[#41332B] border-[#b99470]/40 text-[#efc9a5]' 
                   : 'bg-[#41332B] border-[#B99470] text-[#F5EFE7]'
               }`}>
-                {user?.fullName?.charAt(0) || 'O'}
+                {user?.fullName?.charAt(0) || (isMember ? 'M' : 'O')}
               </div>
               <div className="min-w-0 flex-1 text-left">
                 <p className={`text-xs font-medium truncate font-['Plus_Jakarta_Sans'] ${
                   isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'
                 }`}>
-                  {user?.fullName || 'Elena Vance'}
+                  {user?.fullName || (isMember ? 'Marcus Reed' : 'Elena Vance')}
                 </p>
                 <p className={`text-[10px] tracking-wider uppercase font-semibold ${
                   isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'
                 }`}>
-                  Proprietor
+                  {isMember ? 'Artisan Stylist' : 'Salon Proprietor'}
                 </p>
               </div>
             </div>

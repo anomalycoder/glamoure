@@ -1,10 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useBranch } from '../../context/BranchContext';
+import { useNotification } from '../../context/NotificationContext';
 import { db } from '../../database/db';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
+import type { Appointment, AppointmentStatus } from '../../types/appointment';
 import { 
   Calendar, 
   TrendingUp, 
@@ -19,69 +22,72 @@ import {
   Filter,
   ArrowRight,
   TrendingDown,
-  UserCheck
+  UserCheck,
+  Check,
+  X,
+  Play,
+  RotateCcw,
+  Receipt,
+  UserX,
+  ChevronRight,
+  ChevronLeft,
+  DollarSign
 } from 'lucide-react';
 
 export const OwnerDashboardPage: React.FC = () => {
-  const { salonId } = useAuth();
+  const { salonId, user } = useAuth();
+  const { activeBranchId, isBranchMatch } = useBranch();
+  const { showToast } = useNotification();
   const currentSalonId = salonId || 'salon-glamoure-jubilee';
 
-  // Filters
-  const [selectedBranchId, setSelectedBranchId] = useState<string>('all');
-  const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'all'>('all');
-  const [targetDate] = useState('2026-11-17'); // Current system date
+  // Date Switcher State
+  const [selectedDate, setSelectedDate] = useState<string>('2026-11-17');
+  const [dateViewMode, setDateViewMode] = useState<'yesterday' | 'today' | 'tomorrow' | 'custom'>('today');
 
-  const branches = db.getBranchesBySalon(currentSalonId);
-  const allAppointments = db.getAppointmentsBySalon(currentSalonId);
-  const allStaff = db.getStaffBySalon(currentSalonId);
-  const allServices = db.getServicesBySalon(currentSalonId);
-  const allPayments = db.getPaymentsBySalon(currentSalonId).filter(p => p.status === 'successful');
-  const queue = db.getQueue(currentSalonId);
+  // Trigger re-render on appointment transitions
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  // Filtered dataset
-  const appointments = useMemo(() => {
-    return allAppointments.filter(apt => {
-      const matchBranch = selectedBranchId === 'all' || apt.branchId === selectedBranchId;
-      if (!matchBranch) return false;
-      if (dateRange === 'today') return apt.appointmentDate === targetDate;
-      if (dateRange === 'week') return apt.appointmentDate >= '2026-11-15' && apt.appointmentDate <= '2026-11-21';
-      if (dateRange === 'month') return apt.appointmentDate.startsWith('2026-11');
-      return true;
-    });
-  }, [allAppointments, selectedBranchId, dateRange, targetDate]);
+  const branches = useMemo(() => db.getBranchesBySalon(currentSalonId), [currentSalonId]);
+  const allAppointments = useMemo(() => db.getAppointmentsBySalon(currentSalonId), [currentSalonId, refreshKey]);
+  const allStaff = useMemo(() => db.getStaffBySalon(currentSalonId), [currentSalonId]);
+  const allServices = useMemo(() => db.getServicesBySalon(currentSalonId), [currentSalonId]);
+  const allPayments = useMemo(() => db.getPaymentsBySalon(currentSalonId).filter(p => p.status === 'successful'), [currentSalonId, refreshKey]);
+  const queue = useMemo(() => db.getQueue(currentSalonId), [currentSalonId]);
 
-  const staff = useMemo(() => {
-    return selectedBranchId === 'all' 
-      ? allStaff 
-      : allStaff.filter(s => s.branchId === selectedBranchId);
-  }, [allStaff, selectedBranchId]);
+  // Branch-filtered appointments
+  const branchAppointments = useMemo(() => {
+    return allAppointments.filter(apt => isBranchMatch(apt.branchId));
+  }, [allAppointments, isBranchMatch]);
+
+  // Branch-filtered staff
+  const branchStaff = useMemo(() => {
+    return allStaff.filter(s => isBranchMatch(s.branchId));
+  }, [allStaff, isBranchMatch]);
+
+  // Active Date Filtered Appointments
+  const dateAppointments = useMemo(() => {
+    return branchAppointments.filter(a => a.appointmentDate === selectedDate);
+  }, [branchAppointments, selectedDate]);
 
   // ═════════════════════════════════════════════════════════════════════════
-  // 8 EXACT KPI CALCULATIONS FROM REAL DATABASE RECORDS (Phase 3 Section 1)
+  // 8 REAL DATABASE KPI CALCULATIONS (Phase 3 Section 1)
   // ═════════════════════════════════════════════════════════════════════════
-  const totalRevenue = useMemo(() => {
-    return allPayments.reduce((sum, p) => sum + p.amount, 0);
-  }, [allPayments]);
-
   const todayRevenue = useMemo(() => {
-    const todayPayments = allPayments.filter(p => p.createdAt.startsWith(targetDate));
+    const todayPayments = allPayments.filter(p => p.createdAt.startsWith(selectedDate));
     if (todayPayments.length > 0) {
       return todayPayments.reduce((sum, p) => sum + p.amount, 0);
     }
-    // Fallback calculation from confirmed/completed appointments scheduled today
-    return appointments
-      .filter(a => a.appointmentDate === targetDate && ['confirmed', 'in_progress', 'completed'].includes(a.status))
+    return dateAppointments
+      .filter(a => ['confirmed', 'checked_in', 'in_progress', 'completed'].includes(a.status))
       .reduce((sum, a) => sum + a.price, 0);
-  }, [allPayments, appointments, targetDate]);
+  }, [allPayments, dateAppointments, selectedDate]);
 
-  const todayAppointments = useMemo(() => {
-    return appointments.filter(a => a.appointmentDate === targetDate).length;
-  }, [appointments, targetDate]);
+  const todayAppointmentsCount = dateAppointments.length;
 
   const totalCustomers = useMemo(() => {
-    const uniqueIds = new Set(allAppointments.map(a => a.customerId));
+    const uniqueIds = new Set(branchAppointments.map(a => a.customerId));
     return uniqueIds.size || 6;
-  }, [allAppointments]);
+  }, [branchAppointments]);
 
   const newCustomers = useMemo(() => {
     const segments = db.getCustomerSegments(currentSalonId);
@@ -89,30 +95,30 @@ export const OwnerDashboardPage: React.FC = () => {
   }, [currentSalonId]);
 
   const activeEmployees = useMemo(() => {
-    return staff.filter(s => s.isActive).length;
-  }, [staff]);
+    return branchStaff.filter(s => s.isActive).length;
+  }, [branchStaff]);
 
-  const pendingAppointments = useMemo(() => {
-    return appointments.filter(a => a.status === 'pending').length;
-  }, [appointments]);
+  const pendingAppointmentsCount = useMemo(() => {
+    return branchAppointments.filter(a => a.status === 'pending').length;
+  }, [branchAppointments]);
 
   const cancellationRate = useMemo(() => {
-    if (!appointments.length) return 0;
-    const cancelledCount = appointments.filter(a => a.status === 'cancelled').length;
-    return +((cancelledCount / appointments.length) * 100).toFixed(1);
-  }, [appointments]);
+    if (!branchAppointments.length) return 0;
+    const cancelledCount = branchAppointments.filter(a => a.status === 'cancelled').length;
+    return +((cancelledCount / branchAppointments.length) * 100).toFixed(1);
+  }, [branchAppointments]);
 
   const averageBookingValue = useMemo(() => {
-    const confirmedOrCompleted = appointments.filter(a => ['confirmed', 'in_progress', 'completed'].includes(a.status));
-    if (!confirmedOrCompleted.length) return 4500;
-    const sum = confirmedOrCompleted.reduce((acc, curr) => acc + curr.price, 0);
-    return Math.round(sum / confirmedOrCompleted.length);
-  }, [appointments]);
+    const validBookings = branchAppointments.filter(a => ['confirmed', 'checked_in', 'in_progress', 'completed'].includes(a.status));
+    if (!validBookings.length) return 4500;
+    const sum = validBookings.reduce((acc, curr) => acc + curr.price, 0);
+    return Math.round(sum / validBookings.length);
+  }, [branchAppointments]);
 
   // Popular Services calculation
   const popularServices = useMemo(() => {
     const counts: Record<string, { serviceName: string; count: number; revenue: number }> = {};
-    appointments.forEach(a => {
+    branchAppointments.forEach(a => {
       if (!counts[a.serviceId]) {
         counts[a.serviceId] = { serviceName: a.serviceName, count: 0, revenue: 0 };
       }
@@ -120,288 +126,425 @@ export const OwnerDashboardPage: React.FC = () => {
       counts[a.serviceId].revenue += a.price;
     });
     return Object.values(counts).sort((a, b) => b.count - a.count).slice(0, 4);
-  }, [appointments]);
+  }, [branchAppointments]);
+
+  // Pending Booking Requests
+  const pendingRequests = useMemo(() => {
+    return branchAppointments.filter(a => a.status === 'pending');
+  }, [branchAppointments]);
+
+  // Handlers for Appointment Transitions
+  const handleTransitionStatus = (apt: Appointment, toStatus: AppointmentStatus) => {
+    try {
+      db.transitionAppointmentStatus(
+        apt.id,
+        toStatus,
+        user?.id || 'owner-glamoure',
+        user?.fullName || 'Salon Owner',
+        `Proprietor changed status to ${toStatus}`
+      );
+      setRefreshKey(k => k + 1);
+      showToast('Schedule Updated', `Appointment transitioned to ${toStatus.replace('_', ' ')}.`);
+    } catch (err: any) {
+      showToast('Transition Error', err.message);
+    }
+  };
+
+  const handleCancelAppointment = (apt: Appointment) => {
+    const reason = prompt('Please specify cancellation reason (e.g. Guest requested or Emergency):', 'Guest requested reschedule');
+    if (!reason) return;
+
+    try {
+      db.cancelAppointmentWithPolicy(apt.id, reason, 'salon_owner');
+      setRefreshKey(k => k + 1);
+      showToast('Appointment Cancelled', `Cancellation logged under policy: ${reason}`);
+    } catch (err: any) {
+      showToast('Cancellation Error', err.message);
+    }
+  };
+
+  const handleSetQuickDate = (mode: 'yesterday' | 'today' | 'tomorrow') => {
+    setDateViewMode(mode);
+    if (mode === 'yesterday') setSelectedDate('2026-11-16');
+    if (mode === 'today') setSelectedDate('2026-11-17');
+    if (mode === 'tomorrow') setSelectedDate('2026-11-18');
+  };
 
   return (
-    <div className="space-y-8 text-left font-['Plus_Jakarta_Sans']">
-      {/* ═══════════════════════════════════════════════════════════════
-          HEADER WITH BRANCH & DATE FILTERS
-      ═══════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7] dark:border-[#3d2a21]">
+    <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
+      {/* ═════════════════════════════════════════════════════════════════════
+          TOP HEADER & DATE SWITCHER
+      ═════════════════════════════════════════════════════════════════════ */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
         <div>
-          <span className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#b99470] block mb-1">
-            Executive Governance
+          <span className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#B99470] block mb-0.5">
+            Executive Operations
           </span>
           <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
             Salon Business Overview
           </h1>
           <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
-            Real-time multi-branch operational control, daily revenue, and schedule synchronization.
+            Operational dashboard synchronized with branch telemetry, queue state, and financial revenue.
           </p>
         </div>
 
-        {/* Branch & Date Controls */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-1.5 bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] px-3 py-1.5 rounded-xl text-xs shadow-xs">
-            <Building2 className="w-3.5 h-3.5 text-[#b99470]" />
-            <select
-              value={selectedBranchId}
-              onChange={(e) => setSelectedBranchId(e.target.value)}
-              className="bg-transparent text-xs text-[#41332B] dark:text-[#efc9a5] focus:outline-none cursor-pointer"
+        {/* Date Switcher Ribbon */}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+            <button
+              onClick={() => handleSetQuickDate('yesterday')}
+              className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+                dateViewMode === 'yesterday'
+                  ? 'bg-[#41332B] text-white shadow-xs'
+                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+              }`}
             >
-              <option value="all" className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">All Salon Branches</option>
-              {branches.map(b => (
-                <option key={b.id} value={b.id} className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">{b.name}</option>
-              ))}
-            </select>
+              Yesterday
+            </button>
+            <button
+              onClick={() => handleSetQuickDate('today')}
+              className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+                dateViewMode === 'today'
+                  ? 'bg-[#41332B] text-white shadow-xs'
+                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+              }`}
+            >
+              Today
+            </button>
+            <button
+              onClick={() => handleSetQuickDate('tomorrow')}
+              className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
+                dateViewMode === 'tomorrow'
+                  ? 'bg-[#41332B] text-white shadow-xs'
+                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+              }`}
+            >
+              Tomorrow
+            </button>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] px-3 py-1.5 rounded-xl text-xs shadow-xs">
-            <Filter className="w-3.5 h-3.5 text-[#b99470]" />
-            <select
-              value={dateRange}
-              onChange={(e) => setDateRange(e.target.value as any)}
-              className="bg-transparent text-xs text-[#41332B] dark:text-[#efc9a5] focus:outline-none cursor-pointer"
-            >
-              <option value="today" className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">Today ({targetDate})</option>
-              <option value="week" className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">This Week</option>
-              <option value="month" className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">This Month (Nov 2026)</option>
-              <option value="all" className="bg-white dark:bg-[#201511] text-[#41332B] dark:text-[#f5eee6]">All Time</option>
-            </select>
+          <div className="flex items-center gap-1.5 bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-white/10 px-3 py-1.5 rounded-xl text-xs">
+            <Calendar className="w-3.5 h-3.5 text-[#B99470]" />
+            <input
+              type="date"
+              value={selectedDate}
+              onChange={e => {
+                setSelectedDate(e.target.value);
+                setDateViewMode('custom');
+              }}
+              className="bg-transparent text-xs text-[#41332B] dark:text-[#f5eee6] focus:outline-none cursor-pointer"
+            />
           </div>
 
-          <Link to="/owner/appointments">
-            <Button className="bg-[#b99470] hover:bg-[#a37f5d] text-white text-xs font-semibold px-3.5 py-1.5 rounded-xl cursor-pointer">
-              Manage Bookings
+          <Link to="/owner/calendar">
+            <Button variant="outline" size="sm" className="text-xs border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]">
+              Full Calendar
             </Button>
           </Link>
         </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          SECTION 1: THE 8 EXACT REQUIRED KPIS (Phase 3 Section 1)
-      ═══════════════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* 1. Today's Revenue */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Today's Revenue</span>
-            <CreditCard className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#efc9a5] mt-2">
-            ₹{todayRevenue.toLocaleString()}
-          </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1 font-medium">
-            <CheckCircle2 className="w-3 h-3" /> Realized transactions
-          </p>
-        </Card>
+      {/* ═════════════════════════════════════════════════════════════════════
+          OPERATIONAL SUMMARY RIBBON (Compact 8 Metrics)
+      ═════════════════════════════════════════════════════════════════════ */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Today's Rev</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">₹{todayRevenue.toLocaleString('en-IN')}</p>
+          <span className="text-[9px] text-emerald-600 mt-0.5 flex items-center gap-0.5"><CheckCircle2 className="w-2.5 h-2.5" /> Realized</span>
+        </div>
 
-        {/* 2. Today's Appointments */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Today's Appointments</span>
-            <Calendar className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6] mt-2">
-            {todayAppointments} <span className="text-xs text-[#806B5C] dark:text-[#a89582] font-normal">slots</span>
-          </p>
-          <p className="text-[10px] text-[#806B5C] dark:text-[#efc9a5] mt-1 font-medium">
-            {appointments.filter(a => a.appointmentDate === targetDate && a.status === 'in_progress').length} In Progress
-          </p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Schedule</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{todayAppointmentsCount} Slots</p>
+          <span className="text-[9px] text-[#806B5C] mt-0.5">On Active Date</span>
+        </div>
 
-        {/* 3. Total Customers */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Total Customers</span>
-            <Users className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6] mt-2">
-            {totalCustomers}
-          </p>
-          <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-1 font-medium">Registered clientele</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Clients</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{totalCustomers}</p>
+          <span className="text-[9px] text-[#806B5C] mt-0.5">Registered</span>
+        </div>
 
-        {/* 4. New Customers */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>New Customers</span>
-            <Sparkles className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#efc9a5] mt-2">
-            {newCustomers}
-          </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Acquired this cycle</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">New Guests</span>
+          <p className="text-base font-light font-['Montserrat'] text-emerald-600 dark:text-emerald-400 mt-0.5">+{newCustomers}</p>
+          <span className="text-[9px] text-emerald-600 mt-0.5">This Month</span>
+        </div>
 
-        {/* 5. Active Employees */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Active Employees</span>
-            <UserCheck className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6] mt-2">
-            {activeEmployees} <span className="text-xs text-[#806B5C] dark:text-[#a89582] font-normal">artisans</span>
-          </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">100% bay occupancy</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Artisans</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{activeEmployees}</p>
+          <span className="text-[9px] text-emerald-600 mt-0.5">Active On-Floor</span>
+        </div>
 
-        {/* 6. Pending Appointments */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Pending Appointments</span>
-            <Clock className="w-4 h-4 text-amber-500" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-amber-600 dark:text-amber-300 mt-2">
-            {pendingAppointments}
-          </p>
-          <p className="text-[10px] text-amber-600 dark:text-amber-400 mt-1 font-medium">Awaiting proprietor review</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Pending</span>
+          <p className="text-base font-light font-['Montserrat'] text-amber-600 dark:text-amber-400 mt-0.5">{pendingAppointmentsCount}</p>
+          <span className="text-[9px] text-amber-600 mt-0.5">Need Action</span>
+        </div>
 
-        {/* 7. Cancellation Rate */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Cancellation Rate</span>
-            <TrendingDown className="w-4 h-4 text-[#806B5C] dark:text-[#a89582]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6] mt-2">
-            {cancellationRate}%
-          </p>
-          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Well below 5% luxury threshold</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Cancel Rate</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{cancellationRate}%</p>
+          <span className="text-[9px] text-emerald-600 mt-0.5">&lt; 5% Target</span>
+        </div>
 
-        {/* 8. Average Booking Value */}
-        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50 transition-all shadow-xs">
-          <div className="flex items-center justify-between text-[#806B5C] dark:text-[#a89582] text-[11px] font-semibold uppercase tracking-wider">
-            <span>Average Booking Value</span>
-            <TrendingUp className="w-4 h-4 text-[#b99470] dark:text-[#efc9a5]" />
-          </div>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#efc9a5] mt-2">
-            ₹{averageBookingValue.toLocaleString()}
-          </p>
-          <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-1 font-medium">Per confirmed ritual</p>
-        </Card>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
+          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Avg Ticket</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#B99470] mt-0.5">₹{averageBookingValue.toLocaleString('en-IN')}</p>
+          <span className="text-[9px] text-[#806B5C] mt-0.5">Per Booking</span>
+        </div>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-          SECTION 2: MAIN DASHBOARD SECTIONS
-      ═══════════════════════════════════════════════════════════════ */}
+      {/* ═════════════════════════════════════════════════════════════════════
+          PENDING REQUESTS ALERT BANNER (If Any)
+      ═════════════════════════════════════════════ */}
+      {pendingRequests.length > 0 && (
+        <Card className="p-4 bg-amber-50/70 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800/40 space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-amber-900 dark:text-amber-200">
+                Pending Booking Requests Needing Acceptance ({pendingRequests.length})
+              </h3>
+            </div>
+            <Link to="/owner/appointments" className="text-xs text-amber-800 dark:text-amber-300 hover:underline">
+              View All in Booking Desk
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {pendingRequests.slice(0, 2).map(req => (
+              <div key={req.id} className="p-3 rounded-lg bg-white dark:bg-[#1a120e] border border-amber-200/80 dark:border-amber-900/50 flex items-center justify-between gap-3 text-xs">
+                <div>
+                  <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{req.customerName}</p>
+                  <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">
+                    {req.serviceName} • {req.appointmentDate} at {req.startTime} (₹{req.price})
+                  </p>
+                </div>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleCancelAppointment(req)}
+                    className="text-[11px] px-2 py-1 text-red-600 border-red-200 hover:bg-red-50"
+                  >
+                    Decline
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => handleTransitionStatus(req, 'confirmed')}
+                    className="text-[11px] px-2.5 py-1 bg-[#41332B] text-white hover:bg-[#2b1810]"
+                  >
+                    Accept
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* ═════════════════════════════════════════════════════════════════════
+          MAIN DASHBOARD SPLIT: SCHEDULE STREAM + OPERATIONAL CARDS
+      ═════════════════════════════════════════════════════════════════════ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Column 1 & 2: Today's Schedule & Trends */}
+        {/* Left 2 Columns: Chronological Schedule Stream with Real-time Actions */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Today's Schedule Snapshot */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-4 shadow-xs">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
-                  Today's Ritual Schedule
+                <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-[#B99470]" />
+                  Ritual Schedule for {selectedDate}
                 </h3>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">Chronological flow of artisan suites</p>
+                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                  Interactive chronological stream with direct lifecycle status transitions.
+                </p>
               </div>
-              <Link
-                to="/owner/calendar"
-                className="text-xs text-[#b99470] hover:text-[#806B5C] dark:hover:text-[#efc9a5] flex items-center gap-1 font-semibold"
-              >
-                <span>Full Calendar</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <span className="text-xs font-mono font-medium text-[#B99470]">
+                {dateAppointments.length} Appointments Scheduled
+              </span>
             </div>
 
-            <div className="space-y-2.5">
-              {appointments.filter(a => a.appointmentDate === targetDate).length === 0 ? (
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582] p-4 text-center">No appointments scheduled for today yet.</p>
+            <div className="space-y-3">
+              {dateAppointments.length === 0 ? (
+                <div className="p-8 text-center text-[#806B5C] dark:text-[#a89582] bg-[#FAF7F2] dark:bg-white/5 rounded-xl border border-dashed border-[#E8D8C7] dark:border-white/10">
+                  <Calendar className="w-8 h-8 mx-auto text-[#B99470]/60 mb-2" />
+                  <p className="font-medium text-sm text-[#41332B] dark:text-[#f5eee6]">No Appointments for {selectedDate}</p>
+                  <p className="text-xs mt-1">Switch date above or create a walk-in booking.</p>
+                </div>
               ) : (
-                appointments
-                  .filter(a => a.appointmentDate === targetDate)
-                  .map(apt => (
-                    <div
-                      key={apt.id}
-                      className="p-3.5 rounded-xl bg-[#FAF6F1] dark:bg-white/[0.02] border border-[#E8D8C7] dark:border-white/5 flex items-center justify-between gap-3 hover:border-[#b99470]/40 transition-all"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="px-2.5 py-1 rounded-lg bg-[#E8D8C7]/50 dark:bg-[#41332b] text-[#41332B] dark:text-[#efc9a5] font-mono text-xs font-semibold shrink-0">
-                          {apt.startTime}
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-[#41332B] dark:text-[#f5eee6]">{apt.customerName}</p>
-                          <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">
-                            {apt.serviceName} • <span className="text-[#b99470] dark:text-[#efc9a5]">{apt.staffName}</span>
-                          </p>
-                        </div>
+                dateAppointments.map(apt => (
+                  <div
+                    key={apt.id}
+                    className="p-3.5 rounded-xl bg-[#FAF6F1] dark:bg-white/[0.02] border border-[#E8D8C7] dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#B99470]/60 transition-all text-xs"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="px-2.5 py-1.5 rounded-lg bg-[#E8D8C7]/50 dark:bg-[#41332B] text-[#41332B] dark:text-[#f5eee6] font-mono font-semibold shrink-0">
+                        {apt.startTime}
                       </div>
-
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs text-[#41332B] dark:text-[#efc9a5] font-semibold">
-                          ₹{apt.price.toLocaleString()}
-                        </span>
-                        <Badge
-                          variant={
-                            apt.status === 'completed' ? 'success' :
-                            apt.status === 'in_progress' ? 'default' :
-                            apt.status === 'confirmed' ? 'outline' : 'warning'
-                          }
-                          className="capitalize text-[10px]"
-                        >
-                          {apt.status.replace('_', ' ')}
-                        </Badge>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-sm text-[#41332B] dark:text-[#f5eee6]">{apt.customerName}</p>
+                          <Badge
+                            variant="outline"
+                            className={`text-[9px] uppercase ${
+                              apt.status === 'completed' ? 'text-emerald-700 dark:text-emerald-400 border-emerald-300' :
+                              apt.status === 'in_progress' ? 'text-amber-700 dark:text-amber-400 border-amber-300 bg-amber-50 dark:bg-amber-950/30' :
+                              apt.status === 'checked_in' ? 'text-blue-700 dark:text-blue-400 border-blue-300' :
+                              apt.status === 'confirmed' ? 'text-stone-700 dark:text-stone-300 border-stone-300' :
+                              apt.status === 'cancelled' ? 'text-red-700 dark:text-red-400 border-red-300' : 'text-stone-500'
+                            }`}
+                          >
+                            {apt.status.replace('_', ' ')}
+                          </Badge>
+                        </div>
+                        <p className="text-[11px] text-[#806B5C] dark:text-[#a89582] mt-0.5">
+                          {apt.serviceName} • Artisan: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{apt.staffName}</span> • ₹{apt.price}
+                        </p>
                       </div>
                     </div>
-                  ))
+
+                    {/* Real-time Status Actions */}
+                    <div className="flex items-center gap-1.5 self-end sm:self-center shrink-0">
+                      {apt.status === 'pending' && (
+                        <>
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleTransitionStatus(apt, 'confirmed')}
+                            className="text-[11px] px-2.5 py-1 bg-[#41332B] text-white"
+                          >
+                            Accept
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCancelAppointment(apt)}
+                            className="text-[11px] px-2 py-1 text-red-600 border-red-200"
+                          >
+                            Decline
+                          </Button>
+                        </>
+                      )}
+
+                      {apt.status === 'confirmed' && (
+                        <>
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={() => handleTransitionStatus(apt, 'checked_in')}
+                            className="text-[11px] px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white"
+                          >
+                            Check In
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCancelAppointment(apt)}
+                            className="text-[11px] px-2 py-1 text-stone-500 border-stone-200"
+                          >
+                            Cancel
+                          </Button>
+                        </>
+                      )}
+
+                      {apt.status === 'checked_in' && (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleTransitionStatus(apt, 'in_progress')}
+                          className="text-[11px] px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white flex items-center gap-1"
+                        >
+                          <Play className="w-3 h-3" />
+                          Start Ritual
+                        </Button>
+                      )}
+
+                      {apt.status === 'in_progress' && (
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => handleTransitionStatus(apt, 'completed')}
+                          className="text-[11px] px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white flex items-center gap-1"
+                        >
+                          <Check className="w-3 h-3" />
+                          Complete Ritual
+                        </Button>
+                      )}
+
+                      {apt.status === 'completed' && (
+                        <Link to="/owner/payments">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-[11px] px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center gap-1"
+                          >
+                            <Receipt className="w-3 h-3 text-[#B99470]" />
+                            Receipt
+                          </Button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                ))
               )}
             </div>
           </Card>
 
-          {/* Revenue Overview & Monthly Trend */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-4 shadow-xs">
+          {/* Revenue Velocity Chart Strip */}
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
-                  Revenue & Appointment Velocity
+                  Weekly Revenue Velocity
                 </h3>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">Consolidated across all verified payment gateways</p>
+                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">Verified receipts across active payment gateways</p>
               </div>
-              <span className="text-xs text-[#b99470] dark:text-[#efc9a5] font-bold font-mono">
-                Total: ₹{totalRevenue.toLocaleString()}
+              <span className="text-xs font-mono font-bold text-[#B99470]">
+                Total Realized: ₹{allPayments.reduce((acc, curr) => acc + curr.amount, 0).toLocaleString('en-IN')}
               </span>
             </div>
 
-            {/* Simple visual bar comparison for recent days */}
             <div className="grid grid-cols-7 gap-2 pt-2">
               {[
-                { day: 'Mon', date: 'Nov 11', amount: 12500, apts: 3 },
-                { day: 'Tue', date: 'Nov 12', amount: 16000, apts: 4 },
-                { day: 'Wed', date: 'Nov 13', amount: 14200, apts: 3 },
-                { day: 'Thu', date: 'Nov 14', amount: 19800, apts: 5 },
-                { day: 'Fri', date: 'Nov 15', amount: 28500, apts: 7 },
-                { day: 'Sat', date: 'Nov 16', amount: 34000, apts: 9 },
-                { day: 'Sun', date: 'Nov 17', amount: 24500, apts: 6 },
+                { day: 'Mon', date: 'Nov 11', amount: 14500, apts: 3 },
+                { day: 'Tue', date: 'Nov 12', amount: 18000, apts: 4 },
+                { day: 'Wed', date: 'Nov 13', amount: 16200, apts: 3 },
+                { day: 'Thu', date: 'Nov 14', amount: 21800, apts: 5 },
+                { day: 'Fri', date: 'Nov 15', amount: 32500, apts: 7 },
+                { day: 'Sat', date: 'Nov 16', amount: 38000, apts: 9 },
+                { day: 'Sun', date: 'Nov 17', amount: 29500, apts: 6 },
               ].map((d, idx) => (
                 <div key={idx} className="flex flex-col items-center gap-1 text-center">
-                  <span className="text-[10px] text-[#41332B] dark:text-[#efc9a5] font-mono">₹{(d.amount / 1000).toFixed(0)}k</span>
-                  <div className="w-full h-24 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent rounded-lg flex items-end p-1">
+                  <span className="text-[10px] text-[#41332B] dark:text-[#f5eee6] font-mono">₹{(d.amount / 1000).toFixed(0)}k</span>
+                  <div className="w-full h-20 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent rounded-lg flex items-end p-1">
                     <div
-                      className="w-full bg-gradient-to-t from-[#B99470] to-[#E8D8C7] dark:from-[#806B5C] dark:to-[#efc9a5] rounded-md transition-all duration-500"
-                      style={{ height: `${(d.amount / 35000) * 100}%` }}
+                      className="w-full bg-gradient-to-t from-[#B99470] to-[#E8D8C7] rounded-md transition-all duration-500"
+                      style={{ height: `${(d.amount / 40000) * 100}%` }}
                     />
                   </div>
                   <span className="text-[10px] font-semibold text-[#41332B] dark:text-[#f5eee6]">{d.day}</span>
-                  <span className="text-[9px] text-[#806B5C] dark:text-[#a89582]">{d.apts} apts</span>
+                  <span className="text-[9px] text-[#806B5C]">{d.apts} apts</span>
                 </div>
               ))}
             </div>
           </Card>
         </div>
 
-        {/* Column 3: Popular Services, Live Queue & Branch Performance */}
+        {/* Right Column: Live Walk-In Queue, Popular Rituals & Artisan Floor Availability */}
         <div className="space-y-6">
-          {/* Live Walk-In Queue Snapshot */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-3 shadow-xs">
+          {/* Live Walk-In Queue */}
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#b99470]" />
-                <span>Live Walk-In Queue</span>
+              <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                <Clock className="w-4 h-4 text-[#B99470]" />
+                Live Walk-In Queue
               </h3>
-              <Link to="/owner/queue" className="text-xs text-[#b99470] hover:text-[#806B5C] dark:hover:text-[#efc9a5] font-medium">
+              <Link to="/owner/queue" className="text-xs text-[#B99470] hover:underline font-medium">
                 Manage ({queue.filter(q => ['waiting', 'next_in_line', 'in_service'].includes(q.status)).length})
               </Link>
             </div>
@@ -414,60 +557,66 @@ export const OwnerDashboardPage: React.FC = () => {
                     <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">{q.serviceName}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] uppercase font-bold text-[#b99470] dark:text-[#efc9a5] block">
+                    <span className="text-[10px] uppercase font-bold text-[#B99470] block">
                       {q.status.replace('_', ' ')}
                     </span>
-                    <span className="text-[9px] text-[#806B5C] dark:text-[#a89582]">{q.estimatedWaitMinutes}m wait</span>
+                    <span className="text-[9px] text-[#806B5C]">{q.estimatedWaitMinutes}m wait</span>
                   </div>
                 </div>
               ))}
             </div>
           </Card>
 
-          {/* Popular Services */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-3 shadow-xs">
-            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+          {/* Popular Rituals */}
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
+            <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+              <Scissors className="w-4 h-4 text-[#B99470]" />
               Popular Rituals
             </h3>
             <div className="space-y-2.5">
               {popularServices.map((srv, idx) => (
-                <div key={idx} className="flex items-center justify-between text-xs p-2 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent">
+                <div key={idx} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5">
                   <div className="min-w-0 flex-1">
                     <p className="font-medium text-[#41332B] dark:text-[#f5eee6] truncate">{srv.serviceName}</p>
                     <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">{srv.count} bookings</p>
                   </div>
-                  <span className="text-xs font-mono text-[#41332B] dark:text-[#efc9a5] font-semibold pl-2">
-                    ₹{srv.revenue.toLocaleString()}
+                  <span className="text-xs font-mono text-[#41332B] dark:text-[#f5eee6] font-semibold pl-2">
+                    ₹{srv.revenue.toLocaleString('en-IN')}
                   </span>
                 </div>
               ))}
             </div>
           </Card>
 
-          {/* Multi-Branch Performance */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-3 shadow-xs">
-            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
-              Branch Performance
-            </h3>
-            <div className="space-y-2 text-xs">
-              {branches.map(b => {
-                const branchApts = allAppointments.filter(a => a.branchId === b.id);
-                return (
-                  <div key={b.id} className="p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent space-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-[#41332B] dark:text-[#efc9a5]">{b.name}</span>
-                      <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">Active</span>
+          {/* Team Floor Availability */}
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
+            <div className="flex items-center justify-between">
+              <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                <UserCheck className="w-4 h-4 text-[#B99470]" />
+                Artisan Floor Roster
+              </h3>
+              <Link to="/owner/people" className="text-xs text-[#B99470] hover:underline font-medium">
+                People
+              </Link>
+            </div>
+
+            <div className="space-y-2">
+              {branchStaff.slice(0, 4).map(st => (
+                <div key={st.id} className="p-2 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-full bg-[#E8D8C7] text-[#41332B] flex items-center justify-center font-serif text-[10px] font-bold">
+                      {st.displayName.charAt(0)}
                     </div>
-                    <p className="text-[11px] text-[#806B5C] dark:text-[#a89582] truncate">{b.address}</p>
-                    <div className="flex justify-between text-[10px] text-[#806B5C] dark:text-[#c2b3a3] pt-1 border-t border-[#E8D8C7] dark:border-white/5">
-                      <span>{branchApts.length} Total Bookings</span>
-                      <span className="font-mono text-[#41332B] dark:text-[#efc9a5] font-semibold">
-                        ₹{branchApts.reduce((acc, curr) => acc + curr.price, 0).toLocaleString()}
-                      </span>
+                    <div>
+                      <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{st.displayName}</p>
+                      <p className="text-[10px] text-[#806B5C]">{st.title}</p>
                     </div>
                   </div>
-                );
-              })}
+                  <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> On Floor
+                  </span>
+                </div>
+              ))}
             </div>
           </Card>
         </div>

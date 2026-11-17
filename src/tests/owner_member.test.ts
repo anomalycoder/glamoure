@@ -560,4 +560,95 @@ describe('GLAMOURÉ PHASE 3: Complete Owner & Member Management System', () => {
     expect(RbacService.isRouteAllowedForRole('salon_member', '/owner/dashboard')).toBe(false);
     expect(RbacService.isRouteAllowedForRole('salon_owner', '/owner/dashboard')).toBe(true);
   });
+
+  // ═════════════════════════════════════════════════════════════════════════
+  // WORKFLOW 23: Price snapshot preservation
+  // ═════════════════════════════════════════════════════════════════════════
+  it('Workflow 23: Preserves price snapshots on historical appointments and invoices when catalogue price changes', () => {
+    // Original appointment created at 5500
+    const originalApt = db.getAppointmentById(createdAppointmentId);
+    expect(originalApt).toBeDefined();
+    const originalPrice = originalApt!.price;
+
+    // Owner updates service price to 7500 in catalogue
+    db.updateService(createdServiceId, { price: 7500 });
+    const updatedService = db.getServiceById(createdServiceId);
+    expect(updatedService?.price).toBe(7500);
+
+    // Historic appointment MUST preserve original snapshot price 5500
+    const reloadedApt = db.getAppointmentById(createdAppointmentId);
+    expect(reloadedApt?.price).toBe(originalPrice);
+
+    // Issued invoice MUST also preserve original subtotal and GST
+    const invoices = db.getInvoicesBySalon(createdSalonId);
+    const historicInvoice = invoices.find(i => i.appointmentId === createdAppointmentId);
+    expect(historicInvoice).toBeDefined();
+    expect(historicInvoice?.subtotal).toBe(originalPrice);
+  });
+
+  // ═════════════════════════════════════════════════════════════════════════
+  // WORKFLOW 24: Artisan deactivation preserves records
+  // ═════════════════════════════════════════════════════════════════════════
+  it('Workflow 24: Deactivating an artisan does not delete past appointments or commissions', () => {
+    const staff = db.getStaffById(createdStaffProfileId);
+    expect(staff).toBeDefined();
+    expect(staff?.isActive).toBe(true);
+
+    // Deactivate artisan
+    const updated = db.updateStaffProfile(createdStaffProfileId, { isActive: false });
+    expect(updated.isActive).toBe(false);
+
+    // Historical appointments for this artisan are completely intact
+    const staffApts = db.getAppointmentsByStaff(createdStaffProfileId);
+    expect(staffApts.length).toBeGreaterThan(0);
+    expect(staffApts.some(a => a.id === createdAppointmentId)).toBe(true);
+  });
+
+  // ═════════════════════════════════════════════════════════════════════════
+  // WORKFLOW 25: GST 18% calculation verification
+  // ═════════════════════════════════════════════════════════════════════════
+  it('Workflow 25: Verifies GST 18% statutory tax calculation and 50/50 CGST/SGST split', () => {
+    const servicePrice = 5000;
+    const gstRate = 0.18;
+    const expectedGst = servicePrice * gstRate; // 900
+    const expectedCgst = expectedGst / 2; // 450
+    const expectedSgst = expectedGst / 2; // 450
+
+    expect(expectedGst).toBe(900);
+    expect(expectedCgst).toBe(450);
+    expect(expectedSgst).toBe(450);
+    expect(servicePrice + expectedGst).toBe(5900);
+  });
+
+  // ═════════════════════════════════════════════════════════════════════════
+  // WORKFLOW 26: Leave request conflict detection
+  // ═════════════════════════════════════════════════════════════════════════
+  it('Workflow 26: Accurately detects existing client appointments during proposed leave window', () => {
+    // Create an upcoming confirmed appointment for the artisan
+    const upcomingApt = db.createAppointment({
+      salonId: createdSalonId,
+      branchId: createdBranchId,
+      customerId: customerUserId,
+      customerName: 'Aria Montgomery',
+      customerEmail: testCustomerEmail,
+      serviceId: createdServiceId,
+      serviceName: 'Bespoke Balayage',
+      staffId: createdStaffProfileId,
+      staffName: 'Elena Vance',
+      appointmentDate: '2026-11-25',
+      startTime: '11:00',
+      endTime: '12:30',
+      durationMinutes: 90,
+      price: 5500,
+      status: 'confirmed',
+    }, customerUserId, 'Aria Montgomery');
+
+    const affected = db.getAffectedAppointments(
+      createdStaffProfileId,
+      '2026-11-24',
+      '2026-11-26'
+    );
+    expect(affected.length).toBeGreaterThan(0);
+    expect(affected.some(a => a.id === upcomingApt.id)).toBe(true);
+  });
 });

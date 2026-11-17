@@ -2,21 +2,25 @@ import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
 import { useThemeControls } from '../ui/ThemeContext';
+import { useBranch } from '../../context/BranchContext';
 import { db } from '../../database/db';
-import { Bell, ChevronDown, Check, Building2, UserCircle, Sun, Moon } from 'lucide-react';
+import { Bell, ChevronDown, Check, Building2, UserCircle, Sun, Moon, MapPin } from 'lucide-react';
 
 export const TopNav: React.FC = () => {
   const { user, role, salonId, switchRole } = useAuth();
   const { notifications, unreadCount, markAsRead } = useNotification();
   const { theme, toggleTheme } = useThemeControls();
+  const { selectedBranchId, setSelectedBranchId, selectedBranch, branches } = useBranch();
   const [showNotifs, setShowNotifs] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [showSalonsMenu, setShowSalonsMenu] = useState(false);
+  const [showBranchMenu, setShowBranchMenu] = useState(false);
 
   const salons = db.getAllSalons();
   const activeSalon = salons.find(s => s.id === salonId) || salons[0];
 
   const isDark = theme === 'dark';
+  const isOwner = role === 'salon_owner';
 
   return (
     <header className={`h-16 px-6 sm:px-8 flex items-center justify-between sticky top-0 z-30 select-none transition-colors duration-200 border-b ${
@@ -24,54 +28,146 @@ export const TopNav: React.FC = () => {
         ? 'bg-[#1c1410] border-[#2f2119] text-[#f5eee6]' 
         : 'bg-white border-[#E8D8C7] text-[#41332B] shadow-xs'
     }`}>
-      {/* Left: Active Salon Tenant Indicator & Switcher */}
-      <div className="relative">
-        <button
-          onClick={() => setShowSalonsMenu(!showSalonsMenu)}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full font-['Montserrat'] text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer border ${
-            isDark
-              ? 'bg-white/5 border-white/10 text-[#f5eee6] hover:border-[#b99470]/50 hover:bg-white/10'
-              : 'bg-[#FAF6F1] border-[#E8D8C7] text-[#41332B] hover:bg-[#F5EFE7] hover:border-[#B99470]'
-          }`}
-        >
-          <Building2 className={`w-3.5 h-3.5 ${isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'}`} />
-          <span>{activeSalon ? activeSalon.name : 'Glamouré Sanctuary'}</span>
-          <ChevronDown className={`w-3 h-3 ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`} />
-        </button>
+      {/* Left: Active Salon Tenant Indicator & Prominent Branch Selector */}
+      <div className="flex items-center gap-2.5">
+        {/* Salon Tenant Switcher */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setShowSalonsMenu(!showSalonsMenu);
+              setShowBranchMenu(false);
+            }}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-full font-['Montserrat'] text-xs uppercase tracking-wider font-medium transition-colors cursor-pointer border ${
+              isDark
+                ? 'bg-white/5 border-white/10 text-[#f5eee6] hover:border-[#b99470]/50 hover:bg-white/10'
+                : 'bg-[#FAF6F1] border-[#E8D8C7] text-[#41332B] hover:bg-[#F5EFE7] hover:border-[#B99470]'
+            }`}
+          >
+            <Building2 className={`w-3.5 h-3.5 ${isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'}`} />
+            <span>{activeSalon ? activeSalon.name : 'Glamouré Sanctuary'}</span>
+            <ChevronDown className={`w-3 h-3 ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`} />
+          </button>
 
-        {showSalonsMenu && (
-          <div className={`absolute left-0 mt-2 w-64 rounded-2xl shadow-2xl p-2 z-40 border text-left ${
-            isDark 
-              ? 'bg-[#221813] border-[#38271e]' 
-              : 'bg-white border-[#E8D8C7] shadow-[0_12px_36px_rgba(65,51,43,0.12)]'
-          }`}>
-            <span className={`block px-3 py-1.5 text-[10.5px] font-['Montserrat'] font-semibold uppercase tracking-wider ${
-              isDark ? 'text-[#a89582]' : 'text-[#806B5C]'
+          {showSalonsMenu && (
+            <div className={`absolute left-0 mt-2 w-64 rounded-2xl shadow-2xl p-2 z-40 border text-left ${
+              isDark 
+                ? 'bg-[#221813] border-[#38271e]' 
+                : 'bg-white border-[#E8D8C7] shadow-[0_12px_36px_rgba(65,51,43,0.12)]'
             }`}>
-              Select Salon Tenant
+              <span className={`block px-3 py-1.5 text-[10.5px] font-['Montserrat'] font-semibold uppercase tracking-wider ${
+                isDark ? 'text-[#a89582]' : 'text-[#806B5C]'
+              }`}>
+                Select Salon Tenant
+              </span>
+              {salons.map(s => (
+                <button
+                  key={s.id}
+                  onClick={() => {
+                    switchRole(role, s.id);
+                    setShowSalonsMenu(false);
+                  }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-['Plus_Jakarta_Sans'] text-left cursor-pointer transition-colors ${
+                    s.id === salonId 
+                      ? isDark ? 'bg-[#b99470]/20 font-semibold text-[#efc9a5]' : 'bg-[#FAF6F1] font-semibold text-[#41332B] border border-[#B99470]/30'
+                      : isDark ? 'hover:bg-white/5 text-[#f5eee6]' : 'hover:bg-[#FAF6F1] text-[#41332B]'
+                  }`}
+                >
+                  <div>
+                    <div className={`font-medium ${isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'}`}>{s.name}</div>
+                    <div className={`text-[10px] ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`}>{s.city}, {s.country}</div>
+                  </div>
+                  {s.id === salonId && <Check className={`w-3.5 h-3.5 ${isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'}`} />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Section 4 Required: Prominent Branch Selector with Persistence */}
+        <div className="relative">
+          <button
+            onClick={() => {
+              setShowBranchMenu(!showBranchMenu);
+              setShowSalonsMenu(false);
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-['Plus_Jakarta_Sans'] text-xs font-medium transition-colors cursor-pointer border ${
+              isDark
+                ? 'bg-[#b99470]/10 border-[#b99470]/30 text-[#efc9a5] hover:bg-[#b99470]/20'
+                : 'bg-white border-[#E8D8C7] text-[#41332B] hover:border-[#B99470] shadow-xs'
+            }`}
+            title="Switch Operating Branch"
+          >
+            <MapPin className={`w-3.5 h-3.5 ${isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'}`} />
+            <span className="font-semibold">
+              {selectedBranchId === 'all' ? 'All Branches' : (selectedBranch?.name || 'Branch')}
             </span>
-            {salons.map(s => (
-              <button
-                key={s.id}
-                onClick={() => {
-                  switchRole(role, s.id);
-                  setShowSalonsMenu(false);
-                }}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-['Plus_Jakarta_Sans'] text-left cursor-pointer transition-colors ${
-                  s.id === salonId 
-                    ? isDark ? 'bg-[#b99470]/20 font-semibold text-[#efc9a5]' : 'bg-[#FAF6F1] font-semibold text-[#41332B] border border-[#B99470]/30'
-                    : isDark ? 'hover:bg-white/5 text-[#f5eee6]' : 'hover:bg-[#FAF6F1] text-[#41332B]'
-                }`}
-              >
-                <div>
-                  <div className={`font-medium ${isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'}`}>{s.name}</div>
-                  <div className={`text-[10px] ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`}>{s.city}, {s.country}</div>
-                </div>
-                {s.id === salonId && <Check className={`w-3.5 h-3.5 ${isDark ? 'text-[#efc9a5]' : 'text-[#B99470]'}`} />}
-              </button>
-            ))}
-          </div>
-        )}
+            <ChevronDown className={`w-3 h-3 ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`} />
+          </button>
+
+          {showBranchMenu && (
+            <div className={`absolute left-0 mt-2 w-64 rounded-2xl shadow-2xl p-2 z-40 border text-left ${
+              isDark 
+                ? 'bg-[#221813] border-[#38271e]' 
+                : 'bg-white border-[#E8D8C7] shadow-[0_12px_36px_rgba(65,51,43,0.12)]'
+            }`}>
+              <div className="px-3 py-1.5 flex items-center justify-between border-b border-[#E8D8C7]/40 dark:border-white/10 mb-1">
+                <span className={`text-[10.5px] font-['Montserrat'] font-semibold uppercase tracking-wider ${
+                  isDark ? 'text-[#a89582]' : 'text-[#806B5C]'
+                }`}>
+                  Operating Branch
+                </span>
+                <span className="text-[10px] text-[#B99470] font-mono">
+                  {branches.length} {branches.length === 1 ? 'Location' : 'Locations'}
+                </span>
+              </div>
+
+              {/* All Branches option (Owner only) */}
+              {isOwner && (
+                <button
+                  onClick={() => {
+                    setSelectedBranchId('all');
+                    setShowBranchMenu(false);
+                  }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-['Plus_Jakarta_Sans'] text-left cursor-pointer transition-colors mb-1 ${
+                    selectedBranchId === 'all'
+                      ? isDark ? 'bg-[#b99470]/20 font-semibold text-[#efc9a5]' : 'bg-[#FAF6F1] font-semibold text-[#41332B] border border-[#B99470]/40'
+                      : isDark ? 'hover:bg-white/5 text-[#f5eee6]' : 'hover:bg-[#FAF6F1] text-[#41332B]'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <Building2 className="w-3.5 h-3.5 text-[#B99470]" />
+                    <span>All Salon Branches (Consolidated)</span>
+                  </div>
+                  {selectedBranchId === 'all' && <Check className="w-3.5 h-3.5 text-[#B99470]" />}
+                </button>
+              )}
+
+              {/* Individual Branches */}
+              {branches.map(b => (
+                <button
+                  key={b.id}
+                  onClick={() => {
+                    setSelectedBranchId(b.id);
+                    setShowBranchMenu(false);
+                  }}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-['Plus_Jakarta_Sans'] text-left cursor-pointer transition-colors ${
+                    selectedBranchId === b.id
+                      ? isDark ? 'bg-[#b99470]/20 font-semibold text-[#efc9a5]' : 'bg-[#FAF6F1] font-semibold text-[#41332B] border border-[#B99470]/40'
+                      : isDark ? 'hover:bg-white/5 text-[#f5eee6]' : 'hover:bg-[#FAF6F1] text-[#41332B]'
+                  }`}
+                >
+                  <div>
+                    <div className="font-medium">{b.name}</div>
+                    <div className={`text-[10px] ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`}>
+                      {b.code} • {b.address}
+                    </div>
+                  </div>
+                  {selectedBranchId === b.id && <Check className="w-3.5 h-3.5 text-[#B99470]" />}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Right Controls: Theme Toggle, Role Switcher, Notifications, Profile */}
