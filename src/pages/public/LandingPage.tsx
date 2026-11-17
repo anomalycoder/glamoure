@@ -61,35 +61,6 @@ export const LandingPage = () => {
 
   return (
     <div className="relative w-full min-h-screen bg-[#1a1614] font-['Plus_Jakarta_Sans'] font-normal text-[#f5eee6] selection:bg-[#cbb08a]/30 selection:text-white">
-      
-      {/* Top Floating App Bar Pill (Direct Gateway to Multi-role Portals) */}
-      <div className="fixed top-4 right-4 z-40">
-        {user ? (
-          <Link
-            to={getDashboardPath()}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#201511]/90 hover:bg-[#34241c] text-[#efc9a5] border border-[#efc9a5]/30 shadow-lg backdrop-blur-md transition-all text-xs font-['Montserrat'] uppercase tracking-wider font-semibold"
-          >
-            <span>Go to Portal ({role.replace('salon_', '')})</span>
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          </Link>
-        ) : (
-          <div className="flex items-center gap-2">
-            <Link
-              to="/login"
-              className="px-4 py-1.5 rounded-full bg-[#201511]/90 hover:bg-[#34241c] text-[#f5eee6] hover:text-[#efc9a5] border border-white/20 shadow-md backdrop-blur-md transition-all text-xs font-['Plus_Jakarta_Sans'] font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/register"
-              className="hidden sm:inline-flex px-4 py-1.5 rounded-full bg-[#41332B] hover:bg-[#58463c] text-[#f5eee6] border border-[#efc9a5]/40 shadow-md backdrop-blur-md transition-all text-xs font-['Plus_Jakarta_Sans'] font-semibold"
-            >
-              Partner / Register
-            </Link>
-          </div>
-        )}
-      </div>
-
       {/* ═══════════════════════════════════════════════════════════
           SECTION 1: HERO VIEW (Refined & Clean)
       ═══════════════════════════════════════════════════════════ */}
