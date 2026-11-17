@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme {
+  --font-heading: "Montserrat", sans-serif;
+  --font-serif: "Montserrat", sans-serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-script: "Alex Brush", cursive;
+
+  --color-sand-100: #faf7f2;
+  --color-sand-200: #f5eee6;
+  --color-sand-300: #e8ded2;
+  --color-sand-400: #d8c3a8;
+  --color-gold-warm: #cbb08a;
+  --color-espresso: #1a1614;
+
+  /* #41332B Luxury Brown Tonal Scale / Classes */
+  --color-brown-50: #f7f4f3;
+  --color-brown-100: #ede7e3;
+  --color-brown-200: #ded1ca;
+  --color-brown-300: #cfbbb0;
+  --color-brown-400: #c0a596;
+  --color-brown-500: #a98470;
+  --color-brown-600: #856451;
+  --color-brown-700: #604a3e;
+  --color-brown-800: #40332b;
+  --color-brown-900: #2f241e;
+  --color-brown-950: #1d1511;
+}
+
+:root {
+  /* Section backgrounds */
+  --bg-services: #F5EFE7;        /* 02 · Warm Ivory */
+  --bg-transformations: #E5D5C5; /* 03 · Sandstone */
+  --bg-about: #F1EAE2;           /* 04 · Soft Cream */
+  --bg-testimonials: #D7C4B1;    /* 05 · Mushroom Taupe */
+  --bg-artists: #F4ECE3;         /* 06 · Light Champagne */
+  --bg-appointments: #E8D8C7;    /* 07 · Warm Latte */
+
+  /* Brand */
+  --color-heading: #41332B;
+  --color-body: #806B5C;
+  --color-accent: #B99470;
+  --color-divider: #DCCBBB;
+  --color-footer: #41332B;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 400;
+  }
+}
+
+/* Custom subtle animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.anim-fade {
+  animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.anim-up {
+  opacity: 0;
+  animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.d-1 { animation-delay: 0.1s; }
+.d-2 { animation-delay: 0.2s; }
+.d-3 { animation-delay: 0.3s; }
+.d-4 { animation-delay: 0.4s; }
+.d-5 { animation-delay: 0.5s; }
+.d-6 { animation-delay: 0.6s; }
+
+/* Custom Sleek Scrollbar for Design Studio */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(239, 201, 165, 0.3);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 201, 165, 0.6);
+}

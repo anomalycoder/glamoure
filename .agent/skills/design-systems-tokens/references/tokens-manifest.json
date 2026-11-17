@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json.schemastore.org/design-tokens.json",
+  "name": "Glamoure Design System Tokens",
+  "version": "1.0.0",
+  "color": {
+    "brand": {
+      "heading": { "value": "#41332B" },
+      "body": { "value": "#806B5C" },
+      "accent": { "value": "#B99470" },
+      "divider": { "value": "#DCCBBB" },
+      "footer": { "value": "#41332B" }
+    },
+    "surface": {
+      "services": { "value": "#F4EEE7" },
+      "transformations": { "value": "#F1EAE2" },
+      "artists": { "value": "#EEE6DC" },
+      "appointments": { "value": "#F3ECE7" },
+      "testimonials": { "value": "#F2ECE5" }
+    },
+    "brown": {
+      "50": { "value": "#f7f4f3" },
+      "100": { "value": "#ede7e3" },
+      "200": { "value": "#ded1ca" },
+      "300": { "value": "#cfbbb0" },
+      "400": { "value": "#c0a596" },
+      "500": { "value": "#a98470" },
+      "600": { "value": "#856451" },
+      "700": { "value": "#604a3e" },
+      "800": { "value": "#40332b" },
+      "900": { "value": "#2f241e" },
+      "950": { "value": "#1d1511" }
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "display": { "value": "Montserrat, sans-serif" },
+      "script": { "value": "Alex Brush, cursive" },
+      "serif": { "value": "Playfair Display, serif" },
+      "sans": { "value": "Plus Jakarta Sans, sans-serif" }
+    },
+    "fontWeight": {
+      "light": { "value": 300 },
+      "regular": { "value": 400 },
+      "medium": { "value": 500 },
+      "semibold": { "value": 600 }
+    }
+  },
+  "spacing": {
+    "1": { "value": "4px" },
+    "2": { "value": "8px" },
+    "3": { "value": "12px" },
+    "4": { "value": "16px" },
+    "6": { "value": "24px" },
+    "8": { "value": "32px" },
+    "12": { "value": "48px" },
+    "16": { "value": "64px" },
+    "24": { "value": "96px" },
+    "48": { "value": "192px" }
+  },
+  "borderRadius": {
+    "sm": { "value": "4px" },
+    "md": { "value": "8px" },
+    "lg": { "value": "16px" },
+    "sculpted": { "value": "25px" },
+    "full": { "value": "9999px" }
+  }
+}
