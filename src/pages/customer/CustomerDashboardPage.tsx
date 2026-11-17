@@ -82,7 +82,7 @@ export const CustomerDashboardPage: React.FC = () => {
           2. UPCOMING VISIT SPOTLIGHT (If active)
       ───────────────────────────────────────────────────────────── */}
       {upcomingApt && (
-        <div className="bg-white/90 rounded-3xl border border-[#B99470] p-6 sm:p-8 shadow-sm space-y-4">
+        <div className="bg-white rounded-3xl border border-[#B99470]/80 p-6 sm:p-8 shadow-sm space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#E8D8C7]/60">
             <div className="flex items-center gap-3">
               <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -150,7 +150,7 @@ export const CustomerDashboardPage: React.FC = () => {
       ───────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recommended Rituals */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7] p-6 shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl border border-[#E8D8C7] p-6 shadow-sm space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-[#E8D8C7]/60">
             <div>
               <h2 className="font-serif text-xl text-[#41332B]">Recommended for You</h2>
@@ -188,7 +188,7 @@ export const CustomerDashboardPage: React.FC = () => {
         </div>
 
         {/* Recent Booking History with 1-click Rebook */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7] p-6 shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl border border-[#E8D8C7] p-6 shadow-sm space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-[#E8D8C7]/60">
             <div>
               <h2 className="font-serif text-xl text-[#41332B]">Recent Visits</h2>
@@ -235,7 +235,7 @@ export const CustomerDashboardPage: React.FC = () => {
       ───────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
         {/* Favorite Stylists / Salons */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7] p-6 shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl border border-[#E8D8C7] p-6 shadow-sm space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-[#E8D8C7]/60">
             <h2 className="font-serif text-xl text-[#41332B]">Saved Artisans &amp; Ateliers</h2>
             <Link to="/customer/favorites" className="text-xs text-[#806B5C] hover:text-[#41332B] font-medium">
@@ -268,7 +268,7 @@ export const CustomerDashboardPage: React.FC = () => {
         </div>
 
         {/* Active Vouchers & Notifications */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7] p-6 shadow-xs space-y-4">
+        <div className="bg-white rounded-2xl border border-[#E8D8C7] p-6 shadow-sm space-y-4">
           <div className="flex justify-between items-center pb-3 border-b border-[#E8D8C7]/60">
             <h2 className="font-serif text-xl text-[#41332B]">Sanctuary Notifications</h2>
             <Link to="/customer/notifications" className="text-xs text-[#806B5C] hover:text-[#41332B] font-medium">

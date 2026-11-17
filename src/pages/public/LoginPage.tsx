@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { UiThemeProvider } from '../../components/ui/ThemeContext';
 import { Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
@@ -60,7 +61,8 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF6F1] flex flex-col justify-between p-6 sm:p-10 font-['Plus_Jakarta_Sans'] text-[#241812]">
+    <UiThemeProvider theme="light">
+      <div className="min-h-screen bg-[#FAF6F1] flex flex-col justify-between p-6 sm:p-10 font-['Plus_Jakarta_Sans'] text-[#241812]">
       {/* Top Header */}
       <div className="max-w-md w-full mx-auto flex items-center justify-between pb-6">
         <Link to="/" className="inline-block group text-left">
@@ -213,5 +215,6 @@ export const LoginPage: React.FC = () => {
         <span>End-to-end encrypted multi-tenant authentication engine.</span>
       </div>
     </div>
+    </UiThemeProvider>
   );
 };

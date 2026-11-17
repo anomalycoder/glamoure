@@ -20,6 +20,8 @@ import {
   Coffee
 } from 'lucide-react';
 
+import { UiThemeProvider } from '../ui/ThemeContext';
+
 export const MemberLayout: React.FC = () => {
   const { user, role, switchRole, logout } = useAuth();
   const { unreadCount } = useNotifications();
@@ -39,7 +41,8 @@ export const MemberLayout: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#18110e] text-[#f5eee6] flex flex-col font-['Plus_Jakarta_Sans']">
+    <UiThemeProvider theme="dark">
+      <div className="min-h-screen bg-[#18110e] text-[#f5eee6] flex flex-col font-['Plus_Jakarta_Sans']">
       {/* ═══════════════════════════════════════════════════════════════
           ARTISAN WORKSTATION TOP BAR
       ═══════════════════════════════════════════════════════════════ */}
@@ -232,5 +235,6 @@ export const MemberLayout: React.FC = () => {
         <Outlet />
       </main>
     </div>
+    </UiThemeProvider>
   );
 };

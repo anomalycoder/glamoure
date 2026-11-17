@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
 import { CustomerAiDrawer } from '../customer/CustomerAiDrawer';
 import { NotificationToastContainer } from '../ui/NotificationToast';
+import { UiThemeProvider } from '../ui/ThemeContext';
 import { 
   Sparkles, 
   Bell, 
@@ -48,7 +49,8 @@ export const CustomerLayout: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5EFE7] text-[#41332B] flex flex-col font-sans selection:bg-[#B99470]/30 selection:text-[#41332B]">
+    <UiThemeProvider theme="light">
+      <div className="min-h-screen bg-[#F5EFE7] text-[#41332B] flex flex-col font-sans selection:bg-[#B99470]/30 selection:text-[#41332B]">
       {/* ─────────────────────────────────────────────────────────────
           1. TOP PRIVILEGE ANNOUNCEMENT BANNER
       ───────────────────────────────────────────────────────────── */}
@@ -292,5 +294,6 @@ export const CustomerLayout: React.FC = () => {
       <CustomerAiDrawer isOpen={aiDrawerOpen} onClose={() => setAiDrawerOpen(false)} />
       <NotificationToastContainer />
     </div>
+    </UiThemeProvider>
   );
 };

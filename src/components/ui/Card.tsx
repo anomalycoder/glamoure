@@ -1,17 +1,31 @@
 import React from 'react';
+import { useUiTheme, type UiTheme } from './ThemeContext';
 
 interface CardProps {
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  theme?: UiTheme;
 }
 
-export const Card: React.FC<CardProps> = ({ children, className = '', onClick }) => {
+export const Card: React.FC<CardProps> = ({ 
+  children, 
+  className = '', 
+  onClick,
+  theme
+}) => {
+  const contextTheme = useUiTheme();
+  const activeTheme = theme || contextTheme;
+
+  const themeClasses = activeTheme === 'dark'
+    ? 'bg-[#201511] border-[#38271e] text-[#f5eee6] hover:border-[#b99470]/30 shadow-[0_4px_24px_rgba(0,0,0,0.25)]'
+    : 'bg-white border-[#41332B]/10 text-[#41332B] hover:border-[#41332B]/25 shadow-[0_4px_20px_rgba(65,51,43,0.05)]';
+
   return (
     <div
       onClick={onClick}
-      className={`rounded-2xl bg-white/70 border border-[#41332B]/10 shadow-[0_4px_20px_rgba(65,51,43,0.04)] backdrop-blur-sm p-5 transition-all ${
-        onClick ? 'cursor-pointer hover:border-[#41332B]/25 hover:shadow-[0_8px_25px_rgba(65,51,43,0.08)]' : ''
+      className={`rounded-2xl border p-5 transition-all duration-200 ${themeClasses} ${
+        onClick ? 'cursor-pointer active:scale-[0.995]' : ''
       } ${className}`}
     >
       {children}
@@ -26,6 +40,7 @@ interface MetricCardProps {
   isPositive?: boolean;
   icon?: React.ReactNode;
   subtitle?: string;
+  theme?: UiTheme;
 }
 
 export const MetricCard: React.FC<MetricCardProps> = ({
@@ -35,36 +50,58 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   isPositive = true,
   icon,
   subtitle,
+  theme,
 }) => {
+  const contextTheme = useUiTheme();
+  const activeTheme = theme || contextTheme;
+
   const changeValue = typeof change === 'object' ? change.value : change;
   const isPos = typeof change === 'object' ? (change.isPositive ?? isPositive) : isPositive;
 
+  const isDark = activeTheme === 'dark';
+
   return (
-    <Card className="flex flex-col justify-between">
-      <div className="flex items-center justify-between text-[#806B5C] mb-3">
-        <span className="font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.14em]">
+    <Card theme={activeTheme} className="flex flex-col justify-between">
+      <div className="flex items-center justify-between mb-3">
+        <span className={`font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.14em] ${
+          isDark ? 'text-[#a89582]' : 'text-[#806B5C]'
+        }`}>
           {title}
         </span>
-        {icon && <div className="p-2 rounded-xl bg-[#E8D8C7]/50 text-[#41332B]">{icon}</div>}
+        {icon && (
+          <div className={`p-2 rounded-xl border ${
+            isDark ? 'bg-white/5 border-white/10 text-[#efc9a5]' : 'bg-[#E8D8C7]/40 border-[#41332B]/10 text-[#41332B]'
+          }`}>
+            {icon}
+          </div>
+        )}
       </div>
 
       <div>
-        <div className="font-['Montserrat'] text-2xl sm:text-3xl font-light text-[#41332B] tracking-tight">
+        <div className={`font-['Montserrat'] text-2xl sm:text-3xl font-light tracking-tight ${
+          isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'
+        }`}>
           {value}
         </div>
 
         {(changeValue || subtitle) && (
-          <div className="flex items-center gap-2 mt-1.5 text-xs font-['Plus_Jakarta_Sans']">
+          <div className="flex items-center gap-2 mt-2 text-xs font-['Plus_Jakarta_Sans']">
             {changeValue && (
               <span
-                className={`font-semibold ${
-                  isPos ? 'text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded' : 'text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded'
+                className={`font-medium px-2 py-0.5 rounded text-[11px] ${
+                  isPos 
+                    ? (isDark ? 'text-emerald-300 bg-emerald-950/50 border border-emerald-800/40' : 'text-emerald-800 bg-emerald-50 border border-emerald-200')
+                    : (isDark ? 'text-rose-300 bg-rose-950/50 border border-rose-800/40' : 'text-rose-800 bg-rose-50 border border-rose-200')
                 }`}
               >
                 {changeValue}
               </span>
             )}
-            {subtitle && <span className="text-[#806B5C]">{subtitle}</span>}
+            {subtitle && (
+              <span className={`text-[11px] ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`}>
+                {subtitle}
+              </span>
+            )}
           </div>
         )}
       </div>

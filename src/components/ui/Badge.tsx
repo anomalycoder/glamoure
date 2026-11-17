@@ -1,94 +1,150 @@
 import React from 'react';
 import type { AppointmentStatus, PaymentStatus } from '../../types/appointment';
+import { useUiTheme, type UiTheme } from './ThemeContext';
 
 interface BadgeProps {
   children?: React.ReactNode;
   label?: string;
   status?: AppointmentStatus | PaymentStatus | 'active' | 'invited' | 'suspended' | string;
   variant?: AppointmentStatus | PaymentStatus | 'neutral' | 'success' | 'warning' | 'error' | 'info' | 'active' | 'invited' | 'suspended' | string;
+  theme?: UiTheme;
   className?: string;
 }
 
-export const Badge: React.FC<BadgeProps> = ({ children, label: propLabel, status, variant, className = '' }) => {
-  let styleClasses = 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
-  let label = propLabel || children;
+export const Badge: React.FC<BadgeProps> = ({ 
+  children, 
+  label: propLabel, 
+  status, 
+  variant, 
+  theme,
+  className = '' 
+}) => {
+  const contextTheme = useUiTheme();
+  const activeTheme = theme || contextTheme;
+  const isDark = activeTheme === 'dark';
 
+  let label = propLabel || children;
   const key = status || variant;
+
+  let styleClasses = isDark
+    ? 'bg-white/10 text-[#f5eee6] border-white/15'
+    : 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
 
   if (key) {
     switch (key) {
       case 'pending':
-        styleClasses = 'bg-amber-500/10 text-amber-700 border-amber-500/30';
+        styleClasses = isDark
+          ? 'bg-amber-950/50 text-amber-300 border-amber-800/40'
+          : 'bg-amber-50 text-amber-800 border-amber-200';
         label = label || 'Pending';
         break;
       case 'confirmed':
-        styleClasses = 'bg-blue-500/10 text-blue-700 border-blue-500/30';
+        styleClasses = isDark
+          ? 'bg-sky-950/50 text-sky-300 border-sky-800/40'
+          : 'bg-sky-50 text-sky-800 border-sky-200';
         label = label || 'Confirmed';
         break;
       case 'checked_in':
-        styleClasses = 'bg-indigo-500/10 text-indigo-700 border-indigo-500/30';
+        styleClasses = isDark
+          ? 'bg-indigo-950/50 text-indigo-300 border-indigo-800/40'
+          : 'bg-indigo-50 text-indigo-800 border-indigo-200';
         label = label || 'Checked In';
         break;
       case 'in_progress':
-        styleClasses = 'bg-emerald-500/15 text-emerald-800 border-emerald-500/40 animate-pulse';
+        styleClasses = isDark
+          ? 'bg-emerald-950/60 text-emerald-300 border-emerald-700/50'
+          : 'bg-emerald-50 text-emerald-800 border-emerald-200';
         label = label || 'In Progress';
         break;
       case 'completed':
-        styleClasses = 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30';
+        styleClasses = isDark
+          ? 'bg-teal-950/50 text-teal-300 border-teal-800/40'
+          : 'bg-teal-50 text-teal-800 border-teal-200';
         label = label || 'Completed';
         break;
       case 'cancelled':
-        styleClasses = 'bg-rose-500/10 text-rose-700 border-rose-500/30';
+        styleClasses = isDark
+          ? 'bg-rose-950/50 text-rose-300 border-rose-800/40'
+          : 'bg-rose-50 text-rose-800 border-rose-200';
         label = label || 'Cancelled';
         break;
       case 'no_show':
-        styleClasses = 'bg-stone-500/20 text-stone-700 border-stone-500/30';
+        styleClasses = isDark
+          ? 'bg-stone-800/60 text-stone-300 border-stone-700/40'
+          : 'bg-stone-100 text-stone-700 border-stone-300';
         label = label || 'No Show';
         break;
       case 'paid':
-        styleClasses = 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30';
+        styleClasses = isDark
+          ? 'bg-emerald-950/50 text-emerald-300 border-emerald-800/40'
+          : 'bg-emerald-50 text-emerald-800 border-emerald-200';
         label = label || 'Paid';
         break;
       case 'deposit_paid':
-        styleClasses = 'bg-teal-500/10 text-teal-700 border-teal-500/30';
+        styleClasses = isDark
+          ? 'bg-teal-950/50 text-teal-300 border-teal-800/40'
+          : 'bg-teal-50 text-teal-800 border-teal-200';
         label = label || 'Deposit Paid';
         break;
       case 'unpaid':
-        styleClasses = 'bg-amber-500/10 text-amber-700 border-amber-500/30';
+        styleClasses = isDark
+          ? 'bg-amber-950/50 text-amber-300 border-amber-800/40'
+          : 'bg-amber-50 text-amber-800 border-amber-200';
         label = label || 'Unpaid';
         break;
       case 'active':
-        styleClasses = 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30';
+        styleClasses = isDark
+          ? 'bg-emerald-950/50 text-emerald-300 border-emerald-800/40'
+          : 'bg-emerald-50 text-emerald-800 border-emerald-200';
         label = label || 'Active';
         break;
+      case 'invited':
+        styleClasses = isDark
+          ? 'bg-sky-950/50 text-sky-300 border-sky-800/40'
+          : 'bg-sky-50 text-sky-800 border-sky-200';
+        label = label || 'Invited';
+        break;
+      case 'suspended':
+        styleClasses = isDark
+          ? 'bg-rose-950/50 text-rose-300 border-rose-800/40'
+          : 'bg-rose-50 text-rose-800 border-rose-200';
+        label = label || 'Suspended';
+        break;
       case 'success':
-        styleClasses = 'bg-emerald-500/10 text-emerald-700 border-emerald-500/30';
-        label = label || 'Success';
+        styleClasses = isDark
+          ? 'bg-emerald-950/50 text-emerald-300 border-emerald-800/40'
+          : 'bg-emerald-50 text-emerald-800 border-emerald-200';
         break;
       case 'warning':
-        styleClasses = 'bg-amber-500/10 text-amber-700 border-amber-500/30';
-        label = label || 'Warning';
+        styleClasses = isDark
+          ? 'bg-amber-950/50 text-amber-300 border-amber-800/40'
+          : 'bg-amber-50 text-amber-800 border-amber-200';
         break;
       case 'error':
-        styleClasses = 'bg-rose-500/10 text-rose-700 border-rose-500/30';
-        label = label || 'Error';
+        styleClasses = isDark
+          ? 'bg-rose-950/50 text-rose-300 border-rose-800/40'
+          : 'bg-rose-50 text-rose-800 border-rose-200';
         break;
       case 'info':
-        styleClasses = 'bg-blue-500/10 text-blue-700 border-blue-500/30';
-        label = label || 'Info';
+        styleClasses = isDark
+          ? 'bg-sky-950/50 text-sky-300 border-sky-800/40'
+          : 'bg-sky-50 text-sky-800 border-sky-200';
         break;
+      case 'neutral':
       default:
-        styleClasses = 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
-        label = label || key;
+        styleClasses = isDark
+          ? 'bg-white/10 text-[#f5eee6] border-white/15'
+          : 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
         break;
     }
   }
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-['Plus_Jakarta_Sans'] font-medium uppercase tracking-wider border ${styleClasses} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-['Montserrat'] font-medium uppercase tracking-wider border select-none ${styleClasses} ${className}`}
     >
-      {label}
+      <span className="w-1.5 h-1.5 rounded-full bg-current opacity-80" />
+      <span>{label}</span>
     </span>
   );
 };

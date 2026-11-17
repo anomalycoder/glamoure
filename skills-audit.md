@@ -1,37 +1,41 @@
 # GLAMOURÉ ENTERPRISE SKILLS AUDIT & CAPABILITY MATRIX
 
-*Last Updated: 2026-11-17 | Status: Verified & Operational across 9 Engineering & Design Categories*
+*Last Updated: 2026-11-17 | Status: Verified & Operational across 18 Engineering, Design & Architecture Skills*
 
 ---
 
-## 1. ENGINEERING SKILLS INVENTORY (9 CRITICAL CATEGORIES)
+## 1. DESIGN & UI/UX SKILLS (PHASE 1 AUDIT & INSTALLATION)
 
-| # | Category | Skill Name | Path | Operational Status | Verification Method |
-|---|---|---|---|---|---|
-| 1 | **Backend** | `backend-architecture-engineering` | `.agent/skills/backend-architecture-engineering/` | ✅ Active & Verified | Tested in `e2e_workflows.test.ts` |
-| 2 | **Database** | `database-engineering-and-migrations` | `.agent/skills/database-engineering-and-migrations/` | ✅ Active & Verified | Verified in `schema.sql` & `db.ts` |
-| 3 | **Security** | `security-and-owasp-hardening` | `.agent/skills/security-and-owasp-hardening/` | ✅ Active & Verified | Verified in `security.test.ts` & `auth.test.ts` |
-| 4 | **Testing** | `testing-and-qa-engineering` | `.agent/skills/testing-and-qa-engineering/` | ✅ Active & Verified | 10 Vitest suites, 101 tests |
-| 5 | **DevOps** | `devops-and-deployment-readiness` | `.agent/skills/devops-and-deployment-readiness/` | ✅ Active & Verified | GitHub Actions CI/CD & `.env.example` |
-| 6 | **Performance** | `performance-and-query-optimization` | `.agent/skills/performance-and-query-optimization/` | ✅ Active & Verified | Verified in `performance.test.ts` |
-| 7 | **Frontend** | `design-systems-tokens` | `.agent/skills/design-systems-tokens/` | ✅ Active & Verified | UI components & tokens check |
-| 8 | **AI / ML** | `ai-and-ml-engineering` | `.agent/skills/ai-and-ml-engineering/` | ✅ Active & Verified | Verified in `intelligence.test.ts` |
-| 9 | **Reliability** | `reliability-engineering-and-incident-management` | `.agent/skills/reliability-engineering-and-incident-management/` | ✅ Active & Verified | Verified in `health.test.ts` |
+| # | Skill Name | Path | Primary Purpose | Source & License |
+|---|---|---|---|---|
+| 1 | **`frontend-design`** | `.agent/skills/frontend-design/` | Anti-AI-slop design principles, typography hierarchy, restrained luxury palette | Anthropic / Open Agent Skills (MIT) |
+| 2 | **`ui-design`** | `.agent/skills/ui-design/` | Component contracts, variant architecture, visual audit & ship verdict | mblode / agent-skills (MIT) |
+| 3 | **`ui-ux-pro-max`** | `.agent/skills/ui-ux-pro-max/` | Nielsen's 10 heuristics, Laws of UX, cognitive load reduction, UX writing | UI/UX Pro Max Architecture |
+| 4 | **`accessibility-and-wcag`** | `.agent/skills/accessibility-and-wcag/` | WCAG 2.2 AA contrast, keyboard focus, touch targets, screen-reader semantics | W3C / WCAG 2.2 Guidelines |
+| 5 | **`dashboard-and-data-design`** | `.agent/skills/dashboard-and-data-design/` | Enterprise SaaS dashboards, scannable data tables, metric hierarchy, anti-card-bloat | SaaS Data Design Standards |
+| 6 | **`design-systems-tokens`** | `.agent/skills/design-systems-tokens/` | Brand tokens (`#41332B`, `#E8D8C7`), typography scales, spacing tokens | Glamouré Design System Core |
+| 7 | **`editorial-web-design`** | `.agent/skills/editorial-web-design/` | High-fashion editorial layouts, asymmetric compositions, warm matte surfaces | Luxury Editorial Standard |
+| 8 | **`motion-design-interactions`** | `.agent/skills/motion-design-interactions/` | Choreographed transitions, micro-interactions, reduced-motion compliance | Motion Design Principles |
+| 9 | **`ux-conversion-design`** | `.agent/skills/ux-conversion-design/` | High-conversion booking funnels, touch optimization, frictionless checkout | Conversion Rate Optimization |
+| 10 | **`visual-storytelling-gallery`** | `.agent/skills/visual-storytelling-gallery/` | High-fashion masonry arrangements, before-and-after sliders, transformation pacing | Visual Storytelling Standard |
 
 ---
 
-## 2. LUXURY EDITORIAL & FRONTEND DESIGN SKILLS
+## 2. BACKEND & RELIABILITY ENGINEERING SKILLS
 
 | # | Skill Name | Path | Focus Area | Verification |
 |---|---|---|---|---|
-| 10 | `editorial-web-design` | `.agent/skills/editorial-web-design/` | Asymmetric layouts, flourish typography, warm tones | Landing Page & Portals |
-| 11 | `motion-design-interactions` | `.agent/skills/motion-design-interactions/` | Choreographed transitions, micro-interactions | Navigation & Modals |
-| 12 | `ux-conversion-design` | `.agent/skills/ux-conversion-design/` | Frictionless booking funnel, WCAG AAA accessibility | Wizard & Portals |
-| 13 | `visual-storytelling-gallery` | `.agent/skills/visual-storytelling-gallery/` | High-fashion masonry galleries, before-after transformation | Moments & Portfolio |
+| 11 | **`backend-architecture-engineering`** | `.agent/skills/backend-architecture-engineering/` | REST API architecture, multi-tenant isolation, idempotency | Tested in `e2e_workflows.test.ts` |
+| 12 | **`database-engineering-and-migrations`** | `.agent/skills/database-engineering-and-migrations/` | PostgreSQL schema, Supabase RLS, composite indexing | Verified in `schema.sql` & `db.ts` |
+| 13 | **`security-and-owasp-hardening`** | `.agent/skills/security-and-owasp-hardening/` | OWASP Top 10 mitigation, XSS sanitization, RBAC, rate-limiting | Verified in `security.test.ts` |
+| 14 | **`testing-and-qa-engineering`** | `.agent/skills/testing-and-qa-engineering/` | Vitest autonomous test matrix, regression suites, TDD | 10 Vitest suites, 101 tests |
+| 15 | **`devops-and-deployment-readiness`** | `.agent/skills/devops-and-deployment-readiness/` | GitHub Actions CI/CD, CodeQL, Dependabot, `.env.example` | `.github/workflows/` |
+| 16 | **`performance-and-query-optimization`** | `.agent/skills/performance-and-query-optimization/` | Concurrency locking, query optimization, bundle reduction | Verified in `performance.test.ts` |
+| 17 | **`ai-and-ml-engineering`** | `.agent/skills/ai-and-ml-engineering/` | 3-tier smart scheduling, demand forecasting, aspect NLP | Verified in `intelligence.test.ts` |
+| 18 | **`reliability-engineering-and-incident-management`** | `.agent/skills/reliability-engineering-and-incident-management/` | Structured JSON logging, health checks, circuit breakers | Verified in `health.test.ts` |
 
 ---
 
-## 3. SUMMARY OF INSTALLED SKILL FILES
-- Total verified skills: **13 skills** across 9 backend/system engineering categories and 4 luxury frontend design categories.
+## 3. SUMMARY
+- Total verified skills: **18 skills** covering all requested frontend design, UX, accessibility, and backend engineering domains.
 - Storage root: `c:/Users/md/OneDrive/Documents/Desktop/glamoure/.agent/skills/`.
-- All skills contain valid YAML frontmatter, execution checklists, and domain rules.

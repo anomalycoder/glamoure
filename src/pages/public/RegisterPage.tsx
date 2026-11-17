@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNotification } from '../../context/NotificationContext';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
+import { UiThemeProvider } from '../../components/ui/ThemeContext';
 import type { UserRole } from '../../types/auth';
 import { ArrowRight, Sparkles, Building2, User } from 'lucide-react';
 
@@ -51,7 +52,8 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF6F1] flex flex-col justify-between p-6 sm:p-10 font-['Plus_Jakarta_Sans'] text-[#241812]">
+    <UiThemeProvider theme="light">
+      <div className="min-h-screen bg-[#FAF6F1] flex flex-col justify-between p-6 sm:p-10 font-['Plus_Jakarta_Sans'] text-[#241812]">
       {/* Top Header */}
       <div className="max-w-lg w-full mx-auto flex items-center justify-between pb-6">
         <Link to="/" className="inline-block group text-left">
@@ -198,5 +200,6 @@ export const RegisterPage: React.FC = () => {
         © 2026 Glamouré Salon Management &amp; Customer Booking Platform.
       </div>
     </div>
+    </UiThemeProvider>
   );
 };
