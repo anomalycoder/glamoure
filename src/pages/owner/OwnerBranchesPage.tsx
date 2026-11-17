@@ -5,7 +5,7 @@ import { db } from '../../database/db';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
-import { Building2, Plus, MapPin, Phone, Mail } from 'lucide-react';
+import { Plus, MapPin, Phone } from 'lucide-react';
 
 export const OwnerBranchesPage: React.FC = () => {
   const { salonId } = useAuth();
@@ -50,10 +50,10 @@ export const OwnerBranchesPage: React.FC = () => {
     <div className="space-y-6 text-left">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="font-['Montserrat'] text-2xl font-light text-[#41332B]">
+          <h2 className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6]">
             Multi-Branch Network
           </h2>
-          <p className="text-xs text-[#806B5C] mt-1">
+          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-1">
             Manage multiple physical studio locations under your salon umbrella.
           </p>
         </div>
@@ -64,8 +64,8 @@ export const OwnerBranchesPage: React.FC = () => {
       </div>
 
       {showAdd && (
-        <form onSubmit={handleCreateBranch} className="p-6 rounded-3xl bg-white border border-[#41332B]/15 shadow-sm space-y-4">
-          <h3 className="font-['Montserrat'] text-xs font-semibold uppercase tracking-wider text-[#41332B]">
+        <form onSubmit={handleCreateBranch} className="p-6 rounded-2xl bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#38271e] shadow-sm space-y-4">
+          <h3 className="font-['Montserrat'] text-xs font-semibold uppercase tracking-wider text-[#41332B] dark:text-[#efc9a5]">
             Register New Branch Location
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -85,27 +85,27 @@ export const OwnerBranchesPage: React.FC = () => {
         {branches.map(b => (
           <Card key={b.id} className="p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-['Montserrat'] text-[10.5px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#E8D8C7]/50 text-[#41332B] font-semibold">
+              <span className="font-['Montserrat'] text-[10.5px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8D8C7]/50 dark:bg-[#34241c] text-[#41332B] dark:text-[#efc9a5] font-semibold border border-[#E8D8C7] dark:border-[#4a3429]">
                 Code: {b.code}
               </span>
               {b.isMainBranch && (
-                <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#41332B] text-white font-medium">
+                <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#41332B] text-[#F5EFE7] font-medium shadow-xs">
                   Flagship
                 </span>
               )}
             </div>
 
-            <h3 className="font-['Montserrat'] text-lg font-medium text-[#41332B] mb-2">
+            <h3 className="font-['Montserrat'] text-lg font-medium text-[#41332B] dark:text-[#f5eee6] mb-2">
               {b.name}
             </h3>
 
-            <div className="space-y-1.5 text-xs text-[#806B5C]">
+            <div className="space-y-1.5 text-xs text-[#806B5C] dark:text-[#a89582]">
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-[#41332B]" />
+                <MapPin className="w-4 h-4 text-[#B99470]" />
                 <span>{b.address}, {b.city}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#41332B]" />
+                <Phone className="w-4 h-4 text-[#B99470]" />
                 <span>{b.phone}</span>
               </div>
             </div>

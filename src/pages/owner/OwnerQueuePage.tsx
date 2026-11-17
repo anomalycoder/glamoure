@@ -122,12 +122,12 @@ export const OwnerQueuePage: React.FC = () => {
   return (
     <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7] dark:border-[#3d2a21]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
             Live Walk-in & Bay Queue
           </h1>
-          <p className="text-xs text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
             Workload-calculated wait times, dynamic queue reordering, and turn alerts.
           </p>
         </div>
@@ -136,7 +136,7 @@ export const OwnerQueuePage: React.FC = () => {
           <select
             value={selectedBranchId}
             onChange={(e) => setSelectedBranchId(e.target.value)}
-            className="px-3 py-2 bg-[#201511] border border-[#3a2820] rounded-xl text-xs text-[#efc9a5] focus:outline-none"
+            className="px-3 py-2 bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-xl text-xs text-[#41332B] dark:text-[#efc9a5] focus:outline-none"
           >
             {branches.map(b => (
               <option key={b.id} value={b.id}>{b.name}</option>
@@ -148,7 +148,7 @@ export const OwnerQueuePage: React.FC = () => {
               resetForm();
               setShowAddModal(true);
             }}
-            className="flex items-center gap-2 bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold text-xs px-4 py-2 rounded-xl cursor-pointer"
+            className="flex items-center gap-2 bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-4 py-2 rounded-xl cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Enroll Walk-in</span>
@@ -158,72 +158,72 @@ export const OwnerQueuePage: React.FC = () => {
 
       {/* KPI Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Active in Queue</p>
-          <p className="font-['Montserrat'] text-2xl text-[#efc9a5] mt-1 font-light">{activeQueue.length}</p>
-          <p className="text-[10px] text-emerald-400 mt-1">Real-time floor count</p>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Active in Queue</p>
+          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#efc9a5] mt-1 font-light">{activeQueue.length}</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Real-time floor count</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">In Service Now</p>
-          <p className="font-['Montserrat'] text-2xl text-emerald-400 mt-1 font-light">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">In Service Now</p>
+          <p className="font-['Montserrat'] text-2xl text-emerald-600 dark:text-emerald-400 mt-1 font-light">
             {activeQueue.filter(q => q.status === 'in_service').length}
           </p>
-          <p className="text-[10px] text-[#a89582] mt-1">Occupying styling bays</p>
+          <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] mt-1">Occupying styling bays</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Total Wait Workload</p>
-          <p className="font-['Montserrat'] text-2xl text-[#f5eee6] mt-1 font-light">
-            {totalWaitWorkload} <span className="text-xs text-[#a89582]">mins</span>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Total Wait Workload</p>
+          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#f5eee6] mt-1 font-light">
+            {totalWaitWorkload} <span className="text-xs text-[#806B5C] dark:text-[#a89582]">mins</span>
           </p>
-          <p className="text-[10px] text-[#efc9a5] mt-1">Calculated service duration</p>
+          <p className="text-[10px] text-[#b99470] dark:text-[#efc9a5] mt-1">Calculated service duration</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Completed Today</p>
-          <p className="font-['Montserrat'] text-2xl text-[#f5eee6] mt-1 font-light">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Completed Today</p>
+          <p className="font-['Montserrat'] text-2xl text-[#41332B] dark:text-[#f5eee6] mt-1 font-light">
             {completedQueue.filter(q => q.status === 'completed').length}
           </p>
-          <p className="text-[10px] text-emerald-400 mt-1">Finished rituals</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Finished rituals</p>
         </Card>
       </div>
 
       {/* Live Queue Cards Stream */}
       <div className="space-y-4">
-        <h2 className="font-['Montserrat'] text-base font-light text-[#f5eee6]">
+        <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
           Current Lounge Standby ({activeQueue.length})
         </h2>
 
         {activeQueue.length === 0 ? (
-          <Card className="p-10 text-center bg-[#201511] border-[#3a2820]">
-            <Clock className="w-8 h-8 text-[#a89582] mx-auto mb-2 opacity-40" />
-            <p className="text-sm font-medium text-[#f5eee6]">Lounge is Peaceful</p>
-            <p className="text-xs text-[#a89582] mt-1">No walk-in guests presently waiting in standby queue.</p>
+          <Card className="p-10 text-center bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] shadow-xs">
+            <Clock className="w-8 h-8 text-[#806B5C] dark:text-[#a89582] mx-auto mb-2 opacity-40" />
+            <p className="text-sm font-medium text-[#41332B] dark:text-[#f5eee6]">Lounge is Peaceful</p>
+            <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-1">No walk-in guests presently waiting in standby queue.</p>
           </Card>
         ) : (
           <div className="space-y-3">
             {activeQueue.map((q, idx) => (
               <Card
                 key={q.id}
-                className={`p-4 bg-[#201511] border transition-all ${
+                className={`p-4 bg-white dark:bg-[#201511] border transition-all shadow-xs ${
                   q.status === 'in_service' 
-                    ? 'border-emerald-500/50 bg-emerald-950/10' 
+                    ? 'border-emerald-500/50 bg-emerald-50/20 dark:bg-emerald-950/10' 
                     : q.status === 'next_in_line'
-                    ? 'border-[#b99470] bg-[#41332b]/20'
-                    : 'border-[#3a2820]'
+                    ? 'border-[#b99470] bg-[#FAF6F1] dark:bg-[#41332b]/20'
+                    : 'border-[#E8D8C7] dark:border-[#3a2820]'
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   {/* Position Badge & Guest Info */}
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-[#41332b] text-[#efc9a5] font-mono font-bold text-sm flex items-center justify-center shrink-0 border border-[#b99470]/30">
+                    <div className="w-9 h-9 rounded-xl bg-[#FAF6F1] dark:bg-[#41332b] text-[#41332B] dark:text-[#efc9a5] font-mono font-bold text-sm flex items-center justify-center shrink-0 border border-[#b99470]/30">
                       #{q.position}
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-[#f5eee6]">{q.customerName}</h3>
+                        <h3 className="text-sm font-semibold text-[#41332B] dark:text-[#f5eee6]">{q.customerName}</h3>
                         <Badge
                           variant={
                             q.status === 'in_service' ? 'success' :
@@ -235,12 +235,12 @@ export const OwnerQueuePage: React.FC = () => {
                         </Badge>
                       </div>
 
-                      <p className="text-xs text-[#a89582] mt-0.5">
-                        {q.serviceName} • Stylist: <span className="text-[#efc9a5]">{q.staffName || 'Any Available'}</span>
+                      <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+                        {q.serviceName} • Stylist: <span className="text-[#b99470] dark:text-[#efc9a5]">{q.staffName || 'Any Available'}</span>
                       </p>
 
                       {q.notes && (
-                        <p className="text-[11px] text-[#c2b3a3] italic mt-1">
+                        <p className="text-[11px] text-[#806B5C] dark:text-[#c2b3a3] italic mt-1">
                           Note: "{q.notes}"
                         </p>
                       )}
@@ -250,10 +250,10 @@ export const OwnerQueuePage: React.FC = () => {
                   {/* Wait Time & Live Controls */}
                   <div className="flex items-center gap-3">
                     <div className="text-right">
-                      <span className="text-xs font-mono text-[#efc9a5] font-bold block">
+                      <span className="text-xs font-mono text-[#b99470] dark:text-[#efc9a5] font-bold block">
                         {q.status === 'in_service' ? 'In Bay' : `~${q.estimatedWaitMinutes} mins`}
                       </span>
-                      <span className="text-[10px] text-[#a89582]">
+                      <span className="text-[10px] text-[#806B5C] dark:text-[#a89582]">
                         Checked in: {new Date(q.checkInTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -264,7 +264,7 @@ export const OwnerQueuePage: React.FC = () => {
                         <button
                           onClick={() => handleReorder(q.id, 'up')}
                           disabled={q.position === 1}
-                          className="p-1 rounded bg-white/5 hover:bg-white/10 text-[#c2b3a3] disabled:opacity-30 cursor-pointer"
+                          className="p-1 rounded bg-[#FAF6F1] dark:bg-white/5 hover:bg-[#E8D8C7] dark:hover:bg-white/10 text-[#41332B] dark:text-[#c2b3a3] disabled:opacity-30 cursor-pointer"
                           title="Move Up"
                         >
                           <ArrowUp className="w-3 h-3" />
@@ -272,7 +272,7 @@ export const OwnerQueuePage: React.FC = () => {
                         <button
                           onClick={() => handleReorder(q.id, 'down')}
                           disabled={q.position === activeQueue.length}
-                          className="p-1 rounded bg-white/5 hover:bg-white/10 text-[#c2b3a3] disabled:opacity-30 cursor-pointer"
+                          className="p-1 rounded bg-[#FAF6F1] dark:bg-white/5 hover:bg-[#E8D8C7] dark:hover:bg-white/10 text-[#41332B] dark:text-[#c2b3a3] disabled:opacity-30 cursor-pointer"
                           title="Move Down"
                         >
                           <ArrowDown className="w-3 h-3" />
@@ -284,7 +284,7 @@ export const OwnerQueuePage: React.FC = () => {
                     {q.status === 'next_in_line' && (
                       <button
                         onClick={() => handleNotifyGuest(q)}
-                        className="p-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition-colors"
+                        className="p-2 rounded-xl bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/30 transition-colors cursor-pointer"
                         title="Alert Guest Turn Approaching"
                       >
                         <Bell className="w-4 h-4" />
@@ -296,7 +296,7 @@ export const OwnerQueuePage: React.FC = () => {
                       <Button
                         size="sm"
                         onClick={() => handleUpdateStatus(q.id, 'in_service')}
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 flex items-center gap-1.5 rounded-xl"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3 py-1.5 flex items-center gap-1.5 rounded-xl cursor-pointer"
                       >
                         <Play className="w-3.5 h-3.5" />
                         <span>Seat in Bay</span>
@@ -307,7 +307,7 @@ export const OwnerQueuePage: React.FC = () => {
                       <Button
                         size="sm"
                         onClick={() => handleUpdateStatus(q.id, 'completed')}
-                        className="bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold text-xs px-3 py-1.5 flex items-center gap-1.5 rounded-xl"
+                        className="bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-3 py-1.5 flex items-center gap-1.5 rounded-xl cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Complete Ritual</span>
@@ -319,7 +319,7 @@ export const OwnerQueuePage: React.FC = () => {
                         size="sm"
                         variant="outline"
                         onClick={() => handleUpdateStatus(q.id, 'next_in_line')}
-                        className="text-xs px-2.5 py-1 text-[#efc9a5]"
+                        className="text-xs px-2.5 py-1 text-[#41332B] dark:text-[#efc9a5] border-[#E8D8C7] dark:border-white/10 cursor-pointer"
                       >
                         <span>Call Next</span>
                       </Button>
@@ -327,7 +327,7 @@ export const OwnerQueuePage: React.FC = () => {
 
                     <button
                       onClick={() => handleUpdateStatus(q.id, 'cancelled')}
-                      className="p-2 rounded-xl text-rose-400 hover:text-rose-200 hover:bg-rose-950/40 transition-colors"
+                      className="p-2 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
                       title="Cancel Walk-in"
                     >
                       <XCircle className="w-4 h-4" />
@@ -342,55 +342,55 @@ export const OwnerQueuePage: React.FC = () => {
 
       {/* Enroll Walk-in Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#201511] border border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <h2 className="font-['Montserrat'] text-base text-[#f5eee6]">Enroll Walk-in Guest</h2>
-              <button onClick={() => setShowAddModal(false)} className="text-[#a89582] hover:text-[#f5eee6]">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
+              <h2 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Enroll Walk-in Guest</h2>
+              <button onClick={() => setShowAddModal(false)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
             <form onSubmit={handleRegisterWalkIn} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Full Name</label>
+                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Full Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Maya Deshmukh"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Phone Number</label>
+                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Phone Number</label>
                   <input
                     type="tel"
                     placeholder="+91 98840 54321"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Email (Optional)</label>
+                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Email (Optional)</label>
                   <input
                     type="email"
                     placeholder="guest@example.com"
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Desired Service</label>
+                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Desired Service</label>
                 <select
                   value={selectedServiceId}
                   onChange={(e) => setSelectedServiceId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#2a1a15] border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                 >
                   {services.map(s => (
                     <option key={s.id} value={s.id}>{s.name} ({s.durationMinutes} mins - ₹{s.price})</option>
@@ -399,11 +399,11 @@ export const OwnerQueuePage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Preferred Artisan</label>
+                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Preferred Artisan</label>
                 <select
                   value={selectedStaffId}
                   onChange={(e) => setSelectedStaffId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#2a1a15] border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                 >
                   <option value="">Any Available Specialist</option>
                   {staffList.map(s => (
@@ -413,21 +413,21 @@ export const OwnerQueuePage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Service Notes</label>
+                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Service Notes</label>
                 <input
                   type="text"
                   placeholder="e.g. Wants gentle scalp wash, scalp sensitivity"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
-                <Button type="button" variant="outline" onClick={() => setShowAddModal(false)} className="text-xs px-3 py-1.5">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E8D8C7] dark:border-white/10">
+                <Button type="button" variant="outline" onClick={() => setShowAddModal(false)} className="text-xs px-3 py-1.5 cursor-pointer">
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold text-xs px-4 py-1.5 rounded-xl">
+                <Button type="submit" className="bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
                   Add to Standby Queue
                 </Button>
               </div>

@@ -99,12 +99,12 @@ export const OwnerSettingsPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in max-w-4xl">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E8D8C7]/60">
+    <div className="space-y-8 animate-fade-in max-w-4xl text-left">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
         <div>
-          <span className="text-[11px] font-sans uppercase tracking-[0.25em] text-[#806B5C] font-semibold">Configuration</span>
-          <h1 className="font-serif text-3xl md:text-4xl text-[#41332B] font-light mt-1">Salon Settings & Policies</h1>
-          <p className="font-sans text-sm text-[#806B5C] mt-2">
+          <span className="text-[11px] font-sans uppercase tracking-[0.25em] text-[#806B5C] dark:text-[#a89582] font-semibold">Configuration</span>
+          <h1 className="font-serif text-3xl md:text-4xl text-[#41332B] dark:text-[#f5eee6] font-light mt-1">Salon Settings & Policies</h1>
+          <p className="font-sans text-sm text-[#806B5C] dark:text-[#a89582] mt-2">
             Configure atelier business rules, online reservation policies, and fiscal parameters.
           </p>
         </div>
@@ -112,10 +112,10 @@ export const OwnerSettingsPage: React.FC = () => {
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* General Business Information */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7]/80 p-6 shadow-xs space-y-6">
-          <div className="flex items-center gap-2 pb-4 border-b border-[#E8D8C7]/60">
+        <div className="bg-white dark:bg-[#201511] rounded-2xl border border-[#E8D8C7] dark:border-[#38271e] p-6 shadow-sm space-y-6">
+          <div className="flex items-center gap-2 pb-4 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
             <Building className="w-5 h-5 text-[#B99470]" />
-            <h2 className="font-serif text-xl text-[#41332B]">Atelier Profile</h2>
+            <h2 className="font-serif text-xl text-[#41332B] dark:text-[#f5eee6]">Atelier Profile</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -159,23 +159,23 @@ export const OwnerSettingsPage: React.FC = () => {
           </div>
 
           <div className="space-y-1">
-            <label className="block text-xs font-medium text-[#41332B] uppercase tracking-wider">
+            <label className="block text-xs font-medium text-[#41332B] dark:text-[#f5eee6] uppercase tracking-wider">
               Brand Narrative / Description
             </label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-2.5 bg-white border border-[#E8D8C7] rounded-xl text-sm text-[#41332B] focus:outline-none focus:border-[#B99470] transition-colors resize-none"
+              className="w-full px-4 py-2.5 bg-white dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-[#4a3429] rounded-xl text-sm text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470] transition-colors resize-none"
             />
           </div>
         </div>
 
         {/* Booking Rules & Fiscal Policies */}
-        <div className="bg-white/80 rounded-2xl border border-[#E8D8C7]/80 p-6 shadow-xs space-y-6">
-          <div className="flex items-center gap-2 pb-4 border-b border-[#E8D8C7]/60">
+        <div className="bg-white dark:bg-[#201511] rounded-2xl border border-[#E8D8C7] dark:border-[#38271e] p-6 shadow-sm space-y-6">
+          <div className="flex items-center gap-2 pb-4 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
             <Sliders className="w-5 h-5 text-[#B99470]" />
-            <h2 className="font-serif text-xl text-[#41332B]">Reservation & Deposit Policies</h2>
+            <h2 className="font-serif text-xl text-[#41332B] dark:text-[#f5eee6]">Reservation & Deposit Policies</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -188,8 +188,8 @@ export const OwnerSettingsPage: React.FC = () => {
                   className="mt-1 rounded border-[#E8D8C7] text-[#41332B] focus:ring-[#B99470]"
                 />
                 <div>
-                  <span className="font-serif text-sm font-medium text-[#41332B] block">Enable Online Guest Booking</span>
-                  <span className="text-xs text-[#806B5C]">Allow public visitors to book appointments on the Glamouré portal.</span>
+                  <span className="font-serif text-sm font-medium text-[#41332B] dark:text-[#f5eee6] block">Enable Online Guest Booking</span>
+                  <span className="text-xs text-[#806B5C] dark:text-[#a89582]">Allow public visitors to book appointments on the Glamouré portal.</span>
                 </div>
               </label>
 
@@ -201,8 +201,8 @@ export const OwnerSettingsPage: React.FC = () => {
                   className="mt-1 rounded border-[#E8D8C7] text-[#41332B] focus:ring-[#B99470]"
                 />
                 <div>
-                  <span className="font-serif text-sm font-medium text-[#41332B] block">Require Advance Deposit</span>
-                  <span className="text-xs text-[#806B5C]">Guests pay a percentage deposit upon checkout to secure their slot.</span>
+                  <span className="font-serif text-sm font-medium text-[#41332B] dark:text-[#f5eee6] block">Require Advance Deposit</span>
+                  <span className="text-xs text-[#806B5C] dark:text-[#a89582]">Guests pay a percentage deposit upon checkout to secure their slot.</span>
                 </div>
               </label>
 
@@ -214,8 +214,8 @@ export const OwnerSettingsPage: React.FC = () => {
                   className="mt-1 rounded border-[#E8D8C7] text-[#41332B] focus:ring-[#B99470]"
                 />
                 <div>
-                  <span className="font-serif text-sm font-medium text-[#41332B] block">Instant Confirmation</span>
-                  <span className="text-xs text-[#806B5C]">Automatically transition new bookings to confirmed without manual approval.</span>
+                  <span className="font-serif text-sm font-medium text-[#41332B] dark:text-[#f5eee6] block">Instant Confirmation</span>
+                  <span className="text-xs text-[#806B5C] dark:text-[#a89582]">Automatically transition new bookings to confirmed without manual approval.</span>
                 </div>
               </label>
             </div>
