@@ -1,0 +1,83 @@
+name: Glamouré CI/CD & Autonomous QA Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - 'fix/**'
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  type-check:
+    name: 🛡️ Strict TypeScript Type Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Verify Strict TypeScript Types
+        run: npx tsc --noEmit
+
+  test-suite:
+    name: 🧪 Automated Test & Hard Constraint Engine
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Execute Vitest Autonomous Test Matrix
+        run: npm test -- --run
+        env:
+          NODE_ENV: test
+          CI: true
+
+  production-build:
+    name: 📦 Production Build & Asset Verification
+    needs: [type-check, test-suite]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Compile Production Artifacts
+        run: npm run build
+
+      - name: Verify Build Artifacts Integrity
+        run: |
+          test -f dist/index.html || { echo "Missing dist/index.html"; exit 1; }
+          test -d dist/assets || { echo "Missing dist/assets directory"; exit 1; }
+          echo "Production build verified successfully."
