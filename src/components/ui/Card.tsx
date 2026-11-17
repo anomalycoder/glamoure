@@ -19,7 +19,7 @@ export const Card: React.FC<CardProps> = ({
 
   const themeClasses = activeTheme === 'dark'
     ? 'bg-[#201511] border-[#38271e] text-[#f5eee6] hover:border-[#b99470]/30 shadow-[0_4px_24px_rgba(0,0,0,0.25)]'
-    : 'bg-white border-[#41332B]/10 text-[#41332B] hover:border-[#41332B]/25 shadow-[0_4px_20px_rgba(65,51,43,0.05)]';
+    : 'bg-white border-[#E8DFD5] text-[#2B2118] hover:border-[#B99470]/40 shadow-[0_1px_3px_rgba(0,0,0,0.02),0_4px_16px_rgba(43,33,24,0.03)]';
 
   return (
     <div
@@ -64,13 +64,13 @@ export const MetricCard: React.FC<MetricCardProps> = ({
     <Card theme={activeTheme} className="flex flex-col justify-between">
       <div className="flex items-center justify-between mb-3">
         <span className={`font-['Montserrat'] text-[11px] font-medium uppercase tracking-[0.14em] ${
-          isDark ? 'text-[#a89582]' : 'text-[#806B5C]'
+          isDark ? 'text-[#a89582]' : 'text-[#7A6658]'
         }`}>
           {title}
         </span>
         {icon && (
           <div className={`p-2 rounded-xl border ${
-            isDark ? 'bg-white/5 border-white/10 text-[#efc9a5]' : 'bg-[#E8D8C7]/40 border-[#41332B]/10 text-[#41332B]'
+            isDark ? 'bg-white/5 border-white/10 text-[#efc9a5]' : 'bg-[#FAF6F1] border-[#E8DFD5] text-[#B99470]'
           }`}>
             {icon}
           </div>
@@ -79,7 +79,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
 
       <div>
         <div className={`font-['Montserrat'] text-2xl sm:text-3xl font-light tracking-tight ${
-          isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'
+          isDark ? 'text-[#f5eee6]' : 'text-[#2B2118]'
         }`}>
           {value}
         </div>
@@ -98,7 +98,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
               </span>
             )}
             {subtitle && (
-              <span className={`text-[11px] ${isDark ? 'text-[#a89582]' : 'text-[#806B5C]'}`}>
+              <span className={`text-[11px] ${isDark ? 'text-[#a89582]' : 'text-[#7A6658]'}`}>
                 {subtitle}
               </span>
             )}

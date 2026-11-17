@@ -145,23 +145,23 @@ export const OwnerInventoryPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           HEADER & SUB-NAV
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#38271e]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Inventory & Professional Formulary
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Stock control, safety threshold alerts, treatment-linked consumption audit logs, and professional backbar formulations.
           </p>
         </div>
 
-        <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+        <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs">
           <button
             onClick={() => setActiveTab('catalogue')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'catalogue'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
             }`}
           >
             Product Catalogue ({branchInventory.length})
@@ -170,8 +170,8 @@ export const OwnerInventoryPage: React.FC = () => {
             onClick={() => setActiveTab('movements')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'movements'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
             }`}
           >
             Movement Audit Log ({movements.length})
@@ -181,36 +181,36 @@ export const OwnerInventoryPage: React.FC = () => {
 
       {/* KPI Highlights */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Total Stock Units</p>
-          <p className="font-['Montserrat'] text-xl text-[#41332B] dark:text-[#f5eee6] mt-0.5 font-light">
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <p className="text-[10px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Total Stock Units</p>
+          <p className="font-['Montserrat'] text-xl text-[#2B2118] dark:text-[#f5eee6] mt-0.5 font-light">
             {branchInventory.reduce((a, b) => a + b.quantity, 0)}
           </p>
-          <p className="text-[10px] text-[#806B5C] mt-0.5">Across active salon bay stock</p>
+          <p className="text-[10px] text-[#7A6658] mt-0.5">Across active salon bay stock</p>
         </Card>
 
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Low-Stock Alerts</p>
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <p className="text-[10px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Low-Stock Alerts</p>
           <p className="font-['Montserrat'] text-xl text-rose-600 dark:text-rose-400 mt-0.5 font-light">
             {lowStockItems.length}
           </p>
           <p className="text-[10px] text-rose-500 mt-0.5">Under minimum buffer</p>
         </Card>
 
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Catalogue Value</p>
-          <p className="font-['Montserrat'] text-xl text-[#41332B] dark:text-[#f5eee6] mt-0.5 font-light">
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <p className="text-[10px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Catalogue Value</p>
+          <p className="font-['Montserrat'] text-xl text-[#2B2118] dark:text-[#f5eee6] mt-0.5 font-light">
             ₹{branchInventory.reduce((a, b) => a + (b.quantity * (b.costPrice || b.unitPrice || 800)), 0).toLocaleString('en-IN')}
           </p>
           <p className="text-[10px] text-emerald-600 mt-0.5">At wholesale cost</p>
         </Card>
 
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <p className="text-[10px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Active Categories</p>
-          <p className="font-['Montserrat'] text-xl text-[#41332B] dark:text-[#f5eee6] mt-0.5 font-light">
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <p className="text-[10px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Active Categories</p>
+          <p className="font-['Montserrat'] text-xl text-[#2B2118] dark:text-[#f5eee6] mt-0.5 font-light">
             {categories.length}
           </p>
-          <p className="text-[10px] text-[#806B5C] mt-0.5">Color, Scalp, Skincare, Nails</p>
+          <p className="text-[10px] text-[#7A6658] mt-0.5">Color, Scalp, Skincare, Nails</p>
         </Card>
       </div>
 
@@ -241,24 +241,24 @@ export const OwnerInventoryPage: React.FC = () => {
           TAB 1: PRODUCT CATALOGUE
       ═════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'catalogue' && (
-        <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
+        <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-4">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2 flex-1">
               <div className="relative min-w-[200px] flex-1 max-w-sm">
-                <Search className="w-3.5 h-3.5 text-[#806B5C] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Search className="w-3.5 h-3.5 text-[#7A6658] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search by product name, SKU or supplier..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-lg text-[#41332B] dark:text-[#f5eee6] focus:outline-none"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-lg text-[#2B2118] dark:text-[#f5eee6] focus:outline-none"
                 />
               </div>
 
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-2.5 py-1.5 text-xs bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-lg text-[#41332B] dark:text-[#f5eee6] focus:outline-none"
+                className="px-2.5 py-1.5 text-xs bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-lg text-[#2B2118] dark:text-[#f5eee6] focus:outline-none"
               >
                 <option value="all">All Product Categories</option>
                 {categories.map(cat => (
@@ -271,7 +271,7 @@ export const OwnerInventoryPage: React.FC = () => {
               variant="primary"
               size="sm"
               onClick={() => setShowNewItemModal(true)}
-              className="text-xs bg-[#41332B] hover:bg-[#2b1810] text-white flex items-center gap-1.5"
+              className="text-xs bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e] flex items-center gap-1.5"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               Add Product
@@ -280,7 +280,7 @@ export const OwnerInventoryPage: React.FC = () => {
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#FAF7F2] dark:bg-white/5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
+              <thead className="bg-[#FAF8F5] dark:bg-white/5 border-b border-[#E8DFD5] dark:border-[#38271e] text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
                 <tr>
                   <th className="py-3 px-4">Product Item</th>
                   <th className="py-3 px-4">SKU</th>
@@ -291,23 +291,23 @@ export const OwnerInventoryPage: React.FC = () => {
                   <th className="py-3 px-4 text-right">Stock Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5">
+              <tbody className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
                 {filteredInventory.map(item => {
                   const isLow = item.quantity <= (item.minThreshold || 5);
                   return (
-                    <tr key={item.id} className="hover:bg-[#FAF6F1]/50 dark:hover:bg-white/[0.02] transition-colors">
+                    <tr key={item.id} className="hover:bg-[#FAF8F5]/50 dark:hover:bg-white/[0.02] transition-colors">
                       <td className="py-3.5 px-4">
-                        <p className="font-semibold text-[#41332B] dark:text-[#f5eee6]">{item.name}</p>
-                        <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">Buffer safety: {item.minThreshold || 5} units</p>
+                        <p className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{item.name}</p>
+                        <p className="text-[10px] text-[#7A6658] dark:text-[#a89582]">Buffer safety: {item.minThreshold || 5} units</p>
                       </td>
                       <td className="py-3.5 px-4 font-mono text-[11px] text-[#B99470]">{item.sku}</td>
                       <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[10px] uppercase font-semibold text-[#806B5C] dark:text-[#c2b3a3]">
+                        <span className="px-2 py-0.5 rounded bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[10px] uppercase font-semibold text-[#7A6658] dark:text-[#c2b3a3]">
                           {item.category}
                         </span>
                       </td>
                       <td className="py-3.5 px-4">
-                        <span className={`font-mono text-sm font-bold ${isLow ? 'text-rose-600 dark:text-rose-400' : 'text-[#41332B] dark:text-[#f5eee6]'}`}>
+                        <span className={`font-mono text-sm font-bold ${isLow ? 'text-rose-600 dark:text-rose-400' : 'text-[#2B2118] dark:text-[#f5eee6]'}`}>
                           {item.quantity}
                         </span>
                         {isLow && (
@@ -318,9 +318,9 @@ export const OwnerInventoryPage: React.FC = () => {
                       </td>
                       <td className="py-3.5 px-4 font-mono text-[11px]">
                         <span>₹{item.costPrice || item.unitPrice || 650}</span>
-                        {item.price && <span className="text-[#806B5C]"> / ₹{item.price}</span>}
+                        {item.price && <span className="text-[#7A6658]"> / ₹{item.price}</span>}
                       </td>
-                      <td className="py-3.5 px-4 text-[#806B5C] text-[11px]">{item.supplier || 'Luxury Salon Importers'}</td>
+                      <td className="py-3.5 px-4 text-[#7A6658] text-[11px]">{item.supplier || 'Luxury Salon Importers'}</td>
                       <td className="py-3.5 px-4 text-right space-x-1.5">
                         <button
                           onClick={() => {
@@ -356,13 +356,13 @@ export const OwnerInventoryPage: React.FC = () => {
           TAB 2: STOCK MOVEMENT AUDIT TRAIL
       ═════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'movements' && (
-        <Card className="p-5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] space-y-4">
-          <div className="flex items-center justify-between pb-2 border-b border-[#E8D8C7]/60 dark:border-white/10">
+        <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-4">
+          <div className="flex items-center justify-between pb-2 border-b border-[#E8DFD5]/60 dark:border-white/10">
             <div>
-              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+              <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                 Auditable Stock Movements
               </h2>
-              <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+              <p className="text-xs text-[#7A6658] dark:text-[#a89582]">
                 Permanent history of intake deliveries, ritual consumption, and shrinkage adjustments.
               </p>
             </div>
@@ -372,7 +372,7 @@ export const OwnerInventoryPage: React.FC = () => {
             {movements.map(mov => (
               <div
                 key={mov.id}
-                className="p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/[0.02] border border-[#E8D8C7]/60 dark:border-[#3a2820] flex items-center justify-between text-xs"
+                className="p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/[0.02] border border-[#E8DFD5]/60 dark:border-[#3a2820] flex items-center justify-between text-xs"
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -386,8 +386,8 @@ export const OwnerInventoryPage: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-[#41332B] dark:text-[#f5eee6]">{mov.itemName}</h4>
-                    <p className="text-[11px] text-[#806B5C]">
+                    <h4 className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{mov.itemName}</h4>
+                    <p className="text-[11px] text-[#7A6658]">
                       Reason: <span className="capitalize">{mov.reason.replace('_', ' ')}</span> • {mov.notes || 'Routine inventory action'}
                     </p>
                   </div>
@@ -397,7 +397,7 @@ export const OwnerInventoryPage: React.FC = () => {
                   <span className={`font-mono font-bold text-xs ${mov.quantityDelta > 0 ? 'text-emerald-600' : 'text-amber-600'}`}>
                     {mov.quantityDelta > 0 ? `+${mov.quantityDelta}` : mov.quantityDelta} units
                   </span>
-                  <p className="text-[10px] text-[#806B5C] mt-0.5">
+                  <p className="text-[10px] text-[#7A6658] mt-0.5">
                     {new Date(mov.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                   </p>
                 </div>
@@ -412,34 +412,34 @@ export const OwnerInventoryPage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {stockModalItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-md bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8D8C7] dark:border-[#3d2a21] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
-            <h3 className="font-['Montserrat'] text-base font-medium text-[#41332B] dark:text-[#f5eee6] pb-3 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <div className="w-full max-w-md bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8DFD5] dark:border-[#38271e] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
+            <h3 className="font-['Montserrat'] text-base font-medium text-[#2B2118] dark:text-[#f5eee6] pb-3 border-b border-[#E8DFD5] dark:border-[#38271e]">
               {stockModalItem.type === 'add' ? 'Restock Product Units' : 'Record Service Consumption'}
             </h3>
 
-            <p className="text-xs text-[#806B5C] mt-2">
-              Product: <span className="font-semibold text-[#41332B] dark:text-[#f5eee6]">{stockModalItem.item.name}</span>
+            <p className="text-xs text-[#7A6658] mt-2">
+              Product: <span className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{stockModalItem.item.name}</span>
             </p>
 
             <form onSubmit={handleStockSubmit} className="mt-4 space-y-3 text-xs">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Units to {stockModalItem.type === 'add' ? 'Add' : 'Deduct'}</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Units to {stockModalItem.type === 'add' ? 'Add' : 'Deduct'}</label>
                 <input
                   type="number"
                   min={1}
                   required
                   value={stockDelta}
                   onChange={e => setStockDelta(Number(e.target.value))}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Reason Code</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Reason Code</label>
                 <select
                   value={stockReason}
                   onChange={e => setStockReason(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 >
                   <option value="restock">Direct Supplier Intake / Restock</option>
                   <option value="service_usage">Used in Guest Treatment Ritual</option>
@@ -450,21 +450,21 @@ export const OwnerInventoryPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Audit Notes (Optional)</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Audit Notes (Optional)</label>
                 <textarea
                   rows={2}
                   value={stockNotes}
                   onChange={e => setStockNotes(e.target.value)}
                   placeholder="e.g. Received PO-8821 from importer"
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8DFD5] dark:border-[#38271e]">
                 <Button type="button" variant="outline" size="sm" onClick={() => setStockModalItem(null)}>
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary" size="sm" className="bg-[#41332B] text-white">
+                <Button type="submit" variant="primary" size="sm" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:text-[#18110e]">
                   Confirm Movement
                 </Button>
               </div>
@@ -478,42 +478,42 @@ export const OwnerInventoryPage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {showNewItemModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-lg bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8D8C7] dark:border-[#3d2a21] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
-            <h3 className="font-['Montserrat'] text-base font-medium text-[#41332B] dark:text-[#f5eee6] pb-3 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <div className="w-full max-w-lg bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8DFD5] dark:border-[#38271e] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
+            <h3 className="font-['Montserrat'] text-base font-medium text-[#2B2118] dark:text-[#f5eee6] pb-3 border-b border-[#E8DFD5] dark:border-[#38271e]">
               Catalogue New Product Formulary
             </h3>
 
             <form onSubmit={handleCreateProduct} className="mt-4 space-y-3 text-xs">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Product Name</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Product Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Kérastase Chronologiste Masque"
                   value={newItemName}
                   onChange={e => setNewItemName(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">SKU Code</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">SKU Code</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. KER-CHRON-500"
                     value={newItemSku}
                     onChange={e => setNewItemSku(e.target.value.toUpperCase())}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6] uppercase font-mono"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6] uppercase font-mono"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Category</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Category</label>
                   <select
                     value={newItemCategory}
                     onChange={e => setNewItemCategory(e.target.value)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   >
                     <option value="Hair Color">Hair Color & Developer</option>
                     <option value="Hair Care">Hair Care & Masks</option>
@@ -526,65 +526,65 @@ export const OwnerInventoryPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Initial Quantity</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Initial Quantity</label>
                   <input
                     type="number"
                     min={0}
                     value={newItemQuantity}
                     onChange={e => setNewItemQuantity(Number(e.target.value))}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Min Safety Buffer</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Min Safety Buffer</label>
                   <input
                     type="number"
                     min={1}
                     value={newItemMinThreshold}
                     onChange={e => setNewItemMinThreshold(Number(e.target.value))}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Wholesale Cost (INR)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Wholesale Cost (INR)</label>
                   <input
                     type="number"
                     min={0}
                     value={newItemCostPrice}
                     onChange={e => setNewItemCostPrice(Number(e.target.value))}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Retail Price (INR)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Retail Price (INR)</label>
                   <input
                     type="number"
                     min={0}
                     value={newItemRetailPrice}
                     onChange={e => setNewItemRetailPrice(Number(e.target.value))}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Supplier</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Supplier</label>
                 <input
                   type="text"
                   value={newItemSupplier}
                   onChange={e => setNewItemSupplier(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8DFD5] dark:border-[#38271e]">
                 <Button type="button" variant="outline" size="sm" onClick={() => setShowNewItemModal(false)}>
                   Cancel
                 </Button>
-                <Button type="submit" variant="primary" size="sm" className="bg-[#41332B] text-white">
+                <Button type="submit" variant="primary" size="sm" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:text-[#18110e]">
                   Add to Formulary
                 </Button>
               </div>

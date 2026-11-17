@@ -318,24 +318,24 @@ export const OwnerPeoplePage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           TOP HEADER & SUB-NAV TABS
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#38271e]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Members & Customers
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Unified human directory: Manage salon artisans, shifts, leave conflicts, and client dossiers.
           </p>
         </div>
 
         {/* Master Tab Pill Selector */}
-        <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+        <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs">
           <button
             onClick={() => setActiveMainTab('members')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
               activeMainTab === 'members'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118] dark:hover:text-[#f5eee6]'
             }`}
           >
             <UserCheck className="w-3.5 h-3.5" />
@@ -345,8 +345,8 @@ export const OwnerPeoplePage: React.FC = () => {
             onClick={() => setActiveMainTab('customers')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors cursor-pointer ${
               activeMainTab === 'customers'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118] dark:hover:text-[#f5eee6]'
             }`}
           >
             <Users className="w-3.5 h-3.5" />
@@ -362,42 +362,42 @@ export const OwnerPeoplePage: React.FC = () => {
         <div className="space-y-6">
           {/* Operational Metrics Strip */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-              <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Total Artisans</span>
-              <p className="text-xl font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">{staffList.length}</p>
+            <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+              <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Total Artisans</span>
+              <p className="text-xl font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{staffList.length}</p>
             </Card>
-            <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-              <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Active On-Floor</span>
+            <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+              <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Active On-Floor</span>
               <p className="text-xl font-light text-emerald-600 dark:text-emerald-400 mt-0.5">
                 {staffList.filter(s => s.isActive).length}
               </p>
             </Card>
-            <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-              <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Pending Leave</span>
+            <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+              <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Pending Leave</span>
               <p className="text-xl font-light text-amber-600 dark:text-amber-400 mt-0.5">
                 {leaveRequests.filter(l => l.status === 'pending').length}
               </p>
             </Card>
-            <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-              <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Avg Team Rating</span>
+            <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+              <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Avg Team Rating</span>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                <span className="text-xl font-light text-[#41332B] dark:text-[#f5eee6]">4.92</span>
+                <span className="text-xl font-light text-[#2B2118] dark:text-[#f5eee6]">4.92</span>
               </div>
             </Card>
           </div>
 
           {/* Action and Filter Bar */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white dark:bg-[#221612] p-3 rounded-xl border border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white dark:bg-[#201511] p-3 rounded-xl border border-[#E8DFD5] dark:border-[#38271e]">
             <div className="flex flex-wrap items-center gap-2 flex-1">
               <div className="relative min-w-[200px] flex-1 sm:max-w-xs">
-                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#806B5C]" />
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6658]" />
                 <input
                   type="text"
                   placeholder="Search artisan by name or title..."
                   value={memberSearchTerm}
                   onChange={e => setMemberSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#41332B]"
+                  className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
@@ -405,7 +405,7 @@ export const OwnerPeoplePage: React.FC = () => {
               <select
                 value={memberRoleFilter}
                 onChange={e => setMemberRoleFilter(e.target.value)}
-                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
               >
                 <option value="all">All Roles</option>
                 <option value="Hairstylist">Hairstylist</option>
@@ -419,7 +419,7 @@ export const OwnerPeoplePage: React.FC = () => {
               <select
                 value={memberStatusFilter}
                 onChange={e => setMemberStatusFilter(e.target.value as any)}
-                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                className="text-xs px-2.5 py-1.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active Only</option>
@@ -431,7 +431,7 @@ export const OwnerPeoplePage: React.FC = () => {
               variant="primary"
               size="sm"
               onClick={() => setShowInviteModal(true)}
-              className="flex items-center gap-1.5 text-xs shrink-0 bg-[#41332B] hover:bg-[#2b1810] text-white"
+              className="flex items-center gap-1.5 text-xs shrink-0 bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e]"
             >
               <UserPlus className="w-3.5 h-3.5" />
               Onboard Artisan
@@ -439,10 +439,10 @@ export const OwnerPeoplePage: React.FC = () => {
           </div>
 
           {/* Members Table */}
-          <Card className="bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] overflow-hidden">
+          <Card className="bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#FAF7F2] dark:bg-white/5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
+                <thead className="bg-[#FAF8F5] dark:bg-white/5 border-b border-[#E8DFD5] dark:border-[#38271e] text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
                   <tr>
                     <th className="py-3 px-4 font-semibold">Artisan</th>
                     <th className="py-3 px-4 font-semibold">Role & Title</th>
@@ -454,10 +454,10 @@ export const OwnerPeoplePage: React.FC = () => {
                     <th className="py-3 px-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5">
+                <tbody className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
                   {filteredStaff.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="py-8 text-center text-[#806B5C] dark:text-[#a89582]">
+                      <td colSpan={8} className="py-8 text-center text-[#7A6658] dark:text-[#a89582]">
                         No team members match the current filter criteria.
                       </td>
                     </tr>
@@ -465,41 +465,41 @@ export const OwnerPeoplePage: React.FC = () => {
                     filteredStaff.map(staff => {
                       const branch = branches.find(b => b.id === staff.branchId);
                       return (
-                        <tr key={staff.id} className="hover:bg-[#FAF7F2]/60 dark:hover:bg-white/5 transition-colors">
+                        <tr key={staff.id} className="hover:bg-[#FAF8F5] dark:hover:bg-white/5 transition-colors">
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2.5">
-                              <div className="w-8 h-8 rounded-full bg-[#E8D8C7] dark:bg-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center justify-center font-serif font-medium text-xs">
+                              <div className="w-8 h-8 rounded-full bg-[#F2ECE4] dark:bg-white/10 text-[#2B2118] dark:text-[#f5eee6] flex items-center justify-center font-serif font-medium text-xs">
                                 {staff.displayName.charAt(0)}
                               </div>
                               <div>
-                                <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{staff.displayName}</p>
-                                <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">Joined {new Date(staff.joinedAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</p>
+                                <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{staff.displayName}</p>
+                                <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">Joined {new Date(staff.joinedAt).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}</p>
                               </div>
                             </div>
                           </td>
                           <td className="py-3 px-4">
-                            <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{staff.role || 'Artisan'}</span>
-                            <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">{staff.title}</p>
+                            <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{staff.role || 'Artisan'}</span>
+                            <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">{staff.title}</p>
                           </td>
                           <td className="py-3 px-4">
-                            <Badge variant="outline" className="text-[10px] border-[#E8D8C7] dark:border-white/10 text-[#806B5C] dark:text-[#c2b3a3]">
+                            <Badge variant="outline" className="text-[10px] border-[#E8DFD5] dark:border-white/10 text-[#7A6658] dark:text-[#c2b3a3]">
                               {branch?.name || 'Flagship'}
                             </Badge>
                           </td>
                           <td className="py-3 px-4">
-                            <span className="inline-flex items-center gap-1 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                            <span className="inline-flex items-center gap-1 font-medium text-[#2B2118] dark:text-[#f5eee6]">
                               <Scissors className="w-3 h-3 text-[#B99470]" />
                               {staff.servicesOffered.length} rituals
                             </span>
                           </td>
-                          <td className="py-3 px-4 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                          <td className="py-3 px-4 font-medium text-[#2B2118] dark:text-[#f5eee6]">
                             {staff.commissionPercentage}%
                           </td>
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-1">
                               <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                              <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{staff.rating.toFixed(1)}</span>
-                              <span className="text-[10px] text-[#806B5C]">({staff.reviewCount})</span>
+                              <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{staff.rating.toFixed(1)}</span>
+                              <span className="text-[10px] text-[#7A6658]">({staff.reviewCount})</span>
                             </div>
                           </td>
                           <td className="py-3 px-4">
@@ -522,7 +522,7 @@ export const OwnerPeoplePage: React.FC = () => {
                                   setSelectedStaff(staff);
                                   setStaffModalSection('overview');
                                 }}
-                                className="text-xs px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]"
+                                className="text-xs px-2.5 py-1 border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6]"
                               >
                                 View Dossier
                               </Button>
@@ -563,8 +563,8 @@ export const OwnerPeoplePage: React.FC = () => {
                   return (
                     <div key={req.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2.5 rounded-lg bg-white dark:bg-[#1f1511] border border-amber-200/80 dark:border-amber-900/50 text-xs">
                       <div>
-                        <span className="font-semibold text-[#41332B] dark:text-[#f5eee6]">{staff?.displayName || 'Artisan'}</span>
-                        <span className="text-[#806B5C] dark:text-[#a89582] ml-2">
+                        <span className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{staff?.displayName || 'Artisan'}</span>
+                        <span className="text-[#7A6658] dark:text-[#a89582] ml-2">
                           {req.startDate} to {req.endDate} • {req.reason}
                         </span>
                       </div>
@@ -601,13 +601,13 @@ export const OwnerPeoplePage: React.FC = () => {
       {activeMainTab === 'customers' && (
         <div className="space-y-6">
           {/* Customer Segments Navigation */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white dark:bg-[#221612] rounded-xl border border-[#E8D8C7]/80 dark:border-[#3d2a21] text-xs">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white dark:bg-[#201511] rounded-xl border border-[#E8DFD5] dark:border-[#38271e] text-xs">
             <button
               onClick={() => setActiveSegment('all')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'all'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               All Clients ({allCustomers.length})
@@ -616,8 +616,8 @@ export const OwnerPeoplePage: React.FC = () => {
               onClick={() => setActiveSegment('highValue')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'highValue'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               <Sparkles className="w-3 h-3 text-[#B99470]" />
@@ -627,8 +627,8 @@ export const OwnerPeoplePage: React.FC = () => {
               onClick={() => setActiveSegment('frequent')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'frequent'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               Frequent ({segments.frequent.length})
@@ -637,8 +637,8 @@ export const OwnerPeoplePage: React.FC = () => {
               onClick={() => setActiveSegment('new')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'new'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               New Guests ({segments.new.length})
@@ -647,8 +647,8 @@ export const OwnerPeoplePage: React.FC = () => {
               onClick={() => setActiveSegment('returning')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'returning'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               Returning ({segments.returning.length})
@@ -657,8 +657,8 @@ export const OwnerPeoplePage: React.FC = () => {
               onClick={() => setActiveSegment('inactive')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 activeSegment === 'inactive'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               At Risk / Inactive ({segments.inactive.length})
@@ -666,15 +666,15 @@ export const OwnerPeoplePage: React.FC = () => {
           </div>
 
           {/* Search & Export Actions */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-[#221612] p-3 rounded-xl border border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-[#201511] p-3 rounded-xl border border-[#E8DFD5] dark:border-[#38271e]">
             <div className="relative flex-1 max-w-sm">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#806B5C]" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#7A6658]" />
               <input
                 type="text"
                 placeholder="Search clients by name, email, or phone..."
                 value={customerSearchTerm}
                 onChange={e => setCustomerSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#41332B]"
+                className="w-full pl-9 pr-3 py-1.5 text-xs rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
               />
             </div>
 
@@ -682,7 +682,7 @@ export const OwnerPeoplePage: React.FC = () => {
               variant="outline"
               size="sm"
               onClick={handleExportCSV}
-              className="flex items-center gap-1.5 text-xs shrink-0 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]"
+              className="flex items-center gap-1.5 text-xs shrink-0 border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6]"
             >
               <Download className="w-3.5 h-3.5 text-[#B99470]" />
               Export Clientele CSV
@@ -690,10 +690,10 @@ export const OwnerPeoplePage: React.FC = () => {
           </div>
 
           {/* Customers Table */}
-          <Card className="bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] overflow-hidden">
+          <Card className="bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-[#FAF7F2] dark:bg-white/5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
+                <thead className="bg-[#FAF8F5] dark:bg-white/5 border-b border-[#E8DFD5] dark:border-[#38271e] text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] tracking-wider">
                   <tr>
                     <th className="py-3 px-4 font-semibold">Client Dossier</th>
                     <th className="py-3 px-4 font-semibold">Contact</th>
@@ -704,10 +704,10 @@ export const OwnerPeoplePage: React.FC = () => {
                     <th className="py-3 px-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5">
+                <tbody className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
                   {filteredCustomers.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="py-8 text-center text-[#806B5C] dark:text-[#a89582]">
+                      <td colSpan={7} className="py-8 text-center text-[#7A6658] dark:text-[#a89582]">
                         No client records found under current filter.
                       </td>
                     </tr>
@@ -715,14 +715,14 @@ export const OwnerPeoplePage: React.FC = () => {
                     filteredCustomers.map(customer => {
                       const isVip = customer.totalSpent > 15000 || customer.totalAppointments >= 5;
                       return (
-                        <tr key={customer.userId} className="hover:bg-[#FAF7F2]/60 dark:hover:bg-white/5 transition-colors">
+                        <tr key={customer.userId} className="hover:bg-[#FAF8F5] dark:hover:bg-white/5 transition-colors">
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2.5">
-                              <div className="w-8 h-8 rounded-full bg-[#E8D8C7] dark:bg-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center justify-center font-serif font-medium text-xs">
+                              <div className="w-8 h-8 rounded-full bg-[#F2ECE4] dark:bg-white/10 text-[#2B2118] dark:text-[#f5eee6] flex items-center justify-center font-serif font-medium text-xs">
                                 {customer.fullName.charAt(0)}
                               </div>
                               <div>
-                                <p className="font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-1.5">
+                                <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-1.5">
                                   {customer.fullName}
                                   {isVip && (
                                     <Badge variant="outline" className="text-[9px] py-0 border-[#B99470]/60 text-[#B99470] bg-[#B99470]/10">
@@ -730,21 +730,21 @@ export const OwnerPeoplePage: React.FC = () => {
                                     </Badge>
                                   )}
                                 </p>
-                                <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">ID: {customer.userId.slice(0, 12)}</p>
+                                <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">ID: {customer.userId.slice(0, 12)}</p>
                               </div>
                             </div>
                           </td>
                           <td className="py-3 px-4">
-                            <p className="text-[#41332B] dark:text-[#f5eee6]">{customer.email}</p>
-                            <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">{customer.phone || 'Phone unlisted'}</p>
+                            <p className="text-[#2B2118] dark:text-[#f5eee6]">{customer.email}</p>
+                            <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">{customer.phone || 'Phone unlisted'}</p>
                           </td>
-                          <td className="py-3 px-4 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                          <td className="py-3 px-4 font-medium text-[#2B2118] dark:text-[#f5eee6]">
                             {customer.totalAppointments} visits
                           </td>
-                          <td className="py-3 px-4 font-medium text-[#41332B] dark:text-[#f5eee6]">
+                          <td className="py-3 px-4 font-medium text-[#2B2118] dark:text-[#f5eee6]">
                             ₹{customer.totalSpent.toLocaleString('en-IN')}
                           </td>
-                          <td className="py-3 px-4 text-[#806B5C] dark:text-[#a89582]">
+                          <td className="py-3 px-4 text-[#7A6658] dark:text-[#a89582]">
                             {customer.lastVisitDate ? customer.lastVisitDate : 'None yet'}
                           </td>
                           <td className="py-3 px-4">
@@ -761,7 +761,7 @@ export const OwnerPeoplePage: React.FC = () => {
                                 setSelectedCustomer(customer);
                                 setCustomerModalTab('overview');
                               }}
-                              className="text-xs px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]"
+                              className="text-xs px-2.5 py-1 border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6]"
                             >
                               Client Dossier
                             </Button>
@@ -782,33 +782,33 @@ export const OwnerPeoplePage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {selectedStaff && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8D8C7] dark:border-[#3d2a21] shadow-2xl flex flex-col overflow-hidden text-left font-['Plus_Jakarta_Sans']">
+          <div className="w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8DFD5] dark:border-[#38271e] shadow-2xl flex flex-col overflow-hidden text-left font-['Plus_Jakarta_Sans']">
             {/* Modal Header */}
-            <div className="p-4 sm:p-5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] flex items-center justify-between bg-[#FAF7F2] dark:bg-[#251a14]">
+            <div className="p-4 sm:p-5 border-b border-[#E8DFD5] dark:border-[#38271e] flex items-center justify-between bg-[#FAF8F5] dark:bg-[#251a14]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#E8D8C7] dark:bg-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center justify-center font-serif text-base font-semibold">
+                <div className="w-10 h-10 rounded-full bg-[#F2ECE4] dark:bg-white/10 text-[#2B2118] dark:text-[#f5eee6] flex items-center justify-center font-serif text-base font-semibold">
                   {selectedStaff.displayName.charAt(0)}
                 </div>
                 <div>
-                  <h3 className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                  <h3 className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
                     {selectedStaff.displayName}
                     <Badge variant="outline" className="text-[10px] border-[#B99470]/60 text-[#B99470]">
                       {selectedStaff.role || 'Artisan'}
                     </Badge>
                   </h3>
-                  <p className="text-xs text-[#806B5C] dark:text-[#a89582]">{selectedStaff.title}</p>
+                  <p className="text-xs text-[#7A6658] dark:text-[#a89582]">{selectedStaff.title}</p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedStaff(null)}
-                className="p-1 rounded-lg text-[#806B5C] hover:text-[#41332B] dark:hover:text-white"
+                className="p-1 rounded-lg text-[#7A6658] hover:text-[#2B2118] dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Modal 7 Section Pills */}
-            <div className="flex overflow-x-auto border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] px-4 pt-2 bg-white dark:bg-[#1f1511] text-xs gap-1">
+            <div className="flex overflow-x-auto border-b border-[#E8DFD5] dark:border-[#38271e] px-4 pt-2 bg-white dark:bg-[#1f1511] text-xs gap-1">
               {[
                 { id: 'overview', label: '1. Overview' },
                 { id: 'services', label: '2. Services' },
@@ -823,8 +823,8 @@ export const OwnerPeoplePage: React.FC = () => {
                   onClick={() => setStaffModalSection(tab.id as any)}
                   className={`pb-2 px-2.5 font-medium border-b-2 whitespace-nowrap transition-colors cursor-pointer ${
                     staffModalSection === tab.id
-                      ? 'border-[#41332B] dark:border-[#B99470] text-[#41332B] dark:text-[#f5eee6]'
-                      : 'border-transparent text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B]'
+                      ? 'border-[#2B2118] dark:border-[#B99470] text-[#2B2118] dark:text-[#f5eee6]'
+                      : 'border-transparent text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118]'
                   }`}
                 >
                   {tab.label}
@@ -837,31 +837,31 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Section 1: Overview */}
               {staffModalSection === 'overview' && (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10">
+                  <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10">
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Assigned Branch</span>
-                      <p className="font-medium text-[#41332B] dark:text-[#f5eee6] mt-0.5">
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Assigned Branch</span>
+                      <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] mt-0.5">
                         {branches.find(b => b.id === selectedStaff.branchId)?.name || 'Flagship'}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Experience</span>
-                      <p className="font-medium text-[#41332B] dark:text-[#f5eee6] mt-0.5">{selectedStaff.experienceYears || 4} Years</p>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Experience</span>
+                      <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{selectedStaff.experienceYears || 4} Years</p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Client Rating</span>
-                      <p className="font-medium text-[#41332B] dark:text-[#f5eee6] mt-0.5">★ {selectedStaff.rating.toFixed(2)} ({selectedStaff.reviewCount} verified reviews)</p>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Client Rating</span>
+                      <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] mt-0.5">★ {selectedStaff.rating.toFixed(2)} ({selectedStaff.reviewCount} verified reviews)</p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Status</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Status</span>
                       <p className="font-medium mt-0.5 text-emerald-600 dark:text-emerald-400">
                         {selectedStaff.isActive ? 'Active on Floor' : 'Inactive'}
                       </p>
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-medium text-[#41332B] dark:text-[#f5eee6] mb-1">Artisan Biography</h4>
-                    <p className="text-[#806B5C] dark:text-[#a89582] leading-relaxed">
+                    <h4 className="font-medium text-[#2B2118] dark:text-[#f5eee6] mb-1">Artisan Biography</h4>
+                    <p className="text-[#7A6658] dark:text-[#a89582] leading-relaxed">
                       {selectedStaff.bio || 'Dedicated beauty specialist with mastery in custom color mixing, Balayage sculpting, and scalp restoration rituals.'}
                     </p>
                   </div>
@@ -871,7 +871,7 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Section 2: Services Offered */}
               {staffModalSection === 'services' && (
                 <div className="space-y-3">
-                  <p className="text-[#806B5C] dark:text-[#a89582]">
+                  <p className="text-[#7A6658] dark:text-[#a89582]">
                     Rituals and treatments this artisan is qualified to perform in client bookings:
                   </p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -882,13 +882,13 @@ export const OwnerPeoplePage: React.FC = () => {
                           key={srv.id}
                           className={`p-2.5 rounded-lg border flex items-center justify-between ${
                             isAssigned
-                              ? 'bg-[#FAF7F2] dark:bg-white/5 border-[#B99470]/60'
-                              : 'bg-white dark:bg-[#1a120e] border-[#E8D8C7]/50 dark:border-white/5 opacity-60'
+                              ? 'bg-[#FAF8F5] dark:bg-white/5 border-[#B99470]/60'
+                              : 'bg-white dark:bg-[#1a120e] border-[#E8DFD5]/50 dark:border-white/5 opacity-60'
                           }`}
                         >
                           <div>
-                            <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{srv.name}</p>
-                            <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">₹{srv.price} • {srv.durationMinutes}m</p>
+                            <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{srv.name}</p>
+                            <p className="text-[10px] text-[#7A6658] dark:text-[#a89582]">₹{srv.price} • {srv.durationMinutes}m</p>
                           </div>
                           {isAssigned && <Check className="w-4 h-4 text-[#B99470]" />}
                         </div>
@@ -901,17 +901,17 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Section 3: Shift Hours */}
               {staffModalSection === 'hours' && (
                 <div className="space-y-3">
-                  <p className="text-[#806B5C] dark:text-[#a89582]">
+                  <p className="text-[#7A6658] dark:text-[#a89582]">
                     Weekly operating schedule determining online booking slot availability:
                   </p>
-                  <div className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5 border border-[#E8D8C7]/80 dark:border-white/10 rounded-xl overflow-hidden">
+                  <div className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-xl overflow-hidden">
                     {staffWorkingHours.length === 0 ? (
-                      <p className="p-4 text-center text-[#806B5C]">Default schedule applied (Mon-Sat, 09:00 - 19:00).</p>
+                      <p className="p-4 text-center text-[#7A6658]">Default schedule applied (Mon-Sat, 09:00 - 19:00).</p>
                     ) : (
                       staffWorkingHours.map(wh => (
                         <div key={wh.id} className="p-3 flex items-center justify-between bg-white dark:bg-white/5">
-                          <span className="font-medium capitalize text-[#41332B] dark:text-[#f5eee6]">{wh.dayOfWeek}</span>
-                          <span className="text-[#806B5C] dark:text-[#a89582]">
+                          <span className="font-medium capitalize text-[#2B2118] dark:text-[#f5eee6]">{wh.dayOfWeek}</span>
+                          <span className="text-[#7A6658] dark:text-[#a89582]">
                             {wh.isWorking ? `${wh.startTime} - ${wh.endTime}` : 'Off Day'}
                           </span>
                         </div>
@@ -925,17 +925,17 @@ export const OwnerPeoplePage: React.FC = () => {
               {staffModalSection === 'leave' && (
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <p className="text-[#806B5C] dark:text-[#a89582]">Historical and planned leave dates:</p>
+                    <p className="text-[#7A6658] dark:text-[#a89582]">Historical and planned leave dates:</p>
                   </div>
                   {staffLeaveHistory.length === 0 ? (
-                    <p className="p-4 text-center text-[#806B5C] bg-[#FAF7F2] dark:bg-white/5 rounded-xl">No leave requests recorded for this artisan.</p>
+                    <p className="p-4 text-center text-[#7A6658] bg-[#FAF8F5] dark:bg-white/5 rounded-xl">No leave requests recorded for this artisan.</p>
                   ) : (
                     <div className="space-y-2">
                       {staffLeaveHistory.map(lr => (
-                        <div key={lr.id} className="p-3 rounded-lg border border-[#E8D8C7]/80 dark:border-white/10 flex items-center justify-between">
+                        <div key={lr.id} className="p-3 rounded-lg border border-[#E8DFD5] dark:border-white/10 flex items-center justify-between">
                           <div>
-                            <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{lr.startDate} to {lr.endDate}</span>
-                            <p className="text-[11px] text-[#806B5C]">{lr.reason}</p>
+                            <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{lr.startDate} to {lr.endDate}</span>
+                            <p className="text-[11px] text-[#7A6658]">{lr.reason}</p>
                           </div>
                           <Badge variant="outline" className={`text-[10px] ${
                             lr.status === 'approved' ? 'text-emerald-600 border-emerald-300' :
@@ -953,25 +953,25 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Section 5: Commission & Ledger */}
               {staffModalSection === 'commission' && (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10">
+                  <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10">
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Commission Rate</span>
-                      <p className="text-lg font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">{selectedStaff.commissionPercentage}%</p>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Commission Rate</span>
+                      <p className="text-lg font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{selectedStaff.commissionPercentage}%</p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Completed Rituals</span>
-                      <p className="text-lg font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Completed Rituals</span>
+                      <p className="text-lg font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">
                         {staffAppointments.filter(a => a.status === 'completed').length}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Revenue Generated</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Revenue Generated</span>
                       <p className="text-lg font-light text-emerald-600 dark:text-emerald-400 mt-0.5">
                         ₹{staffAppointments.filter(a => a.status === 'completed').reduce((sum, a) => sum + a.price, 0).toLocaleString('en-IN')}
                       </p>
                     </div>
                   </div>
-                  <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">
+                  <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">
                     Commissions are settled automatically per payroll cycle based on verified invoice payments.
                   </p>
                 </div>
@@ -980,18 +980,18 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Section 6: Performance */}
               {staffModalSection === 'performance' && (
                 <div className="space-y-3">
-                  <div className="p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10 space-y-2">
+                  <div className="p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Punctuality & Chair Turnover</span>
-                      <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">98.2%</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Punctuality & Chair Turnover</span>
+                      <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">98.2%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Repeat Guest Request Rate</span>
-                      <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">74%</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Repeat Guest Request Rate</span>
+                      <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">74%</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Total Reviews Logged</span>
-                      <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{selectedStaff.reviewCount}</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Total Reviews Logged</span>
+                      <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{selectedStaff.reviewCount}</span>
                     </div>
                   </div>
                 </div>
@@ -999,11 +999,11 @@ export const OwnerPeoplePage: React.FC = () => {
 
               {/* Section 7: Operations Status */}
               {staffModalSection === 'status' && (
-                <div className="space-y-4 p-4 rounded-xl border border-[#E8D8C7]/80 dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5">
+                <div className="space-y-4 p-4 rounded-xl border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h4 className="font-medium text-[#41332B] dark:text-[#f5eee6]">Floor Availability & Booking Engine Status</h4>
-                      <p className="text-[11px] text-[#806B5C] dark:text-[#a89582] mt-1 leading-relaxed">
+                      <h4 className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Floor Availability & Booking Engine Status</h4>
+                      <p className="text-[11px] text-[#7A6658] dark:text-[#a89582] mt-1 leading-relaxed">
                         Deactivating temporarily unlists this artisan from customer booking flows. All past appointments, customer formulas, and commission ledger records are permanently preserved.
                       </p>
                     </div>
@@ -1021,7 +1021,7 @@ export const OwnerPeoplePage: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-[#E8D8C7]/80 dark:border-[#3d2a21] bg-[#FAF7F2] dark:bg-[#251a14] flex justify-end">
+            <div className="p-4 border-t border-[#E8DFD5] dark:border-[#38271e] bg-[#FAF8F5] dark:bg-[#251a14] flex justify-end">
               <Button
                 variant="outline"
                 size="sm"
@@ -1040,33 +1040,33 @@ export const OwnerPeoplePage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {selectedCustomer && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8D8C7] dark:border-[#3d2a21] shadow-2xl flex flex-col overflow-hidden text-left font-['Plus_Jakarta_Sans']">
+          <div className="w-full max-w-3xl max-h-[90vh] bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8DFD5] dark:border-[#38271e] shadow-2xl flex flex-col overflow-hidden text-left font-['Plus_Jakarta_Sans']">
             {/* Header */}
-            <div className="p-4 sm:p-5 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] flex items-center justify-between bg-[#FAF7F2] dark:bg-[#251a14]">
+            <div className="p-4 sm:p-5 border-b border-[#E8DFD5] dark:border-[#38271e] flex items-center justify-between bg-[#FAF8F5] dark:bg-[#251a14]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#E8D8C7] dark:bg-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center justify-center font-serif text-base font-semibold">
+                <div className="w-10 h-10 rounded-full bg-[#F2ECE4] dark:bg-white/10 text-[#2B2118] dark:text-[#f5eee6] flex items-center justify-center font-serif text-base font-semibold">
                   {selectedCustomer.fullName.charAt(0)}
                 </div>
                 <div>
-                  <h3 className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                  <h3 className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
                     {selectedCustomer.fullName}
                     <Badge variant="outline" className="text-[10px] border-[#B99470]/60 text-[#B99470]">
                       VIP Client
                     </Badge>
                   </h3>
-                  <p className="text-xs text-[#806B5C] dark:text-[#a89582]">{selectedCustomer.email} • {selectedCustomer.phone || 'Phone unlisted'}</p>
+                  <p className="text-xs text-[#7A6658] dark:text-[#a89582]">{selectedCustomer.email} • {selectedCustomer.phone || 'Phone unlisted'}</p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedCustomer(null)}
-                className="p-1 rounded-lg text-[#806B5C] hover:text-[#41332B] dark:hover:text-white"
+                className="p-1 rounded-lg text-[#7A6658] hover:text-[#2B2118] dark:hover:text-white"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* 8 Tabs Header */}
-            <div className="flex overflow-x-auto border-b border-[#E8D8C7]/80 dark:border-[#3d2a21] px-4 pt-2 bg-white dark:bg-[#1f1511] text-xs gap-1">
+            <div className="flex overflow-x-auto border-b border-[#E8DFD5] dark:border-[#38271e] px-4 pt-2 bg-white dark:bg-[#1f1511] text-xs gap-1">
               {[
                 { id: 'overview', label: '1. Overview' },
                 { id: 'appointments', label: '2. History' },
@@ -1082,8 +1082,8 @@ export const OwnerPeoplePage: React.FC = () => {
                   onClick={() => setCustomerModalTab(tab.id as any)}
                   className={`pb-2 px-2.5 font-medium border-b-2 whitespace-nowrap transition-colors cursor-pointer ${
                     customerModalTab === tab.id
-                      ? 'border-[#41332B] dark:border-[#B99470] text-[#41332B] dark:text-[#f5eee6]'
-                      : 'border-transparent text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B]'
+                      ? 'border-[#2B2118] dark:border-[#B99470] text-[#2B2118] dark:text-[#f5eee6]'
+                      : 'border-transparent text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118]'
                   }`}
                 >
                   {tab.label}
@@ -1096,26 +1096,26 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Tab 1: Overview */}
               {customerModalTab === 'overview' && (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10">
+                  <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10">
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Total Visits</span>
-                      <p className="text-lg font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">{selectedCustomer.totalAppointments}</p>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Total Visits</span>
+                      <p className="text-lg font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{selectedCustomer.totalAppointments}</p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Total Spent</span>
-                      <p className="text-lg font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">₹{selectedCustomer.totalSpent.toLocaleString('en-IN')}</p>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Total Spent</span>
+                      <p className="text-lg font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">₹{selectedCustomer.totalSpent.toLocaleString('en-IN')}</p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Loyalty Points</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Loyalty Points</span>
                       <p className="text-lg font-light text-[#B99470] mt-0.5">{selectedCustomer.loyaltyPoints} pts</p>
                     </div>
                   </div>
-                  <div className="p-3 rounded-xl border border-[#E8D8C7]/80 dark:border-white/10 space-y-1.5">
-                    <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">Registered Customer Profile</p>
-                    <p className="text-[#806B5C] dark:text-[#a89582]">
+                  <div className="p-3 rounded-xl border border-[#E8DFD5] dark:border-white/10 space-y-1.5">
+                    <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Registered Customer Profile</p>
+                    <p className="text-[#7A6658] dark:text-[#a89582]">
                       Hair Type: {customerProfile?.hairType || 'Wavy / Fine Color-Treated'} • Skin Type: {customerProfile?.skinType || 'Sensitive / Normal'}
                     </p>
-                    <p className="text-[#806B5C] dark:text-[#a89582]">
+                    <p className="text-[#7A6658] dark:text-[#a89582]">
                       Emergency Contact: {customerProfile?.emergencyContact || '+91 98840 12345'}
                     </p>
                   </div>
@@ -1126,16 +1126,16 @@ export const OwnerPeoplePage: React.FC = () => {
               {customerModalTab === 'appointments' && (
                 <div className="space-y-2">
                   {customerAppointments.length === 0 ? (
-                    <p className="p-4 text-center text-[#806B5C]">No appointment records found for this client.</p>
+                    <p className="p-4 text-center text-[#7A6658]">No appointment records found for this client.</p>
                   ) : (
                     customerAppointments.map(apt => (
-                      <div key={apt.id} className="p-3 rounded-lg border border-[#E8D8C7]/80 dark:border-white/10 flex items-center justify-between">
+                      <div key={apt.id} className="p-3 rounded-lg border border-[#E8DFD5] dark:border-white/10 flex items-center justify-between">
                         <div>
-                          <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{apt.serviceName}</p>
-                          <p className="text-[11px] text-[#806B5C]">{apt.appointmentDate} at {apt.startTime} • Artisan: {apt.staffName}</p>
+                          <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{apt.serviceName}</p>
+                          <p className="text-[11px] text-[#7A6658]">{apt.appointmentDate} at {apt.startTime} • Artisan: {apt.staffName}</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">₹{apt.price}</p>
+                          <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">₹{apt.price}</p>
                           <Badge variant="outline" className="text-[9px] uppercase border-[#B99470]">
                             {apt.status}
                           </Badge>
@@ -1149,15 +1149,15 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Tab 3: Spend Analytics */}
               {customerModalTab === 'spend' && (
                 <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10">
+                  <div className="grid grid-cols-2 gap-3 p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10">
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Average Ticket Value</span>
-                      <p className="text-lg font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Average Ticket Value</span>
+                      <p className="text-lg font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">
                         ₹{selectedCustomer.totalAppointments > 0 ? Math.round(selectedCustomer.totalSpent / selectedCustomer.totalAppointments).toLocaleString('en-IN') : 0}
                       </p>
                     </div>
                     <div>
-                      <span className="text-[#806B5C] dark:text-[#a89582]">Client Tier</span>
+                      <span className="text-[#7A6658] dark:text-[#a89582]">Client Tier</span>
                       <p className="text-lg font-light text-[#B99470] mt-0.5">Platinum Haute</p>
                     </div>
                   </div>
@@ -1167,54 +1167,54 @@ export const OwnerPeoplePage: React.FC = () => {
               {/* Tab 4: Formula Vault */}
               {customerModalTab === 'formula' && (
                 <div className="space-y-3">
-                  <div className="p-3.5 rounded-xl border border-[#B99470]/40 bg-[#FAF7F2] dark:bg-white/5 space-y-3">
-                    <div className="flex items-center gap-2 text-[#41332B] dark:text-[#f5eee6] font-medium">
+                  <div className="p-3.5 rounded-xl border border-[#B99470]/40 bg-[#FAF8F5] dark:bg-white/5 space-y-3">
+                    <div className="flex items-center gap-2 text-[#2B2118] dark:text-[#f5eee6] font-medium">
                       <Sparkles className="w-4 h-4 text-[#B99470]" />
                       Color Technical Sheet & Scalp Notes
                     </div>
                     <div>
-                      <label className="text-[10px] text-[#806B5C] uppercase tracking-wider">Color Formula</label>
+                      <label className="text-[10px] text-[#7A6658] uppercase tracking-wider">Color Formula</label>
                       <input
                         type="text"
                         value={colorFormula}
                         onChange={e => setColorFormula(e.target.value)}
-                        className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#41332B] dark:text-[#f5eee6]"
+                        className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#2B2118] dark:text-[#f5eee6]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-[10px] text-[#806B5C] uppercase tracking-wider">Developer</label>
+                        <label className="text-[10px] text-[#7A6658] uppercase tracking-wider">Developer</label>
                         <input
                           type="text"
                           value={developerVol}
                           onChange={e => setDeveloperVol(e.target.value)}
-                          className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#41332B] dark:text-[#f5eee6]"
+                          className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#2B2118] dark:text-[#f5eee6]"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] text-[#806B5C] uppercase tracking-wider">Processing Time</label>
+                        <label className="text-[10px] text-[#7A6658] uppercase tracking-wider">Processing Time</label>
                         <input
                           type="text"
                           value={processingTime}
                           onChange={e => setProcessingTime(e.target.value)}
-                          className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#41332B] dark:text-[#f5eee6]"
+                          className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#2B2118] dark:text-[#f5eee6]"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="text-[10px] text-[#806B5C] uppercase tracking-wider">Skin & Scalp Sensitivity</label>
+                      <label className="text-[10px] text-[#7A6658] uppercase tracking-wider">Skin & Scalp Sensitivity</label>
                       <input
                         type="text"
                         value={skinSensitivities}
                         onChange={e => setSkinSensitivities(e.target.value)}
-                        className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#41332B] dark:text-[#f5eee6]"
+                        className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#2B2118] dark:text-[#f5eee6]"
                       />
                     </div>
                     <Button
                       variant="primary"
                       size="sm"
                       onClick={() => showToast('Formula Vault Updated', 'Technical color notes saved.')}
-                      className="text-xs bg-[#41332B] text-white"
+                      className="text-xs bg-[#2B2118] text-white"
                     >
                       Save Formula Sheet
                     </Button>
@@ -1224,11 +1224,11 @@ export const OwnerPeoplePage: React.FC = () => {
 
               {/* Tab 5: Preferences */}
               {customerModalTab === 'preferences' && (
-                <div className="space-y-3 p-3 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10">
+                <div className="space-y-3 p-3 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10">
                   <div className="space-y-2">
-                    <p className="text-[#806B5C] dark:text-[#a89582]">Beverage: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">Iced Oat Latte / Sparkling Water with Lemon</span></p>
-                    <p className="text-[#806B5C] dark:text-[#a89582]">Atmosphere: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">Quiet Relaxation (Minimal Conversation Preferred)</span></p>
-                    <p className="text-[#806B5C] dark:text-[#a89582]">Favorite Stylist: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">Elena Vance</span></p>
+                    <p className="text-[#7A6658] dark:text-[#a89582]">Beverage: <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Iced Oat Latte / Sparkling Water with Lemon</span></p>
+                    <p className="text-[#7A6658] dark:text-[#a89582]">Atmosphere: <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Quiet Relaxation (Minimal Conversation Preferred)</span></p>
+                    <p className="text-[#7A6658] dark:text-[#a89582]">Favorite Stylist: <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Elena Vance</span></p>
                   </div>
                 </div>
               )}
@@ -1242,13 +1242,13 @@ export const OwnerPeoplePage: React.FC = () => {
                       rows={3}
                       value={newCustomerNote}
                       onChange={e => setNewCustomerNote(e.target.value)}
-                      className="w-full p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#41332B] dark:text-[#f5eee6]"
+                      className="w-full p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-white dark:bg-[#1a120e] text-[#2B2118] dark:text-[#f5eee6]"
                     />
-                    <Button type="submit" variant="primary" size="sm" className="text-xs bg-[#41332B] text-white">
+                    <Button type="submit" variant="primary" size="sm" className="text-xs bg-[#2B2118] text-white">
                       Add Note to Dossier
                     </Button>
                   </form>
-                  <div className="p-3 rounded-lg border border-[#E8D8C7]/80 dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-xs text-[#806B5C] dark:text-[#a89582] whitespace-pre-line">
+                  <div className="p-3 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-xs text-[#7A6658] dark:text-[#a89582] whitespace-pre-line">
                     {customerProfile?.preferredNotes || selectedCustomer.notes || 'No historical staff notes recorded.'}
                   </div>
                 </div>
@@ -1258,16 +1258,16 @@ export const OwnerPeoplePage: React.FC = () => {
               {customerModalTab === 'invoices' && (
                 <div className="space-y-2">
                   {customerInvoices.length === 0 ? (
-                    <p className="p-4 text-center text-[#806B5C]">No formal tax invoices on file for this guest.</p>
+                    <p className="p-4 text-center text-[#7A6658]">No formal tax invoices on file for this guest.</p>
                   ) : (
                     customerInvoices.map(inv => (
-                      <div key={inv.id} className="p-3 rounded-lg border border-[#E8D8C7]/80 dark:border-white/10 flex items-center justify-between">
+                      <div key={inv.id} className="p-3 rounded-lg border border-[#E8DFD5] dark:border-white/10 flex items-center justify-between">
                         <div>
-                          <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">Invoice #{inv.id}</p>
-                          <p className="text-[11px] text-[#806B5C]">{inv.issuedAt} • GST: ₹{inv.taxAmount}</p>
+                          <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Invoice #{inv.id}</p>
+                          <p className="text-[11px] text-[#7A6658]">{inv.issuedAt} • GST: ₹{inv.taxAmount}</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">₹{inv.totalAmount}</p>
+                          <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">₹{inv.totalAmount}</p>
                           <Badge variant="outline" className="text-[9px] text-emerald-600 border-emerald-300">
                             {inv.status}
                           </Badge>
@@ -1282,19 +1282,19 @@ export const OwnerPeoplePage: React.FC = () => {
               {customerModalTab === 'reviews' && (
                 <div className="space-y-2">
                   {customerReviews.length === 0 ? (
-                    <p className="p-4 text-center text-[#806B5C]">No public reviews submitted yet.</p>
+                    <p className="p-4 text-center text-[#7A6658]">No public reviews submitted yet.</p>
                   ) : (
                     customerReviews.map(rev => (
-                      <div key={rev.id} className="p-3 rounded-lg border border-[#E8D8C7]/80 dark:border-white/10 space-y-1">
+                      <div key={rev.id} className="p-3 rounded-lg border border-[#E8DFD5] dark:border-white/10 space-y-1">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1">
                             {[...Array(rev.rating)].map((_, i) => (
                               <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
                             ))}
                           </div>
-                          <span className="text-[10px] text-[#806B5C]">{new Date(rev.createdAt).toLocaleDateString()}</span>
+                          <span className="text-[10px] text-[#7A6658]">{new Date(rev.createdAt).toLocaleDateString()}</span>
                         </div>
-                        <p className="text-[#41332B] dark:text-[#f5eee6]">{rev.comment}</p>
+                        <p className="text-[#2B2118] dark:text-[#f5eee6]">{rev.comment}</p>
                       </div>
                     ))
                   )}
@@ -1303,7 +1303,7 @@ export const OwnerPeoplePage: React.FC = () => {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 border-t border-[#E8D8C7]/80 dark:border-[#3d2a21] bg-[#FAF7F2] dark:bg-[#251a14] flex justify-end">
+            <div className="p-4 border-t border-[#E8DFD5] dark:border-[#38271e] bg-[#FAF8F5] dark:bg-[#251a14] flex justify-end">
               <Button
                 variant="outline"
                 size="sm"
@@ -1322,59 +1322,59 @@ export const OwnerPeoplePage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {showInviteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
-          <div className="w-full max-w-lg bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8D8C7] dark:border-[#3d2a21] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-              <h3 className="font-['Montserrat'] text-base font-medium text-[#41332B] dark:text-[#f5eee6]">
+          <div className="w-full max-w-lg bg-white dark:bg-[#1f1511] rounded-2xl border border-[#E8DFD5] dark:border-[#38271e] shadow-2xl p-5 text-left font-['Plus_Jakarta_Sans']">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-[#38271e]">
+              <h3 className="font-['Montserrat'] text-base font-medium text-[#2B2118] dark:text-[#f5eee6]">
                 Onboard New Salon Artisan
               </h3>
-              <button onClick={() => setShowInviteModal(false)} className="text-[#806B5C] hover:text-[#41332B]">
+              <button onClick={() => setShowInviteModal(false)} className="text-[#7A6658] hover:text-[#2B2118]">
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleInviteEmployee} className="mt-4 space-y-3 text-xs">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Full Name</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Full Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Maya Krishnan"
                   value={inviteName}
                   onChange={e => setInviteName(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Work Email</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Work Email</label>
                   <input
                     type="email"
                     required
                     placeholder="maya@glamoure.com"
                     value={inviteEmail}
                     onChange={e => setInviteEmail(e.target.value)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Phone</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Phone</label>
                   <input
                     type="text"
                     value={invitePhone}
                     onChange={e => setInvitePhone(e.target.value)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Role</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Role</label>
                   <select
                     value={inviteRole}
                     onChange={e => setInviteRole(e.target.value as any)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   >
                     <option value="Hairstylist">Hairstylist</option>
                     <option value="Beautician">Beautician</option>
@@ -1384,23 +1384,23 @@ export const OwnerPeoplePage: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Title</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Title</label>
                   <input
                     type="text"
                     value={inviteTitle}
                     onChange={e => setInviteTitle(e.target.value)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Branch Location</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Branch Location</label>
                   <select
                     value={inviteBranchId}
                     onChange={e => setInviteBranchId(e.target.value)}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   >
                     {branches.map(b => (
                       <option key={b.id} value={b.id}>{b.name}</option>
@@ -1408,19 +1408,19 @@ export const OwnerPeoplePage: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Commission Rate (%)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Commission Rate (%)</label>
                   <input
                     type="number"
                     min={0}
                     max={100}
                     value={inviteCommission}
                     onChange={e => setInviteCommission(Number(e.target.value))}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+              <div className="flex justify-end gap-2 pt-3 border-t border-[#E8DFD5] dark:border-[#38271e]">
                 <Button
                   type="button"
                   variant="outline"
@@ -1433,7 +1433,7 @@ export const OwnerPeoplePage: React.FC = () => {
                   type="submit"
                   variant="primary"
                   size="sm"
-                  className="bg-[#41332B] text-white hover:bg-[#2b1810]"
+                  className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e]"
                 >
                   Complete Onboarding
                 </Button>

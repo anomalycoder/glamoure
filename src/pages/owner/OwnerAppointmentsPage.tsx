@@ -297,7 +297,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           {row.status === 'confirmed' && (
             <button
               onClick={() => handleStatusChange(row.id, 'checked_in')}
-              className="p-1.5 rounded-lg bg-white/5 hover:bg-emerald-950/40 text-emerald-400 hover:text-emerald-200 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-emerald-50 dark:bg-white/5 hover:bg-emerald-100 dark:hover:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-transparent transition-colors cursor-pointer"
               title="Check In Guest"
             >
               <UserCheck className="w-3.5 h-3.5" />
@@ -307,7 +307,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           {row.status === 'checked_in' && (
             <button
               onClick={() => handleStatusChange(row.id, 'in_progress')}
-              className="p-1.5 rounded-lg bg-white/5 hover:bg-[#41332b] text-[#efc9a5] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 hover:bg-[#FAF6F1] dark:hover:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] border border-[#E8DFD5] dark:border-transparent transition-colors cursor-pointer"
               title="Commence Ritual (In Progress)"
             >
               <Play className="w-3.5 h-3.5" />
@@ -317,7 +317,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           {row.status === 'in_progress' && (
             <button
               onClick={() => handleStatusChange(row.id, 'completed')}
-              className="p-1.5 rounded-lg bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition-colors cursor-pointer"
               title="Complete Ritual"
             >
               <Check className="w-3.5 h-3.5" />
@@ -331,7 +331,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
                 setReassignApt(row);
                 setNewStaffId(row.staffId);
               }}
-              className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#a89582] hover:text-[#f5eee6] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 hover:bg-[#FAF6F1] dark:hover:bg-white/10 text-[#7A6658] hover:text-[#2B2118] dark:text-[#a89582] dark:hover:text-[#f5eee6] border border-[#E8DFD5] dark:border-transparent transition-colors cursor-pointer"
               title="Reassign Stylist"
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -346,7 +346,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
                 setNewDate(row.appointmentDate);
                 setNewTime(row.startTime);
               }}
-              className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#a89582] hover:text-[#f5eee6] transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 hover:bg-[#FAF6F1] dark:hover:bg-white/10 text-[#7A6658] hover:text-[#2B2118] dark:text-[#a89582] dark:hover:text-[#f5eee6] border border-[#E8DFD5] dark:border-transparent transition-colors cursor-pointer"
               title="Reschedule Appointment"
             >
               <Calendar className="w-3.5 h-3.5" />
@@ -360,7 +360,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
                 setCancelApt(row);
                 setCancelReason('Proprietor rescheduled at customer request');
               }}
-              className="p-1.5 rounded-lg bg-white/5 hover:bg-rose-950/40 text-rose-400 hover:text-rose-200 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg bg-rose-50 dark:bg-white/5 hover:bg-rose-100 dark:hover:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-transparent transition-colors cursor-pointer"
               title="Cancel Booking"
             >
               <XCircle className="w-3.5 h-3.5" />
@@ -370,7 +370,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           {/* Audit History */}
           <button
             onClick={() => handleOpenHistory(row)}
-            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[#a89582] hover:text-[#f5eee6] transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 hover:bg-[#FAF6F1] dark:hover:bg-white/10 text-[#7A6658] hover:text-[#2B2118] dark:text-[#a89582] dark:hover:text-[#f5eee6] border border-[#E8DFD5] dark:border-transparent transition-colors cursor-pointer"
             title="View Audit Trail"
           >
             <History className="w-3.5 h-3.5" />
@@ -383,12 +383,12 @@ export const OwnerAppointmentsPage: React.FC = () => {
   return (
     <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7] dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Appointment Operations
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Real-time multi-branch dispatch, manual salon reservations, and status lifecycle control.
           </p>
         </div>
@@ -400,7 +400,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
             setManualStaffId(staff[0]?.id || '');
             setShowManualBookingModal(true);
           }}
-          className="flex items-center gap-2 bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-4 py-2.5 rounded-xl cursor-pointer"
+          className="flex items-center gap-2 bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e] font-semibold text-xs px-4 py-2.5 rounded-xl cursor-pointer shadow-xs transition-all"
         >
           <Plus className="w-4 h-4" />
           <span>New Manual Reservation</span>
@@ -408,17 +408,17 @@ export const OwnerAppointmentsPage: React.FC = () => {
       </div>
 
       {/* Multi-Filters Grid */}
-      <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-3 shadow-xs">
+      <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-3 shadow-xs">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 text-xs">
           {/* Search Input */}
           <div className="relative sm:col-span-2">
-            <Search className="w-3.5 h-3.5 text-[#806B5C] dark:text-[#a89582] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-3.5 h-3.5 text-[#7A6658] dark:text-[#a89582] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search customer, ritual or booking ID..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-8 pr-3 py-2 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] placeholder-[#806B5C] dark:placeholder-[#a89582] focus:outline-none focus:border-[#b99470]"
+              className="w-full pl-8 pr-3 py-2 bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] placeholder-[#7A6658]/60 dark:placeholder-[#a89582] focus:outline-none focus:border-[#B99470]"
             />
           </div>
 
@@ -426,7 +426,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+            className="px-3 py-2 bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
           >
             <option value="all">All Statuses</option>
             <option value="confirmed">Confirmed</option>
@@ -440,7 +440,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           <select
             value={branchFilter}
             onChange={(e) => setBranchFilter(e.target.value)}
-            className="px-3 py-2 bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+            className="px-3 py-2 bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
           >
             <option value="all">All Branches</option>
             {branches.map(b => (
@@ -452,7 +452,7 @@ export const OwnerAppointmentsPage: React.FC = () => {
           <select
             value={staffFilter}
             onChange={(e) => setStaffFilter(e.target.value)}
-            className="px-3 py-2 bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+            className="px-3 py-2 bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
           >
             <option value="all">All Stylists</option>
             {staff.map(s => (
@@ -465,13 +465,13 @@ export const OwnerAppointmentsPage: React.FC = () => {
             type="date"
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
-            className="px-3 py-2 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+            className="px-3 py-2 bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
           />
         </div>
       </Card>
 
       {/* Appointments Table */}
-      <Card className="bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] overflow-hidden shadow-xs">
+      <Card className="bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] overflow-hidden shadow-xs">
         <DataTable<Appointment>
           columns={columns}
           data={filteredAppointments}
@@ -483,57 +483,57 @@ export const OwnerAppointmentsPage: React.FC = () => {
           MODAL: MANUAL APPOINTMENT CREATION
       ═══════════════════════════════════════════════════════════════ */}
       {showManualBookingModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <h2 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Create Manual Reservation</h2>
-              <button onClick={() => setShowManualBookingModal(false)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <h2 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-semibold">Create Manual Reservation</h2>
+              <button onClick={() => setShowManualBookingModal(false)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
             <form onSubmit={handleCreateManualAppointment} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Full Name</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Full Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Radhika Apte"
                   value={clientName}
                   onChange={(e) => setClientName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Email</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Email</label>
                   <input
                     type="email"
                     required
                     placeholder="radhika@example.com"
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Phone</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Phone</label>
                   <input
                     type="tel"
                     placeholder="+91 98840 12345"
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Branch</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Branch</label>
                   <select
                     value={manualBranchId}
                     onChange={(e) => setManualBranchId(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   >
                     {branches.map(b => (
                       <option key={b.id} value={b.id}>{b.name}</option>
@@ -541,11 +541,11 @@ export const OwnerAppointmentsPage: React.FC = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Ritual Service</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Ritual Service</label>
                   <select
                     value={manualServiceId}
                     onChange={(e) => setManualServiceId(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   >
                     {services.map(s => (
                       <option key={s.id} value={s.id}>{s.name} (₹{s.price})</option>
@@ -555,11 +555,11 @@ export const OwnerAppointmentsPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Assigned Artisan</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Assigned Artisan</label>
                 <select
                   value={manualStaffId}
                   onChange={(e) => setManualStaffId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 >
                   {staff.map(s => (
                     <option key={s.id} value={s.id}>{s.displayName} ({s.title})</option>
@@ -569,32 +569,32 @@ export const OwnerAppointmentsPage: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Date</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Date</label>
                   <input
                     type="date"
                     required
                     value={manualDate}
                     onChange={(e) => setManualDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Time Slot</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Time Slot</label>
                   <input
                     type="time"
                     required
                     value={manualTime}
                     onChange={(e) => setManualTime(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E8D8C7] dark:border-white/10">
-                <Button type="button" variant="outline" onClick={() => setShowManualBookingModal(false)} className="text-xs px-3 py-1.5 cursor-pointer">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E8DFD5] dark:border-white/10">
+                <Button type="button" variant="outline" onClick={() => setShowManualBookingModal(false)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
+                <Button type="submit" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e] font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer shadow-xs">
                   Confirm Manual Booking
                 </Button>
               </div>
@@ -607,45 +607,45 @@ export const OwnerAppointmentsPage: React.FC = () => {
           MODAL: RESCHEDULE APPOINTMENT
       ═══════════════════════════════════════════════════════════════ */}
       {rescheduleApt && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <h3 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Reschedule Appointment</h3>
-              <button onClick={() => setRescheduleApt(null)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <h3 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-semibold">Reschedule Appointment</h3>
+              <button onClick={() => setRescheduleApt(null)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
-            <p className="text-xs text-[#806B5C] dark:text-[#c2b3a3]">
-              Rescheduling ritual for <strong className="text-[#41332B] dark:text-[#f5eee6]">{rescheduleApt.customerName}</strong> ({rescheduleApt.serviceName}).
+            <p className="text-xs text-[#7A6658] dark:text-[#c2b3a3]">
+              Rescheduling ritual for <strong className="text-[#2B2118] dark:text-[#f5eee6]">{rescheduleApt.customerName}</strong> ({rescheduleApt.serviceName}).
             </p>
 
             <form onSubmit={handleRescheduleSubmit} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">New Date</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">New Date</label>
                 <input
                   type="date"
                   required
                   value={newDate}
                   onChange={(e) => setNewDate(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">New Start Time</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">New Start Time</label>
                 <input
                   type="time"
                   required
                   value={newTime}
                   onChange={(e) => setNewTime(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-3">
-                <Button type="button" variant="outline" onClick={() => setRescheduleApt(null)} className="text-xs px-3 py-1.5 cursor-pointer">
+                <Button type="button" variant="outline" onClick={() => setRescheduleApt(null)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#b99470] text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
+                <Button type="submit" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:text-[#18110e] font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer shadow-xs">
                   Save New Time
                 </Button>
               </div>
@@ -658,24 +658,24 @@ export const OwnerAppointmentsPage: React.FC = () => {
           MODAL: REASSIGN ARTISAN
       ═══════════════════════════════════════════════════════════════ */}
       {reassignApt && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <h3 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Reassign Artisan</h3>
-              <button onClick={() => setReassignApt(null)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <h3 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-semibold">Reassign Artisan</h3>
+              <button onClick={() => setReassignApt(null)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
-            <p className="text-xs text-[#806B5C] dark:text-[#c2b3a3]">
-              Assigning new specialist for <span className="text-[#41332B] dark:text-[#f5eee6] font-medium">{reassignApt.customerName}'s {reassignApt.serviceName}</span>.
+            <p className="text-xs text-[#7A6658] dark:text-[#c2b3a3]">
+              Assigning new specialist for <span className="text-[#2B2118] dark:text-[#f5eee6] font-medium">{reassignApt.customerName}'s {reassignApt.serviceName}</span>.
             </p>
 
             <form onSubmit={handleReassignSubmit} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Specialist</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Specialist</label>
                 <select
                   value={newStaffId}
                   onChange={(e) => setNewStaffId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 >
                   {staff.map(s => (
                     <option key={s.id} value={s.id}>{s.displayName} ({s.title})</option>
@@ -684,10 +684,10 @@ export const OwnerAppointmentsPage: React.FC = () => {
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-3">
-                <Button type="button" variant="outline" onClick={() => setReassignApt(null)} className="text-xs px-3 py-1.5 cursor-pointer">
+                <Button type="button" variant="outline" onClick={() => setReassignApt(null)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#b99470] text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
+                <Button type="submit" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:text-[#18110e] font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer shadow-xs">
                   Confirm Reassignment
                 </Button>
               </div>
@@ -700,34 +700,34 @@ export const OwnerAppointmentsPage: React.FC = () => {
           MODAL: CANCEL APPOINTMENT WITH REASON
       ═══════════════════════════════════════════════════════════════ */}
       {cancelApt && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <h3 className="font-['Montserrat'] text-base text-rose-600 dark:text-rose-400 font-medium">Cancel Appointment</h3>
-              <button onClick={() => setCancelApt(null)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <h3 className="font-['Montserrat'] text-base text-rose-600 dark:text-rose-400 font-semibold">Cancel Appointment</h3>
+              <button onClick={() => setCancelApt(null)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
-            <p className="text-xs text-[#806B5C] dark:text-[#c2b3a3]">
-              Are you sure you want to cancel the booking for <strong className="text-[#41332B] dark:text-[#f5eee6]">{cancelApt.customerName}</strong>?
+            <p className="text-xs text-[#7A6658] dark:text-[#c2b3a3]">
+              Are you sure you want to cancel the booking for <strong className="text-[#2B2118] dark:text-[#f5eee6]">{cancelApt.customerName}</strong>?
             </p>
 
             <form onSubmit={handleCancelSubmit} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Cancellation Reason</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Cancellation Reason</label>
                 <textarea
                   required
                   rows={3}
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-2">
-                <Button type="button" variant="outline" onClick={() => setCancelApt(null)} className="text-xs px-3 py-1.5 cursor-pointer">
+                <Button type="button" variant="outline" onClick={() => setCancelApt(null)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                   Back
                 </Button>
-                <Button type="submit" className="bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
+                <Button type="submit" className="bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer shadow-xs">
                   Confirm Cancellation
                 </Button>
               </div>
@@ -740,44 +740,44 @@ export const OwnerAppointmentsPage: React.FC = () => {
           DRAWER: AUDIT STATUS HISTORY
       ═══════════════════════════════════════════════════════════════ */}
       {historyApt && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
               <div className="flex items-center gap-2">
-                <History className="w-4 h-4 text-[#b99470]" />
-                <h3 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Audit History</h3>
+                <History className="w-4 h-4 text-[#B99470]" />
+                <h3 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-semibold">Audit History</h3>
               </div>
-              <button onClick={() => setHistoryApt(null)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+              <button onClick={() => setHistoryApt(null)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
             <div className="space-y-2 text-xs">
-              <p className="text-[#41332B] dark:text-[#efc9a5] font-semibold">{historyApt.serviceName} for {historyApt.customerName}</p>
-              <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">Reference ID: {historyApt.id}</p>
+              <p className="text-[#2B2118] dark:text-[#efc9a5] font-semibold">{historyApt.serviceName} for {historyApt.customerName}</p>
+              <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">Reference ID: {historyApt.id}</p>
             </div>
 
             <div className="space-y-3 pt-2 max-h-60 overflow-y-auto custom-scrollbar">
               {statusHistory.length === 0 ? (
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582] italic">No prior status transitions logged.</p>
+                <p className="text-xs text-[#7A6658] dark:text-[#a89582] italic">No prior status transitions logged.</p>
               ) : (
                 statusHistory.map((h, i) => (
-                  <div key={i} className="p-3 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/5 text-xs space-y-1">
+                  <div key={i} className="p-3 rounded-lg bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/5 text-xs space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-[#b99470] dark:text-[#efc9a5] uppercase text-[10px]">
+                      <span className="font-semibold text-[#B99470] dark:text-[#efc9a5] uppercase text-[10px]">
                         {h.fromStatus ? `${h.fromStatus} → ` : ''}{h.toStatus}
                       </span>
-                      <span className="text-[10px] text-[#806B5C] dark:text-[#a89582]">
+                      <span className="text-[10px] text-[#7A6658] dark:text-[#a89582]">
                         {new Date(h.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
-                    <p className="text-[11px] text-[#806B5C] dark:text-[#c2b3a3]">By: {h.changedByName}</p>
-                    {h.reason && <p className="text-[10px] text-[#806B5C] dark:text-[#a89582] italic">"{h.reason}"</p>}
+                    <p className="text-[11px] text-[#7A6658] dark:text-[#c2b3a3]">By: {h.changedByName}</p>
+                    {h.reason && <p className="text-[10px] text-[#7A6658] dark:text-[#a89582] italic">"{h.reason}"</p>}
                   </div>
                 ))
               )}
             </div>
 
             <div className="pt-2 text-right">
-              <Button type="button" variant="outline" onClick={() => setHistoryApt(null)} className="text-xs px-3 py-1.5 cursor-pointer">
+              <Button type="button" variant="outline" onClick={() => setHistoryApt(null)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                 Close
               </Button>
             </div>

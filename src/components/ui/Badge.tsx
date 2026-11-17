@@ -28,7 +28,7 @@ export const Badge: React.FC<BadgeProps> = ({
 
   let styleClasses = isDark
     ? 'bg-white/10 text-[#f5eee6] border-white/15'
-    : 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
+    : 'bg-[#FAF6F1] text-[#2B2118] border-[#E0D5C9]';
 
   if (key) {
     switch (key) {
@@ -134,7 +134,7 @@ export const Badge: React.FC<BadgeProps> = ({
       default:
         styleClasses = isDark
           ? 'bg-white/10 text-[#f5eee6] border-white/15'
-          : 'bg-[#41332B]/10 text-[#41332B] border-[#41332B]/20';
+          : 'bg-[#FAF6F1] text-[#2B2118] border-[#E0D5C9]';
         break;
     }
   }

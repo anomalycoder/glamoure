@@ -20,14 +20,14 @@ const DashboardLayoutInner: React.FC = () => {
     <div className={`min-h-screen flex font-['Plus_Jakarta_Sans'] transition-colors duration-200 ${
       theme === 'dark' 
         ? 'bg-[#16110e] text-[#f5eee6] selection:bg-[#b99470]/30 selection:text-white' 
-        : 'bg-[#FAF7F2] text-[#41332B] selection:bg-[#E8D8C7] selection:text-[#41332B]'
+        : 'bg-[#FAF8F5] text-[#2B2118] selection:bg-[#B99470]/20 selection:text-[#2B2118]'
     }`}>
       {/* Role-Aware Responsive Sidebar */}
       <Sidebar />
 
       {/* Main Content Area */}
       <div className={`flex-1 flex flex-col min-w-0 min-h-screen transition-colors duration-200 ${
-        theme === 'dark' ? 'bg-[#16110e]' : 'bg-[#FAF7F2]'
+        theme === 'dark' ? 'bg-[#16110e]' : 'bg-[#FAF8F5]'
       }`}>
         <TopNav />
 

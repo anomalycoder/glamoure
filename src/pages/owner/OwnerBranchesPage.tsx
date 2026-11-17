@@ -47,13 +47,13 @@ export const OwnerBranchesPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 text-left">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
-          <h2 className="font-['Montserrat'] text-2xl font-light text-[#41332B] dark:text-[#f5eee6]">
+          <h2 className="font-['Montserrat'] text-2xl font-light text-[#2B2118] dark:text-[#f5eee6]">
             Multi-Branch Network
           </h2>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-1">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-1">
             Manage multiple physical studio locations under your salon umbrella.
           </p>
         </div>
@@ -64,8 +64,8 @@ export const OwnerBranchesPage: React.FC = () => {
       </div>
 
       {showAdd && (
-        <form onSubmit={handleCreateBranch} className="p-6 rounded-2xl bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#38271e] shadow-sm space-y-4">
-          <h3 className="font-['Montserrat'] text-xs font-semibold uppercase tracking-wider text-[#41332B] dark:text-[#efc9a5]">
+        <form onSubmit={handleCreateBranch} className="p-6 rounded-2xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#38271e] shadow-xs space-y-4">
+          <h3 className="font-['Montserrat'] text-xs font-semibold uppercase tracking-wider text-[#2B2118] dark:text-[#efc9a5]">
             Register New Branch Location
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -85,21 +85,21 @@ export const OwnerBranchesPage: React.FC = () => {
         {branches.map(b => (
           <Card key={b.id} className="p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-['Montserrat'] text-[10.5px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#E8D8C7]/50 dark:bg-[#34241c] text-[#41332B] dark:text-[#efc9a5] font-semibold border border-[#E8D8C7] dark:border-[#4a3429]">
+              <span className="font-['Montserrat'] text-[10.5px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#FAF8F5] dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] font-semibold border border-[#E8DFD5] dark:border-[#4a3429]">
                 Code: {b.code}
               </span>
               {b.isMainBranch && (
-                <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#41332B] text-[#F5EFE7] font-medium shadow-xs">
+                <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#2B2118] text-white font-medium shadow-xs">
                   Flagship
                 </span>
               )}
             </div>
 
-            <h3 className="font-['Montserrat'] text-lg font-medium text-[#41332B] dark:text-[#f5eee6] mb-2">
+            <h3 className="font-['Montserrat'] text-lg font-medium text-[#2B2118] dark:text-[#f5eee6] mb-2">
               {b.name}
             </h3>
 
-            <div className="space-y-1.5 text-xs text-[#806B5C] dark:text-[#a89582]">
+            <div className="space-y-1.5 text-xs text-[#7A6658] dark:text-[#a89582]">
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-[#B99470]" />
                 <span>{b.address}, {b.city}</span>

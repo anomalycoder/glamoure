@@ -314,30 +314,30 @@ export const OwnerLiveMonitorPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           HEADER & REAL-TIME TELEMETRY
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#38271e]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
             Live Salon Monitor & Edge Vision
             <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               RTSP Gateway Live
             </span>
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Real-time physical chair occupancy, ritual milestone detection, and optical workstation flow.
           </p>
         </div>
 
         {/* Room / Station Filter */}
-        <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+        <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs">
           {['all', 'styling', 'wash', 'color', 'spa'].map(t => (
             <button
               key={t}
               onClick={() => setFilterType(t)}
               className={`px-3 py-1.5 rounded-lg capitalize font-medium transition-colors cursor-pointer ${
                 filterType === t
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               {t}
@@ -349,10 +349,10 @@ export const OwnerLiveMonitorPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           PRIVACY & ETHICS GUARANTEE BANNER
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="p-3.5 rounded-xl bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div className="p-3.5 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-2.5">
           <ShieldCheck className="w-4 h-4 text-[#B99470] shrink-0" />
-          <span className="text-[#41332B] dark:text-[#f5eee6]">
+          <span className="text-[#2B2118] dark:text-[#f5eee6]">
             <strong>Strict Privacy & Safety Protocol:</strong> Local edge inference only. Real-time dynamic face blurring is enabled. Zero facial recognition or biometric profiles stored. DPDP & GDPR Compliant.
           </span>
         </div>
@@ -365,20 +365,20 @@ export const OwnerLiveMonitorPage: React.FC = () => {
           METRICS STRIP
       ═════════════════════════════════════════════════════════════════════ */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Total Workstations</span>
-          <p className="text-xl font-light text-[#41332B] dark:text-[#f5eee6] mt-0.5">{totalStations}</p>
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Total Workstations</span>
+          <p className="text-xl font-light text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{totalStations}</p>
         </Card>
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Chairs Occupied</span>
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Chairs Occupied</span>
           <p className="text-xl font-light text-amber-600 dark:text-amber-400 mt-0.5">{occupiedCount}</p>
         </Card>
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Available Bays</span>
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Available Bays</span>
           <p className="text-xl font-light text-emerald-600 dark:text-emerald-400 mt-0.5">{availableCount}</p>
         </Card>
-        <Card className="p-3.5 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-          <span className="text-[10px] tracking-wider uppercase text-[#806B5C] dark:text-[#a89582] font-semibold">Buffer / Sanitizing</span>
+        <Card className="p-3.5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+          <span className="text-[10px] tracking-wider uppercase text-[#7A6658] dark:text-[#a89582] font-semibold">Buffer / Sanitizing</span>
           <p className="text-xl font-light text-blue-600 dark:text-blue-400 mt-0.5">{bufferCount}</p>
         </Card>
       </div>
@@ -395,10 +395,10 @@ export const OwnerLiveMonitorPage: React.FC = () => {
           return (
             <Card
               key={station.id}
-              className="bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21] overflow-hidden flex flex-col transition-all hover:border-[#B99470]/60"
+              className="bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] overflow-hidden flex flex-col transition-all hover:border-[#B99470]/60"
             >
               {/* Camera Simulated Viewport / Optical Stream Header */}
-              <div className="relative aspect-video bg-[#18110e] border-b border-[#E8D8C7]/60 dark:border-[#3d2a21] flex flex-col justify-between p-3 overflow-hidden group">
+              <div className="relative aspect-video bg-[#18110e] border-b border-[#E8DFD5]/60 dark:border-[#38271e] flex flex-col justify-between p-3 overflow-hidden group">
                 {/* Visual Camera Background / Edge Wireframe Grid */}
                 <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#b99470_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
@@ -462,35 +462,35 @@ export const OwnerLiveMonitorPage: React.FC = () => {
               <div className="p-4 flex-1 flex flex-col justify-between space-y-3 text-xs">
                 <div>
                   <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-sm text-[#41332B] dark:text-[#f5eee6]">{station.name}</h3>
-                    <Badge variant="outline" className="text-[10px] border-[#E8D8C7] text-[#806B5C]">
+                    <h3 className="font-medium text-sm text-[#2B2118] dark:text-[#f5eee6]">{station.name}</h3>
+                    <Badge variant="outline" className="text-[10px] border-[#E8DFD5] text-[#7A6658]">
                       {station.type.toUpperCase()}
                     </Badge>
                   </div>
 
                   {/* AI Milestone Telemetry */}
-                  <div className="mt-2.5 p-2.5 rounded-lg bg-[#FAF7F2] dark:bg-white/5 border border-[#E8D8C7]/80 dark:border-white/10 space-y-1.5">
+                  <div className="mt-2.5 p-2.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 space-y-1.5">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] uppercase font-semibold text-[#806B5C] dark:text-[#a89582]">Detected Ritual</span>
-                      <span className="text-[10px] text-[#806B5C]">Started {station.detectedRitual.detectedAt}</span>
+                      <span className="text-[10px] uppercase font-semibold text-[#7A6658] dark:text-[#a89582]">Detected Ritual</span>
+                      <span className="text-[10px] text-[#7A6658]">Started {station.detectedRitual.detectedAt}</span>
                     </div>
-                    <p className="font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-1.5">
+                    <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-1.5">
                       <Scissors className="w-3 h-3 text-[#B99470]" />
                       {station.detectedRitual.serviceName}
                     </p>
-                    <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">
-                      Artisan: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{station.detectedRitual.stylistName}</span>
+                    <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">
+                      Artisan: <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{station.detectedRitual.stylistName}</span>
                     </p>
-                    <div className="pt-1.5 border-t border-[#E8D8C7]/50 dark:border-white/5 flex items-center justify-between text-[10px]">
-                      <span className="text-[#806B5C]">Milestone:</span>
-                      <span className="font-medium text-[#41332B] dark:text-[#f5eee6] truncate max-w-[170px]">{station.detectedRitual.currentMilestone}</span>
+                    <div className="pt-1.5 border-t border-[#E8DFD5]/50 dark:border-white/5 flex items-center justify-between text-[10px]">
+                      <span className="text-[#7A6658]">Milestone:</span>
+                      <span className="font-medium text-[#2B2118] dark:text-[#f5eee6] truncate max-w-[170px]">{station.detectedRitual.currentMilestone}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Human Confirmation / Correction Bar */}
                 {isOccupied && (
-                  <div className="pt-2 border-t border-[#E8D8C7]/60 dark:border-[#3d2a21] flex items-center justify-between gap-2">
+                  <div className="pt-2 border-t border-[#E8DFD5]/60 dark:border-[#38271e] flex items-center justify-between gap-2">
                     {station.detectedRitual.isHumanConfirmed ? (
                       <span className="flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-medium">
                         <CheckCircle2 className="w-3.5 h-3.5" />
@@ -501,7 +501,7 @@ export const OwnerLiveMonitorPage: React.FC = () => {
                         variant="primary"
                         size="sm"
                         onClick={() => handleConfirmAiEvent(station.id)}
-                        className="text-[11px] px-2.5 py-1 bg-[#41332B] text-white hover:bg-[#2b1810]"
+                        className="text-[11px] px-2.5 py-1 bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e]"
                       >
                         Confirm AI Event
                       </Button>
@@ -511,7 +511,7 @@ export const OwnerLiveMonitorPage: React.FC = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => handleCorrectMilestone(station.id)}
-                      className="text-[11px] px-2 py-1 border-[#E8D8C7] dark:border-white/10 text-[#806B5C] hover:text-[#41332B]"
+                      className="text-[11px] px-2 py-1 border-[#E8DFD5] dark:border-white/10 text-[#7A6658] hover:text-[#2B2118]"
                     >
                       <Edit2 className="w-3 h-3 mr-1" />
                       Correct
@@ -527,12 +527,12 @@ export const OwnerLiveMonitorPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           CHRONOLOGICAL AI COMPUTER VISION EVENT STREAM
       ═════════════════════════════════════════════════════════════════════ */}
-      <Card className="p-4 bg-white dark:bg-[#221612] border-[#E8D8C7]/80 dark:border-[#3d2a21]">
-        <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] mb-3 flex items-center gap-2">
+      <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e]">
+        <h3 className="font-['Montserrat'] text-sm font-medium text-[#2B2118] dark:text-[#f5eee6] mb-3 flex items-center gap-2">
           <Activity className="w-4 h-4 text-[#B99470]" />
           Real-time Edge Vision Event Stream
         </h3>
-        <div className="space-y-2 text-xs divide-y divide-[#E8D8C7]/40 dark:divide-white/5">
+        <div className="space-y-2 text-xs divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
           {[
             { time: '14:54', bay: 'Wash Basin 02', event: 'Station transitioned to buffer state for UV sanitation fogging', conf: '98%' },
             { time: '14:46', bay: 'Wash Basin 01', event: 'Guest seated. Ozone Scalp Exfoliation detected via head positioning', conf: '91%' },
@@ -541,11 +541,11 @@ export const OwnerLiveMonitorPage: React.FC = () => {
           ].map((evt, idx) => (
             <div key={idx} className="pt-2 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-[#806B5C]">{evt.time}</span>
-                <Badge variant="outline" className="text-[10px] border-[#E8D8C7] text-[#41332B] dark:text-[#f5eee6]">
+                <span className="font-mono text-[10px] text-[#7A6658]">{evt.time}</span>
+                <Badge variant="outline" className="text-[10px] border-[#E8DFD5] text-[#2B2118] dark:text-[#f5eee6]">
                   {evt.bay}
                 </Badge>
-                <span className="text-[#806B5C] dark:text-[#a89582]">{evt.event}</span>
+                <span className="text-[#7A6658] dark:text-[#a89582]">{evt.event}</span>
               </div>
               <span className="text-[10px] font-mono text-[#B99470] shrink-0">{evt.conf} conf</span>
             </div>

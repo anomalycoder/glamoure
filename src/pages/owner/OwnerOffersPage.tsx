@@ -102,14 +102,14 @@ export const OwnerOffersPage: React.FC = () => {
   const totalRedeemed = offers.reduce((acc, curr) => acc + (curr.usageCount || 0), 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Offers & Promotional Campaigns
           </h1>
-          <p className="font-['Plus_Jakarta_Sans'] text-xs text-[#a89582] mt-1">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-1">
             Design targeted seasonal discounts, first-visit privileges, and ritual bundle rewards.
           </p>
         </div>
@@ -119,7 +119,7 @@ export const OwnerOffersPage: React.FC = () => {
             resetForm();
             setShowModal(true);
           }}
-          className="flex items-center gap-2 bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold text-xs px-4 py-2.5 rounded-xl cursor-pointer"
+          className="flex items-center gap-2 bg-[#2B2118] hover:bg-[#1D1610] text-white font-semibold text-xs px-4 py-2.5 rounded-xl cursor-pointer shadow-xs"
         >
           <Plus className="w-4 h-4" />
           <span>Launch Campaign</span>
@@ -128,51 +128,51 @@ export const OwnerOffersPage: React.FC = () => {
 
       {/* KPI Highlights */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Active Campaigns</p>
-          <p className="font-['Montserrat'] text-2xl text-[#efc9a5] mt-1 font-light">{activeCount}</p>
-          <p className="text-[10px] text-emerald-400 mt-1">Currently bookable</p>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Active Campaigns</p>
+          <p className="font-['Montserrat'] text-2xl text-[#2B2118] dark:text-[#efc9a5] mt-1 font-light">{activeCount}</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">Currently bookable</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Total Redemptions</p>
-          <p className="font-['Montserrat'] text-2xl text-[#f5eee6] mt-1 font-light">{totalRedeemed}</p>
-          <p className="text-[10px] text-[#a89582] mt-1">Client checkouts</p>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Total Redemptions</p>
+          <p className="font-['Montserrat'] text-2xl text-[#2B2118] dark:text-[#f5eee6] mt-1 font-light">{totalRedeemed}</p>
+          <p className="text-[10px] text-[#7A6658] dark:text-[#a89582] mt-1">Client checkouts</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Campaign Types</p>
-          <p className="font-['Montserrat'] text-2xl text-[#f5eee6] mt-1 font-light">4 Variants</p>
-          <p className="text-[10px] text-[#a89582] mt-1">% / Fixed / Bundles / First-Visit</p>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Campaign Types</p>
+          <p className="font-['Montserrat'] text-2xl text-[#2B2118] dark:text-[#f5eee6] mt-1 font-light">4 Variants</p>
+          <p className="text-[10px] text-[#7A6658] dark:text-[#a89582] mt-1">% / Fixed / Bundles / First-Visit</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Top Performing</p>
-          <p className="font-['Montserrat'] text-xl text-[#efc9a5] mt-1 font-medium truncate">GLAMFIRST</p>
-          <p className="text-[10px] text-emerald-400 mt-1">12 redemptions this month</p>
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Top Performing</p>
+          <p className="font-['Montserrat'] text-xl text-[#B99470] dark:text-[#efc9a5] mt-1 font-medium truncate">GLAMFIRST</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1 font-medium">12 redemptions this month</p>
         </Card>
       </div>
 
       {/* Search & Offers Table */}
-      <Card className="p-6 bg-[#201511] border-[#3a2820] space-y-4">
+      <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-[#a89582] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#7A6658] dark:text-[#a89582] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search code or title..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 text-xs bg-white/5 border border-white/10 rounded-xl text-[#f5eee6] placeholder-[#a89582] focus:outline-none focus:border-[#b99470]"
+              className="w-full pl-9 pr-3 py-2 text-xs bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] placeholder-[#7A6658] dark:placeholder-[#a89582] focus:outline-none focus:border-[#B99470]"
             />
           </div>
-          <span className="text-xs text-[#a89582]">Showing {filteredOffers.length} campaigns</span>
+          <span className="text-xs text-[#7A6658] dark:text-[#a89582]">Showing {filteredOffers.length} campaigns</span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#c2b3a3]">
+          <table className="w-full text-left text-xs text-[#2B2118] dark:text-[#c2b3a3]">
             <thead>
-              <tr className="border-b border-white/10 text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
+              <tr className="border-b border-[#E8DFD5] dark:border-white/10 text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
                 <th className="pb-3">Campaign Code</th>
                 <th className="pb-3">Title & Benefit</th>
                 <th className="pb-3">Type</th>
@@ -183,38 +183,38 @@ export const OwnerOffersPage: React.FC = () => {
                 <th className="pb-3 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
               {filteredOffers.map((offer) => (
-                <tr key={offer.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="py-3.5 font-mono font-bold text-[#efc9a5]">
-                    <span className="px-2 py-1 rounded bg-[#41332b]/80 border border-[#b99470]/30">
+                <tr key={offer.id} className="hover:bg-[#FAF8F5] dark:hover:bg-white/[0.02] transition-colors">
+                  <td className="py-3.5 font-mono font-bold text-[#B99470] dark:text-[#efc9a5]">
+                    <span className="px-2 py-1 rounded bg-[#FAF8F5] dark:bg-[#41332b]/80 border border-[#E8DFD5] dark:border-[#b99470]/30">
                       {offer.code}
                     </span>
                   </td>
                   <td className="py-3.5">
-                    <p className="font-medium text-[#f5eee6]">{offer.title}</p>
-                    <p className="text-[11px] text-[#a89582] truncate max-w-xs">{offer.description || 'Exclusive luxury benefit'}</p>
+                    <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{offer.title}</p>
+                    <p className="text-[11px] text-[#7A6658] dark:text-[#a89582] truncate max-w-xs">{offer.description || 'Exclusive luxury benefit'}</p>
                   </td>
-                  <td className="py-3.5 uppercase text-[10px] tracking-wider text-[#d8c3a8]">
+                  <td className="py-3.5 uppercase text-[10px] tracking-wider text-[#7A6658] dark:text-[#d8c3a8]">
                     {offer.type || (offer.discountPercent ? `${offer.discountPercent}% OFF` : 'Fixed')}
                   </td>
-                  <td className="py-3.5 font-medium text-[#f5eee6]">
+                  <td className="py-3.5 font-medium text-[#2B2118] dark:text-[#f5eee6]">
                     ₹{(offer.minSpend || 0).toLocaleString()}
                   </td>
                   <td className="py-3.5">
-                    <span className="text-[#f5eee6] font-semibold">{offer.usageCount}</span>
-                    {offer.maxUses && <span className="text-[#a89582]"> / {offer.maxUses}</span>}
+                    <span className="text-[#2B2118] dark:text-[#f5eee6] font-semibold">{offer.usageCount}</span>
+                    {offer.maxUses && <span className="text-[#7A6658] dark:text-[#a89582]"> / {offer.maxUses}</span>}
                   </td>
-                  <td className="py-3.5 text-[11px]">
-                    {offer.validFrom} <span className="text-[#a89582]">to</span> {offer.validTo}
+                  <td className="py-3.5 text-[11px] text-[#7A6658] dark:text-[#a89582]">
+                    {offer.validFrom} <span className="text-[#7A6658] dark:text-[#a89582]">to</span> {offer.validTo}
                   </td>
                   <td className="py-3.5">
                     <button
                       onClick={() => handleToggleActive(offer)}
                       className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold cursor-pointer transition-colors ${
                         offer.isActive 
-                          ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/40 hover:bg-emerald-900/60' 
-                          : 'bg-neutral-800 text-neutral-400 border border-neutral-700 hover:bg-neutral-700'
+                          ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/40 hover:bg-emerald-100' 
+                          : 'bg-stone-100 dark:bg-neutral-800 text-stone-600 dark:text-neutral-400 border border-stone-200 dark:border-neutral-700 hover:bg-stone-200'
                       }`}
                     >
                       {offer.isActive ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
@@ -224,7 +224,7 @@ export const OwnerOffersPage: React.FC = () => {
                   <td className="py-3.5 text-right">
                     <button
                       onClick={() => handleDelete(offer.id)}
-                      className="p-1.5 rounded-lg text-rose-400 hover:text-rose-200 hover:bg-rose-950/40 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-rose-600 hover:text-rose-800 hover:bg-rose-50 dark:text-rose-400 dark:hover:text-rose-200 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
                       title="Retire campaign"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -239,16 +239,16 @@ export const OwnerOffersPage: React.FC = () => {
 
       {/* Launch Campaign Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#201511] border border-[#3a2820] rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2 text-[#efc9a5]">
-                <Sparkles className="w-5 h-5 text-[#b99470]" />
-                <h2 className="font-['Montserrat'] text-lg font-light text-[#f5eee6]">Launch New Campaign</h2>
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-lg w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <div className="flex items-center gap-2 text-[#2B2118] dark:text-[#efc9a5]">
+                <Sparkles className="w-5 h-5 text-[#B99470]" />
+                <h2 className="font-['Montserrat'] text-lg font-light text-[#2B2118] dark:text-[#f5eee6]">Launch New Campaign</h2>
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-[#a89582] hover:text-[#f5eee6]"
+                className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer"
               >
                 ✕
               </button>
@@ -257,22 +257,22 @@ export const OwnerOffersPage: React.FC = () => {
             <form onSubmit={handleCreateOffer} className="space-y-4 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Promo Code</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Promo Code</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. LUXURY20"
                     value={code}
                     onChange={(e) => setCode(e.target.value.toUpperCase())}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] font-mono uppercase focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] font-mono uppercase focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Campaign Type</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Campaign Type</label>
                   <select
                     value={offerType}
                     onChange={(e) => setOfferType(e.target.value as any)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#2a1a15] border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   >
                     <option value="percentage">Percentage Discount (%)</option>
                     <option value="fixed">Fixed Currency Discount (₹)</option>
@@ -283,92 +283,92 @@ export const OwnerOffersPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Campaign Title</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Campaign Title</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Autumn Equinox Sanctuary Privilege"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Client Terms / Notes</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Client Terms / Notes</label>
                 <input
                   type="text"
                   placeholder="e.g. Valid on hair coloring and skin rituals."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 {offerType === 'percentage' || offerType === 'first_visit' ? (
                   <div>
-                    <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Discount Percentage (%)</label>
+                    <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Discount Percentage (%)</label>
                     <input
                       type="number"
                       min="1"
                       max="100"
                       value={discountPercent}
                       onChange={(e) => setDiscountPercent(Number(e.target.value))}
-                      className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                      className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                     />
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Discount Amount (₹)</label>
+                    <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Discount Amount (₹)</label>
                     <input
                       type="number"
                       min="50"
                       value={discountAmount}
                       onChange={(e) => setDiscountAmount(Number(e.target.value))}
-                      className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                      className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                     />
                   </div>
                 )}
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Minimum Cart Total (₹)</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Minimum Cart Total (₹)</label>
                   <input
                     type="number"
                     min="0"
                     value={minSpend}
                     onChange={(e) => setMinSpend(Number(e.target.value))}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Valid From</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Valid From</label>
                   <input
                     type="date"
                     value={validFrom}
                     onChange={(e) => setValidFrom(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Valid To</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Valid To</label>
                   <input
                     type="date"
                     value={validTo}
                     onChange={(e) => setValidTo(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[#a89582] uppercase text-[10px] font-bold mb-1">Service Restriction (Optional)</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Service Restriction (Optional)</label>
                 <select
                   value={serviceId}
                   onChange={(e) => setServiceId(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#2a1a15] border border-white/10 text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 >
                   <option value="">Applicable across all salon rituals</option>
                   {services.map(s => (
@@ -377,18 +377,18 @@ export const OwnerOffersPage: React.FC = () => {
                 </select>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#E8DFD5] dark:border-white/10">
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-xs"
+                  className="px-4 py-2 text-xs border-[#E8DFD5] text-[#2B2118]"
                 >
                   Cancel
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold px-4 py-2 text-xs rounded-xl"
+                  className="bg-[#2B2118] hover:bg-[#1D1610] text-white font-semibold px-4 py-2 text-xs rounded-xl shadow-xs"
                 >
                   Publish Campaign
                 </Button>

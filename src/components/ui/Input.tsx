@@ -25,12 +25,12 @@ export const Input: React.FC<InputProps> = ({
 
   const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
 
-  const labelStyles = isDark ? 'text-[#a89582]' : 'text-[#41332B]';
-  const iconStyles = isDark ? 'text-[#a89582]' : 'text-[#806B5C]';
+  const labelStyles = isDark ? 'text-[#a89582]' : 'text-[#2B2118]';
+  const iconStyles = isDark ? 'text-[#a89582]' : 'text-[#7A6658]';
 
   const baseInputStyles = isDark
     ? 'bg-[#1c1410] text-[#f5eee6] placeholder-[#a89582]/40 border-[#38271e] hover:border-[#b99470]/40 focus:border-[#b99470] focus:ring-1 focus:ring-[#b99470]'
-    : 'bg-white text-[#241812] placeholder-[#806B5C]/50 border-[#41332B]/15 hover:border-[#41332B]/30 focus:border-[#41332B] focus:ring-1 focus:ring-[#41332B]';
+    : 'bg-white text-[#2B2118] placeholder-[#7A6658]/50 border-[#E8DFD5] hover:border-[#B99470]/50 focus:border-[#B99470] focus:ring-1 focus:ring-[#B99470]';
 
   const errorInputStyles = 'border-rose-500 focus:border-rose-500 focus:ring-1 focus:ring-rose-500';
 

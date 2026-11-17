@@ -40,10 +40,10 @@ export function DataTable<T>({
   if (isLoading) {
     return (
       <div className={`w-full py-16 flex flex-col items-center justify-center rounded-2xl border ${
-        isDark ? 'bg-[#201511] border-[#38271e] text-[#a89582]' : 'bg-white border-[#41332B]/10 text-[#806B5C]'
+        isDark ? 'bg-[#201511] border-[#38271e] text-[#a89582]' : 'bg-white border-[#E8DFD5] text-[#7A6658]'
       }`}>
         <div className={`w-6 h-6 border-2 border-t-transparent rounded-full animate-spin mb-3 ${
-          isDark ? 'border-[#b99470]' : 'border-[#41332B]'
+          isDark ? 'border-[#b99470]' : 'border-[#2B2118]'
         }`} />
         <span className="text-xs font-['Plus_Jakarta_Sans'] font-medium uppercase tracking-wider">
           Loading Data...
@@ -57,10 +57,10 @@ export function DataTable<T>({
       <div className={`w-full py-16 border rounded-2xl flex flex-col items-center justify-center text-center p-6 ${
         isDark
           ? 'bg-[#201511] border-[#38271e] text-[#a89582]'
-          : 'bg-white border-[#41332B]/10 text-[#806B5C]'
+          : 'bg-white border-[#E8DFD5] text-[#7A6658]'
       }`}>
         <span className={`font-['Montserrat'] text-sm uppercase tracking-wider mb-1 font-medium ${
-          isDark ? 'text-[#f5eee6]' : 'text-[#41332B]'
+          isDark ? 'text-[#f5eee6]' : 'text-[#2B2118]'
         }`}>
           {emptyMessage}
         </span>
@@ -73,21 +73,21 @@ export function DataTable<T>({
 
   const containerStyles = isDark
     ? 'border-[#38271e] bg-[#201511] text-[#f5eee6] shadow-xl'
-    : 'border-[#41332B]/10 bg-white text-[#241812] shadow-sm';
+    : 'border-[#E8DFD5] bg-white text-[#2B2118] shadow-xs';
 
   const headerStyles = isDark
     ? 'border-b border-[#38271e] bg-[#291d17] text-[#efc9a5]'
-    : 'border-b border-[#41332B]/10 bg-[#E8D8C7]/30 text-[#41332B]';
+    : 'border-b border-[#E8DFD5] bg-[#FAF8F5] text-[#2B2118]';
 
   const dividerStyles = isDark
     ? 'divide-y divide-[#38271e]/60'
-    : 'divide-y divide-[#41332B]/5';
+    : 'divide-y divide-[#E8DFD5]/60';
 
   const rowHoverStyles = (clickable?: boolean) => {
     if (isDark) {
       return clickable ? 'cursor-pointer hover:bg-[#2b1f19] active:bg-[#34241d]' : 'hover:bg-white/[0.02]';
     }
-    return clickable ? 'cursor-pointer hover:bg-[#F5EFE7]/80' : 'hover:bg-black/[0.01]';
+    return clickable ? 'cursor-pointer hover:bg-[#FAF8F5]' : 'hover:bg-[#FAF8F5]/50';
   };
 
   return (

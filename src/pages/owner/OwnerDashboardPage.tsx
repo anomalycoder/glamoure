@@ -175,28 +175,28 @@ export const OwnerDashboardPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           TOP HEADER & DATE SWITCHER
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
           <span className="font-['Montserrat'] text-[11px] font-semibold uppercase tracking-[0.2em] text-[#B99470] block mb-0.5">
             Executive Operations
           </span>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Salon Business Overview
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Operational dashboard synchronized with branch telemetry, queue state, and financial revenue.
           </p>
         </div>
 
         {/* Date Switcher Ribbon */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+          <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs">
             <button
               onClick={() => handleSetQuickDate('yesterday')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 dateViewMode === 'yesterday'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               Yesterday
@@ -205,8 +205,8 @@ export const OwnerDashboardPage: React.FC = () => {
               onClick={() => handleSetQuickDate('today')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 dateViewMode === 'today'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               Today
@@ -215,15 +215,15 @@ export const OwnerDashboardPage: React.FC = () => {
               onClick={() => handleSetQuickDate('tomorrow')}
               className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
                 dateViewMode === 'tomorrow'
-                  ? 'bg-[#41332B] text-white shadow-xs'
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
               }`}
             >
               Tomorrow
             </button>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-white/10 px-3 py-1.5 rounded-xl text-xs">
+          <div className="flex items-center gap-1.5 bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-white/10 px-3 py-1.5 rounded-xl text-xs">
             <Calendar className="w-3.5 h-3.5 text-[#B99470]" />
             <input
               type="date"
@@ -232,12 +232,12 @@ export const OwnerDashboardPage: React.FC = () => {
                 setSelectedDate(e.target.value);
                 setDateViewMode('custom');
               }}
-              className="bg-transparent text-xs text-[#41332B] dark:text-[#f5eee6] focus:outline-none cursor-pointer"
+              className="bg-transparent text-xs text-[#2B2118] dark:text-[#f5eee6] focus:outline-none cursor-pointer"
             />
           </div>
 
           <Link to="/owner/calendar">
-            <Button variant="outline" size="sm" className="text-xs border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6]">
+            <Button variant="outline" size="sm" className="text-xs border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6]">
               Full Calendar
             </Button>
           </Link>
@@ -248,58 +248,58 @@ export const OwnerDashboardPage: React.FC = () => {
           OPERATIONAL SUMMARY RIBBON (Compact 8 Metrics)
       ═════════════════════════════════════════════════════════════════════ */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Today's Rev</span>
-          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">₹{todayRevenue.toLocaleString('en-IN')}</p>
-          <span className="text-[9px] text-emerald-600 mt-0.5 flex items-center gap-0.5"><CheckCircle2 className="w-2.5 h-2.5" /> Realized</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Today's Rev</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] mt-0.5">₹{todayRevenue.toLocaleString('en-IN')}</p>
+          <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center gap-0.5"><CheckCircle2 className="w-2.5 h-2.5" /> Realized</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Schedule</span>
-          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{todayAppointmentsCount} Slots</p>
-          <span className="text-[9px] text-[#806B5C] mt-0.5">On Active Date</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Schedule</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{todayAppointmentsCount} Slots</p>
+          <span className="text-[9px] text-[#7A6658] dark:text-[#a89582] mt-0.5">On Active Date</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Clients</span>
-          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{totalCustomers}</p>
-          <span className="text-[9px] text-[#806B5C] mt-0.5">Registered</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Clients</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{totalCustomers}</p>
+          <span className="text-[9px] text-[#7A6658] dark:text-[#a89582] mt-0.5">Registered</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">New Guests</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">New Guests</span>
           <p className="text-base font-light font-['Montserrat'] text-emerald-600 dark:text-emerald-400 mt-0.5">+{newCustomers}</p>
-          <span className="text-[9px] text-emerald-600 mt-0.5">This Month</span>
+          <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5">This Month</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Artisans</span>
-          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{activeEmployees}</p>
-          <span className="text-[9px] text-emerald-600 mt-0.5">Active On-Floor</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Artisans</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{activeEmployees}</p>
+          <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5">Active On-Floor</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Pending</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Pending</span>
           <p className="text-base font-light font-['Montserrat'] text-amber-600 dark:text-amber-400 mt-0.5">{pendingAppointmentsCount}</p>
-          <span className="text-[9px] text-amber-600 mt-0.5">Need Action</span>
+          <span className="text-[9px] text-amber-600 dark:text-amber-400 mt-0.5">Need Action</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Cancel Rate</span>
-          <p className="text-base font-light font-['Montserrat'] text-[#41332B] dark:text-[#f5eee6] mt-0.5">{cancellationRate}%</p>
-          <span className="text-[9px] text-emerald-600 mt-0.5">&lt; 5% Target</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Cancel Rate</span>
+          <p className="text-base font-light font-['Montserrat'] text-[#2B2118] dark:text-[#f5eee6] mt-0.5">{cancellationRate}%</p>
+          <span className="text-[9px] text-emerald-600 dark:text-emerald-400 mt-0.5">&lt; 5% Target</span>
         </div>
 
-        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8D8C7]/80 dark:border-[#3a2820] flex flex-col justify-between">
-          <span className="text-[9px] uppercase tracking-wider text-[#806B5C] dark:text-[#a89582] font-semibold">Avg Ticket</span>
+        <div className="p-3 rounded-xl bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] flex flex-col justify-between shadow-xs">
+          <span className="text-[9px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Avg Ticket</span>
           <p className="text-base font-light font-['Montserrat'] text-[#B99470] mt-0.5">₹{averageBookingValue.toLocaleString('en-IN')}</p>
-          <span className="text-[9px] text-[#806B5C] mt-0.5">Per Booking</span>
+          <span className="text-[9px] text-[#7A6658] dark:text-[#a89582] mt-0.5">Per Booking</span>
         </div>
       </div>
 
       {/* ═════════════════════════════════════════════════════════════════════
           PENDING REQUESTS ALERT BANNER (If Any)
-      ═════════════════════════════════════════════ */}
+      ═════════════════════════════════════════════════════════════════════ */}
       {pendingRequests.length > 0 && (
         <Card className="p-4 bg-amber-50/70 dark:bg-amber-950/20 border-amber-200 dark:border-amber-800/40 space-y-3">
           <div className="flex items-center justify-between">
@@ -318,8 +318,8 @@ export const OwnerDashboardPage: React.FC = () => {
             {pendingRequests.slice(0, 2).map(req => (
               <div key={req.id} className="p-3 rounded-lg bg-white dark:bg-[#1a120e] border border-amber-200/80 dark:border-amber-900/50 flex items-center justify-between gap-3 text-xs">
                 <div>
-                  <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{req.customerName}</p>
-                  <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">
+                  <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{req.customerName}</p>
+                  <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">
                     {req.serviceName} • {req.appointmentDate} at {req.startTime} (₹{req.price})
                   </p>
                 </div>
@@ -336,7 +336,7 @@ export const OwnerDashboardPage: React.FC = () => {
                     variant="primary"
                     size="sm"
                     onClick={() => handleTransitionStatus(req, 'confirmed')}
-                    className="text-[11px] px-2.5 py-1 bg-[#41332B] text-white hover:bg-[#2b1810]"
+                    className="text-[11px] px-2.5 py-1 bg-[#2B2118] text-white hover:bg-[#1D1610]"
                   >
                     Accept
                   </Button>
@@ -353,14 +353,14 @@ export const OwnerDashboardPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Columns: Chronological Schedule Stream with Real-time Actions */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-4">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+                <h3 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
                   <Clock className="w-4 h-4 text-[#B99470]" />
                   Ritual Schedule for {selectedDate}
                 </h3>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                <p className="text-xs text-[#7A6658] dark:text-[#a89582]">
                   Interactive chronological stream with direct lifecycle status transitions.
                 </p>
               </div>
@@ -371,24 +371,24 @@ export const OwnerDashboardPage: React.FC = () => {
 
             <div className="space-y-3">
               {dateAppointments.length === 0 ? (
-                <div className="p-8 text-center text-[#806B5C] dark:text-[#a89582] bg-[#FAF7F2] dark:bg-white/5 rounded-xl border border-dashed border-[#E8D8C7] dark:border-white/10">
+                <div className="p-8 text-center text-[#7A6658] dark:text-[#a89582] bg-[#FAF8F5] dark:bg-white/5 rounded-xl border border-dashed border-[#E8DFD5] dark:border-white/10">
                   <Calendar className="w-8 h-8 mx-auto text-[#B99470]/60 mb-2" />
-                  <p className="font-medium text-sm text-[#41332B] dark:text-[#f5eee6]">No Appointments for {selectedDate}</p>
+                  <p className="font-medium text-sm text-[#2B2118] dark:text-[#f5eee6]">No Appointments for {selectedDate}</p>
                   <p className="text-xs mt-1">Switch date above or create a walk-in booking.</p>
                 </div>
               ) : (
                 dateAppointments.map(apt => (
                   <div
                     key={apt.id}
-                    className="p-3.5 rounded-xl bg-[#FAF6F1] dark:bg-white/[0.02] border border-[#E8D8C7] dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#B99470]/60 transition-all text-xs"
+                    className="p-3.5 rounded-xl bg-white dark:bg-white/[0.02] border border-[#E8DFD5] dark:border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-[#B99470] hover:shadow-xs transition-all text-xs"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="px-2.5 py-1.5 rounded-lg bg-[#E8D8C7]/50 dark:bg-[#41332B] text-[#41332B] dark:text-[#f5eee6] font-mono font-semibold shrink-0">
+                      <div className="px-2.5 py-1.5 rounded-lg bg-[#FAF8F5] dark:bg-[#41332B] text-[#2B2118] dark:text-[#f5eee6] font-mono font-semibold shrink-0 border border-[#E8DFD5] dark:border-transparent">
                         {apt.startTime}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="font-semibold text-sm text-[#41332B] dark:text-[#f5eee6]">{apt.customerName}</p>
+                          <p className="font-semibold text-sm text-[#2B2118] dark:text-[#f5eee6]">{apt.customerName}</p>
                           <Badge
                             variant="outline"
                             className={`text-[9px] uppercase ${
@@ -402,8 +402,8 @@ export const OwnerDashboardPage: React.FC = () => {
                             {apt.status.replace('_', ' ')}
                           </Badge>
                         </div>
-                        <p className="text-[11px] text-[#806B5C] dark:text-[#a89582] mt-0.5">
-                          {apt.serviceName} • Artisan: <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{apt.staffName}</span> • ₹{apt.price}
+                        <p className="text-[11px] text-[#7A6658] dark:text-[#a89582] mt-0.5">
+                          {apt.serviceName} • Artisan: <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{apt.staffName}</span> • ₹{apt.price}
                         </p>
                       </div>
                     </div>
@@ -416,7 +416,7 @@ export const OwnerDashboardPage: React.FC = () => {
                             variant="primary"
                             size="sm"
                             onClick={() => handleTransitionStatus(apt, 'confirmed')}
-                            className="text-[11px] px-2.5 py-1 bg-[#41332B] text-white"
+                            className="text-[11px] px-2.5 py-1 bg-[#2B2118] text-white hover:bg-[#1D1610]"
                           >
                             Accept
                           </Button>
@@ -424,7 +424,7 @@ export const OwnerDashboardPage: React.FC = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleCancelAppointment(apt)}
-                            className="text-[11px] px-2 py-1 text-red-600 border-red-200"
+                            className="text-[11px] px-2 py-1 text-red-600 border-red-200 hover:bg-red-50"
                           >
                             Decline
                           </Button>
@@ -445,7 +445,7 @@ export const OwnerDashboardPage: React.FC = () => {
                             variant="outline"
                             size="sm"
                             onClick={() => handleCancelAppointment(apt)}
-                            className="text-[11px] px-2 py-1 text-stone-500 border-stone-200"
+                            className="text-[11px] px-2 py-1 text-[#7A6658] border-[#E8DFD5] hover:bg-[#FAF8F5]"
                           >
                             Cancel
                           </Button>
@@ -481,7 +481,7 @@ export const OwnerDashboardPage: React.FC = () => {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-[11px] px-2.5 py-1 border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] flex items-center gap-1"
+                            className="text-[11px] px-2.5 py-1 border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] hover:bg-[#FAF8F5] flex items-center gap-1"
                           >
                             <Receipt className="w-3 h-3 text-[#B99470]" />
                             Receipt
@@ -496,13 +496,13 @@ export const OwnerDashboardPage: React.FC = () => {
           </Card>
 
           {/* Revenue Velocity Chart Strip */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-4">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+                <h3 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                   Weekly Revenue Velocity
                 </h3>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">Verified receipts across active payment gateways</p>
+                <p className="text-xs text-[#7A6658] dark:text-[#a89582]">Verified receipts across active payment gateways</p>
               </div>
               <span className="text-xs font-mono font-bold text-[#B99470]">
                 Total Realized: ₹{allPayments.reduce((acc, curr) => acc + curr.amount, 0).toLocaleString('en-IN')}
@@ -520,15 +520,15 @@ export const OwnerDashboardPage: React.FC = () => {
                 { day: 'Sun', date: 'Nov 17', amount: 29500, apts: 6 },
               ].map((d, idx) => (
                 <div key={idx} className="flex flex-col items-center gap-1 text-center">
-                  <span className="text-[10px] text-[#41332B] dark:text-[#f5eee6] font-mono">₹{(d.amount / 1000).toFixed(0)}k</span>
-                  <div className="w-full h-20 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent rounded-lg flex items-end p-1">
+                  <span className="text-[10px] text-[#2B2118] dark:text-[#f5eee6] font-mono">₹{(d.amount / 1000).toFixed(0)}k</span>
+                  <div className="w-full h-20 bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-transparent rounded-lg flex items-end p-1">
                     <div
                       className="w-full bg-gradient-to-t from-[#B99470] to-[#E8D8C7] rounded-md transition-all duration-500"
                       style={{ height: `${(d.amount / 40000) * 100}%` }}
                     />
                   </div>
-                  <span className="text-[10px] font-semibold text-[#41332B] dark:text-[#f5eee6]">{d.day}</span>
-                  <span className="text-[9px] text-[#806B5C]">{d.apts} apts</span>
+                  <span className="text-[10px] font-semibold text-[#2B2118] dark:text-[#f5eee6]">{d.day}</span>
+                  <span className="text-[9px] text-[#7A6658]">{d.apts} apts</span>
                 </div>
               ))}
             </div>
@@ -538,9 +538,9 @@ export const OwnerDashboardPage: React.FC = () => {
         {/* Right Column: Live Walk-In Queue, Popular Rituals & Artisan Floor Availability */}
         <div className="space-y-6">
           {/* Live Walk-In Queue */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
-              <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+              <h3 className="font-['Montserrat'] text-sm font-medium text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
                 <Clock className="w-4 h-4 text-[#B99470]" />
                 Live Walk-In Queue
               </h3>
@@ -551,16 +551,16 @@ export const OwnerDashboardPage: React.FC = () => {
 
             <div className="space-y-2">
               {queue.slice(0, 3).map(q => (
-                <div key={q.id} className="p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/[0.02] border border-[#E8D8C7] dark:border-white/5 flex items-center justify-between text-xs">
+                <div key={q.id} className="p-2.5 rounded-lg bg-[#FAF8F5] dark:bg-white/[0.02] border border-[#E8DFD5] dark:border-white/5 flex items-center justify-between text-xs">
                   <div>
-                    <p className="font-semibold text-[#41332B] dark:text-[#f5eee6]">#{q.position} {q.customerName}</p>
-                    <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">{q.serviceName}</p>
+                    <p className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">#{q.position} {q.customerName}</p>
+                    <p className="text-[10px] text-[#7A6658] dark:text-[#a89582]">{q.serviceName}</p>
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] uppercase font-bold text-[#B99470] block">
                       {q.status.replace('_', ' ')}
                     </span>
-                    <span className="text-[9px] text-[#806B5C]">{q.estimatedWaitMinutes}m wait</span>
+                    <span className="text-[9px] text-[#7A6658]">{q.estimatedWaitMinutes}m wait</span>
                   </div>
                 </div>
               ))}
@@ -568,19 +568,19 @@ export const OwnerDashboardPage: React.FC = () => {
           </Card>
 
           {/* Popular Rituals */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
-            <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-3 shadow-xs">
+            <h3 className="font-['Montserrat'] text-sm font-medium text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
               <Scissors className="w-4 h-4 text-[#B99470]" />
               Popular Rituals
             </h3>
             <div className="space-y-2.5">
               {popularServices.map((srv, idx) => (
-                <div key={idx} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5">
+                <div key={idx} className="flex items-center justify-between text-xs p-2.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/5">
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-[#41332B] dark:text-[#f5eee6] truncate">{srv.serviceName}</p>
-                    <p className="text-[10px] text-[#806B5C] dark:text-[#a89582]">{srv.count} bookings</p>
+                    <p className="font-medium text-[#2B2118] dark:text-[#f5eee6] truncate">{srv.serviceName}</p>
+                    <p className="text-[10px] text-[#7A6658] dark:text-[#a89582]">{srv.count} bookings</p>
                   </div>
-                  <span className="text-xs font-mono text-[#41332B] dark:text-[#f5eee6] font-semibold pl-2">
+                  <span className="text-xs font-mono text-[#2B2118] dark:text-[#f5eee6] font-semibold pl-2">
                     ₹{srv.revenue.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -589,9 +589,9 @@ export const OwnerDashboardPage: React.FC = () => {
           </Card>
 
           {/* Team Floor Availability */}
-          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#3a2820] space-y-3">
+          <Card className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-3 shadow-xs">
             <div className="flex items-center justify-between">
-              <h3 className="font-['Montserrat'] text-sm font-medium text-[#41332B] dark:text-[#f5eee6] flex items-center gap-2">
+              <h3 className="font-['Montserrat'] text-sm font-medium text-[#2B2118] dark:text-[#f5eee6] flex items-center gap-2">
                 <UserCheck className="w-4 h-4 text-[#B99470]" />
                 Artisan Floor Roster
               </h3>
@@ -602,14 +602,14 @@ export const OwnerDashboardPage: React.FC = () => {
 
             <div className="space-y-2">
               {branchStaff.slice(0, 4).map(st => (
-                <div key={st.id} className="p-2 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7]/60 dark:border-white/5 flex items-center justify-between text-xs">
+                <div key={st.id} className="p-2 rounded-lg bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/5 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-full bg-[#E8D8C7] text-[#41332B] flex items-center justify-center font-serif text-[10px] font-bold">
+                    <div className="w-6 h-6 rounded-full bg-[#FAF8F5] text-[#2B2118] border border-[#E8DFD5] flex items-center justify-center font-serif text-[10px] font-bold">
                       {st.displayName.charAt(0)}
                     </div>
                     <div>
-                      <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{st.displayName}</p>
-                      <p className="text-[10px] text-[#806B5C]">{st.title}</p>
+                      <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{st.displayName}</p>
+                      <p className="text-[10px] text-[#7A6658]">{st.title}</p>
                     </div>
                   </div>
                   <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-600 dark:text-emerald-400">

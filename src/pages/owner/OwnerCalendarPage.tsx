@@ -114,26 +114,26 @@ export const OwnerCalendarPage: React.FC = () => {
   return (
     <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7] dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Artisan Bay & Schedule Calendar
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Synchronized timeline view across suites, master colorists, and treatment suites.
           </p>
         </div>
 
         {/* 5 View Mode Pills (Day, Week, Month, Employee, Branch) */}
-        <div className="flex rounded-lg bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs overflow-x-auto">
+        <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs overflow-x-auto">
           {(['day', 'week', 'month', 'employee', 'branch'] as const).map(mode => (
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
-              className={`px-3 py-1.5 rounded-md font-medium capitalize transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg font-medium capitalize transition-all cursor-pointer ${
                 viewMode === mode 
-                  ? 'bg-white dark:bg-[#41332b] text-[#41332B] dark:text-[#efc9a5] shadow-xs' 
-                  : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B] dark:hover:text-[#f5eee6]'
+                  ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold' 
+                  : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118] dark:hover:text-[#f5eee6]'
               }`}
             >
               {mode} View
@@ -143,15 +143,15 @@ export const OwnerCalendarPage: React.FC = () => {
       </div>
 
       {/* Date Navigation & Controls */}
-      <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] flex flex-wrap items-center justify-between gap-4 text-xs shadow-xs">
+      <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] flex flex-wrap items-center justify-between gap-4 text-xs shadow-xs">
         <div className="flex items-center gap-3">
           <input
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="px-3 py-1.5 bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+            className="px-3 py-1.5 bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
           />
-          <span className="text-xs text-[#b99470] dark:text-[#efc9a5] font-semibold">
+          <span className="text-xs text-[#B99470] dark:text-[#efc9a5] font-semibold">
             {new Date(selectedDate).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' })}
           </span>
         </div>
@@ -161,7 +161,7 @@ export const OwnerCalendarPage: React.FC = () => {
             <select
               value={selectedStaffId}
               onChange={(e) => setSelectedStaffId(e.target.value)}
-              className="px-3 py-1.5 bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6]"
+              className="px-3 py-1.5 bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
             >
               <option value="all">All Artisans</option>
               {staff.map(s => (
@@ -174,7 +174,7 @@ export const OwnerCalendarPage: React.FC = () => {
             <select
               value={selectedBranchId}
               onChange={(e) => setSelectedBranchId(e.target.value)}
-              className="px-3 py-1.5 bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 rounded-xl text-[#41332B] dark:text-[#f5eee6]"
+              className="px-3 py-1.5 bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 rounded-xl text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
             >
               <option value="all">All Branches</option>
               {branches.map(b => (
@@ -190,7 +190,7 @@ export const OwnerCalendarPage: React.FC = () => {
               setSlotServiceId(services[0]?.id || '');
               setShowSlotModal(true);
             }}
-            className="bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-3 py-1.5 rounded-xl cursor-pointer"
+            className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e] font-semibold text-xs px-3.5 py-1.5 rounded-xl cursor-pointer shadow-xs"
           >
             <Plus className="w-3.5 h-3.5 mr-1" />
             <span>Book Slot</span>
@@ -202,18 +202,18 @@ export const OwnerCalendarPage: React.FC = () => {
           VIEW 1: DAY TIMELINE (ARTISAN BAYS)
       ═══════════════════════════════════════════════════════════════ */}
       {(viewMode === 'day' || viewMode === 'employee') && (
-        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] overflow-x-auto shadow-xs">
+        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] overflow-x-auto shadow-xs">
           <div className="min-w-[700px]">
             {/* Staff Headers */}
-            <div className="grid grid-cols-12 gap-2 pb-3 border-b border-[#E8D8C7] dark:border-white/10 text-xs">
-              <div className="col-span-2 text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold">Artisan Bay</div>
-              <div className="col-span-10 grid grid-cols-11 gap-1 text-center font-mono text-[10px] text-[#806B5C] dark:text-[#a89582]">
+            <div className="grid grid-cols-12 gap-2 pb-3 border-b border-[#E8DFD5] dark:border-white/10 text-xs">
+              <div className="col-span-2 text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold">Artisan Bay</div>
+              <div className="col-span-10 grid grid-cols-11 gap-1 text-center font-mono text-[10px] text-[#7A6658] dark:text-[#a89582]">
                 {hours.map(h => <span key={h}>{h}</span>)}
               </div>
             </div>
 
             {/* Artisan Rows */}
-            <div className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5 pt-2">
+            <div className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5 pt-2">
               {staff
                 .filter(s => selectedStaffId === 'all' || s.id === selectedStaffId)
                 .map(artisan => {
@@ -224,11 +224,11 @@ export const OwnerCalendarPage: React.FC = () => {
                   return (
                     <div key={artisan.id} className="grid grid-cols-12 gap-2 py-3 items-center">
                       <div className="col-span-2">
-                        <p className="font-semibold text-xs text-[#41332B] dark:text-[#f5eee6] truncate">{artisan.displayName}</p>
-                        <p className="text-[10px] text-[#b99470] truncate">{artisan.title}</p>
+                        <p className="font-semibold text-xs text-[#2B2118] dark:text-[#f5eee6] truncate">{artisan.displayName}</p>
+                        <p className="text-[10px] text-[#B99470] truncate">{artisan.title}</p>
                       </div>
 
-                      <div className="col-span-10 grid grid-cols-11 gap-1 relative h-12 bg-[#FAF6F1] dark:bg-white/[0.01] rounded-lg p-1 border border-[#E8D8C7] dark:border-white/5">
+                      <div className="col-span-10 grid grid-cols-11 gap-1 relative h-12 bg-[#FAF8F5] dark:bg-white/[0.01] rounded-lg p-1 border border-[#E8DFD5] dark:border-white/5">
                         {dayAppointments.map(apt => {
                           const [startH] = apt.startTime.split(':').map(Number);
                           const colStart = Math.max(1, startH - 8);
@@ -240,12 +240,12 @@ export const OwnerCalendarPage: React.FC = () => {
                               style={{
                                 gridColumn: `${colStart} / span ${colSpan}`,
                               }}
-                              className="h-full rounded-md bg-[#FAF6F1] dark:bg-[#41332b] border border-[#b99470] dark:border-[#b99470]/60 p-1.5 flex flex-col justify-center text-[10px] overflow-hidden shadow-sm"
+                              className="h-full rounded-md bg-white dark:bg-[#34241c] border border-[#E8DFD5] dark:border-[#b99470]/60 p-1.5 flex flex-col justify-center text-[10px] overflow-hidden shadow-xs hover:border-[#B99470] transition-colors"
                             >
-                              <span className="font-semibold text-[#41332B] dark:text-[#efc9a5] truncate leading-tight">
+                              <span className="font-semibold text-[#2B2118] dark:text-[#efc9a5] truncate leading-tight">
                                 {apt.customerName}
                               </span>
-                              <span className="text-[9px] text-[#806B5C] dark:text-[#c2b3a3] truncate">
+                              <span className="text-[9px] text-[#7A6658] dark:text-[#c2b3a3] truncate">
                                 {apt.serviceName} ({apt.startTime})
                               </span>
                             </div>
@@ -264,29 +264,29 @@ export const OwnerCalendarPage: React.FC = () => {
           VIEW 2: WEEK TIMELINE
       ═══════════════════════════════════════════════════════════════ */}
       {viewMode === 'week' && (
-        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] overflow-x-auto shadow-xs">
+        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] overflow-x-auto shadow-xs">
           <div className="grid grid-cols-7 gap-3 min-w-[700px]">
             {weekDays.map(d => {
               const dayApts = allAppointments.filter(a => a.appointmentDate === d.date && a.status !== 'cancelled');
               const isToday = d.date === selectedDate;
 
               return (
-                <div key={d.date} className={`p-3 rounded-xl border ${isToday ? 'bg-[#FAF6F1] dark:bg-[#41332b]/30 border-[#b99470]' : 'bg-[#FAF7F2] dark:bg-white/[0.02] border-[#E8D8C7] dark:border-[#3a2820]'}`}>
-                  <div className="text-center pb-2 border-b border-[#E8D8C7] dark:border-white/10">
-                    <p className="text-[10px] uppercase font-bold text-[#806B5C] dark:text-[#a89582]">{d.name}</p>
-                    <p className={`font-mono text-sm font-semibold ${isToday ? 'text-[#b99470] dark:text-[#efc9a5]' : 'text-[#41332B] dark:text-[#f5eee6]'}`}>
+                <div key={d.date} className={`p-3 rounded-xl border ${isToday ? 'bg-white dark:bg-[#34241c]/40 border-[#B99470] shadow-xs' : 'bg-[#FAF8F5] dark:bg-white/[0.02] border-[#E8DFD5] dark:border-[#3a2820]'}`}>
+                  <div className="text-center pb-2 border-b border-[#E8DFD5] dark:border-white/10">
+                    <p className="text-[10px] uppercase font-bold text-[#7A6658] dark:text-[#a89582]">{d.name}</p>
+                    <p className={`font-mono text-sm font-semibold ${isToday ? 'text-[#B99470] dark:text-[#efc9a5]' : 'text-[#2B2118] dark:text-[#f5eee6]'}`}>
                       {d.date.split('-')[2]}
                     </p>
                   </div>
 
                   <div className="space-y-1.5 pt-2 text-[10px]">
                     {dayApts.length === 0 ? (
-                      <p className="text-[#806B5C] dark:text-[#a89582] italic text-center py-4">No rituals</p>
+                      <p className="text-[#7A6658] dark:text-[#a89582] italic text-center py-4">No rituals</p>
                     ) : (
                       dayApts.map(a => (
-                        <div key={a.id} className="p-1.5 rounded bg-white dark:bg-white/5 border border-[#E8D8C7] dark:border-white/5">
-                          <p className="font-semibold text-[#41332B] dark:text-[#efc9a5] truncate">{a.customerName}</p>
-                          <p className="text-[#806B5C] dark:text-[#a89582] truncate">{a.startTime} • {a.staffName}</p>
+                        <div key={a.id} className="p-1.5 rounded bg-white dark:bg-white/5 border border-[#E8DFD5] dark:border-white/5">
+                          <p className="font-semibold text-[#2B2118] dark:text-[#efc9a5] truncate">{a.customerName}</p>
+                          <p className="text-[#7A6658] dark:text-[#a89582] truncate">{a.startTime} • {a.staffName}</p>
                         </div>
                       ))
                     )}
@@ -302,11 +302,11 @@ export const OwnerCalendarPage: React.FC = () => {
           VIEW 3: MONTH TIMELINE
       ═══════════════════════════════════════════════════════════════ */}
       {viewMode === 'month' && (
-        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-4 shadow-xs">
-          <h2 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6]">November 2026 Monthly Grid</h2>
+        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
+          <h2 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-medium">November 2026 Monthly Grid</h2>
           <div className="grid grid-cols-7 gap-2 text-center text-xs">
             {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(h => (
-              <span key={h} className="text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold pb-2">{h}</span>
+              <span key={h} className="text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold pb-2">{h}</span>
             ))}
             {Array.from({ length: 30 }, (_, i) => {
               const dayNum = i + 1;
@@ -321,12 +321,12 @@ export const OwnerCalendarPage: React.FC = () => {
                     setViewMode('day');
                   }}
                   className={`p-2 rounded-xl border min-h-[60px] flex flex-col justify-between cursor-pointer transition-all ${
-                    dateStr === selectedDate ? 'bg-[#FAF6F1] dark:bg-[#41332b] border-[#b99470]' : 'bg-[#FAF7F2] dark:bg-white/[0.02] border-[#E8D8C7] dark:border-[#3a2820] hover:border-[#b99470]/50'
+                    dateStr === selectedDate ? 'bg-white dark:bg-[#34241c] border-[#B99470] shadow-xs' : 'bg-[#FAF8F5] dark:bg-white/[0.02] border-[#E8DFD5] dark:border-[#3a2820] hover:border-[#B99470]/50'
                   }`}
                 >
-                  <span className="font-mono text-xs font-semibold text-[#41332B] dark:text-[#f5eee6]">{dayNum}</span>
+                  <span className="font-mono text-xs font-semibold text-[#2B2118] dark:text-[#f5eee6]">{dayNum}</span>
                   {count > 0 && (
-                    <span className="px-1.5 py-0.5 rounded-full bg-[#b99470]/30 text-[#41332B] dark:text-[#efc9a5] text-[9px] font-bold">
+                    <span className="px-1.5 py-0.5 rounded-full bg-[#F2ECE4] border border-[#E8DFD5] text-[#2B2118] dark:bg-[#b99470]/30 dark:text-[#efc9a5] text-[9px] font-bold">
                       {count} apts
                     </span>
                   )}
@@ -345,22 +345,22 @@ export const OwnerCalendarPage: React.FC = () => {
           {branches.map(b => {
             const branchApts = allAppointments.filter(a => a.branchId === b.id && a.appointmentDate === selectedDate && a.status !== 'cancelled');
             return (
-              <Card key={b.id} className="p-5 bg-white dark:bg-[#201511] border-[#E8D8C7] dark:border-[#3a2820] space-y-3 shadow-xs">
-                <div className="flex justify-between items-center pb-2 border-b border-[#E8D8C7] dark:border-white/10">
-                  <h3 className="font-semibold text-sm text-[#41332B] dark:text-[#efc9a5]">{b.name}</h3>
+              <Card key={b.id} className="p-5 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-3 shadow-xs">
+                <div className="flex justify-between items-center pb-2 border-b border-[#E8DFD5] dark:border-white/10">
+                  <h3 className="font-semibold text-sm text-[#2B2118] dark:text-[#efc9a5]">{b.name}</h3>
                   <Badge variant="outline" className="text-[10px]">{branchApts.length} Slots Today</Badge>
                 </div>
                 <div className="space-y-2 text-xs">
                   {branchApts.length === 0 ? (
-                    <p className="text-xs text-[#806B5C] dark:text-[#a89582] py-4 text-center">No reservations for this branch today.</p>
+                    <p className="text-xs text-[#7A6658] dark:text-[#a89582] py-4 text-center">No reservations for this branch today.</p>
                   ) : (
                     branchApts.map(a => (
-                      <div key={a.id} className="p-2.5 rounded-lg bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-transparent flex justify-between items-center">
+                      <div key={a.id} className="p-2.5 rounded-lg bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-transparent flex justify-between items-center">
                         <div>
-                          <p className="font-semibold text-[#41332B] dark:text-[#f5eee6]">{a.customerName} ({a.serviceName})</p>
-                          <p className="text-[11px] text-[#806B5C] dark:text-[#a89582]">{a.startTime} • Artisan: {a.staffName}</p>
+                          <p className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{a.customerName} ({a.serviceName})</p>
+                          <p className="text-[11px] text-[#7A6658] dark:text-[#a89582]">{a.startTime} • Artisan: {a.staffName}</p>
                         </div>
-                        <span className="font-mono text-xs text-[#41332B] dark:text-[#efc9a5] font-semibold">₹{a.price}</span>
+                        <span className="font-mono text-xs text-[#2B2118] dark:text-[#efc9a5] font-semibold">₹{a.price}</span>
                       </div>
                     ))
                   )}
@@ -373,33 +373,33 @@ export const OwnerCalendarPage: React.FC = () => {
 
       {/* Quick Booking Modal */}
       {showSlotModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-[#201511] border border-[#E8D8C7] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7] dark:border-white/10">
-              <h3 className="font-['Montserrat'] text-base text-[#41332B] dark:text-[#f5eee6] font-medium">Quick Bay Reservation</h3>
-              <button onClick={() => setShowSlotModal(false)} className="text-[#806B5C] dark:text-[#a89582] hover:text-[#41332B] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5] dark:border-white/10">
+              <h3 className="font-['Montserrat'] text-base text-[#2B2118] dark:text-[#f5eee6] font-medium">Quick Bay Reservation</h3>
+              <button onClick={() => setShowSlotModal(false)} className="text-[#7A6658] dark:text-[#a89582] hover:text-[#2B2118] dark:hover:text-[#f5eee6] cursor-pointer">✕</button>
             </div>
 
             <form onSubmit={handleCreateSlotAppointment} className="space-y-3 text-xs">
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Name</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Guest Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Ananya Pandey"
                   value={slotCustomerName}
                   onChange={(e) => setSlotCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Ritual</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Ritual</label>
                   <select
                     value={slotServiceId}
                     onChange={(e) => setSlotServiceId(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   >
                     {services.map(s => (
                       <option key={s.id} value={s.id}>{s.name} ({s.durationMinutes}m)</option>
@@ -408,11 +408,11 @@ export const OwnerCalendarPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Stylist Bay</label>
+                  <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Stylist Bay</label>
                   <select
                     value={slotStaffId}
                     onChange={(e) => setSlotStaffId(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-[#2a1a15] border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                    className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-[#2a1a15] border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                   >
                     {staff.map(s => (
                       <option key={s.id} value={s.id}>{s.displayName}</option>
@@ -422,21 +422,21 @@ export const OwnerCalendarPage: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[#806B5C] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Time</label>
+                <label className="block text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] font-bold mb-1">Time</label>
                 <input
                   type="time"
                   required
                   value={slotTime}
                   onChange={(e) => setSlotTime(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-[#FAF6F1] dark:bg-white/5 border border-[#E8D8C7] dark:border-white/10 text-[#41332B] dark:text-[#f5eee6] focus:outline-none focus:border-[#b99470]"
+                  className="w-full px-3 py-2 rounded-xl bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-white/10 text-[#2B2118] dark:text-[#f5eee6] focus:outline-none focus:border-[#B99470]"
                 />
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-3">
-                <Button type="button" variant="outline" onClick={() => setShowSlotModal(false)} className="text-xs px-3 py-1.5 cursor-pointer">
+                <Button type="button" variant="outline" onClick={() => setShowSlotModal(false)} className="text-xs px-3 py-1.5 cursor-pointer border-[#E8DFD5] text-[#2B2118]">
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-[#b99470] hover:bg-[#a37f5d] text-white font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer">
+                <Button type="submit" className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:hover:bg-[#a37f5d] dark:text-[#18110e] font-semibold text-xs px-4 py-1.5 rounded-xl cursor-pointer shadow-xs">
                   Reserve Slot
                 </Button>
               </div>

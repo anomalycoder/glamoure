@@ -178,23 +178,23 @@ export const OwnerSettingsPage: React.FC = () => {
       {/* ═════════════════════════════════════════════════════════════════════
           HEADER & SUB-NAV TABS
       ═════════════════════════════════════════════════════════════════════ */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8D8C7]/80 dark:border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#38271e]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#41332B] dark:text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Salon Settings & Scheduling Policies
           </h1>
-          <p className="text-xs text-[#806B5C] dark:text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Operational rules, branch operating hours, temporary closures with conflict impact detection, and booking limits.
           </p>
         </div>
 
-        <div className="flex rounded-xl bg-[#FAF6F1] dark:bg-white/5 p-1 border border-[#E8D8C7] dark:border-white/10 text-xs">
+        <div className="flex rounded-xl bg-[#F2ECE4] dark:bg-white/5 p-1 border border-[#E8DFD5] dark:border-white/10 text-xs">
           <button
             onClick={() => setActiveTab('profile')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'profile'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
             }`}
           >
             Atelier Profile & Policies
@@ -203,8 +203,8 @@ export const OwnerSettingsPage: React.FC = () => {
             onClick={() => setActiveTab('hours')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'hours'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
             }`}
           >
             Operating Hours & Buffers
@@ -213,8 +213,8 @@ export const OwnerSettingsPage: React.FC = () => {
             onClick={() => setActiveTab('closures')}
             className={`px-3 py-1.5 rounded-lg font-medium transition-colors cursor-pointer ${
               activeTab === 'closures'
-                ? 'bg-[#41332B] text-white shadow-xs'
-                : 'text-[#806B5C] dark:text-[#c2b3a3] hover:text-[#41332B]'
+                ? 'bg-white dark:bg-[#34241c] text-[#2B2118] dark:text-[#efc9a5] shadow-xs font-semibold'
+                : 'text-[#7A6658] dark:text-[#c2b3a3] hover:text-[#2B2118]'
             }`}
           >
             Holidays & Impact Check
@@ -227,94 +227,94 @@ export const OwnerSettingsPage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'profile' && (
         <form onSubmit={handleSaveProfile} className="space-y-6">
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-5">
-            <div className="flex items-center gap-2 pb-3 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-[#E8DFD5]/60 dark:border-[#38271e]">
               <Building className="w-4 h-4 text-[#B99470]" />
-              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+              <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                 General Atelier Profile
               </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Salon Name</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Salon Name</label>
                 <input
                   type="text"
                   required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Official Email</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Official Email</label>
                 <input
                   type="email"
                   required
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Concierge Phone</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Concierge Phone</label>
                 <input
                   type="text"
                   required
                   value={formData.phone}
                   onChange={e => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Currency & Settlement</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Currency & Settlement</label>
                 <input
                   type="text"
                   disabled
                   value="INR (₹) - Indian Rupee"
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7]/60 dark:border-white/10 bg-[#FAF7F2]/50 dark:bg-white/5 text-[#806B5C]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5]/60 dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#7A6658]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Address Line</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Address Line</label>
                 <input
                   type="text"
                   value={formData.address}
                   onChange={e => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">City & State</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">City & State</label>
                 <input
                   type="text"
                   value={`${formData.city}, Telangana`}
                   onChange={e => setFormData({ ...formData, city: e.target.value })}
-                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="font-medium text-[#41332B] dark:text-[#f5eee6] text-xs">Editorial Brand Story</label>
+              <label className="font-medium text-[#2B2118] dark:text-[#f5eee6] text-xs">Editorial Brand Story</label>
               <textarea
                 rows={3}
                 value={formData.description}
                 onChange={e => setFormData({ ...formData, description: e.target.value })}
-                className="w-full mt-1 p-2.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-xs text-[#41332B] dark:text-[#f5eee6]"
+                className="w-full mt-1 p-2.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-xs text-[#2B2118] dark:text-[#f5eee6]"
               />
             </div>
           </Card>
 
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-5">
-            <div className="flex items-center gap-2 pb-3 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-5">
+            <div className="flex items-center gap-2 pb-3 border-b border-[#E8DFD5]/60 dark:border-[#38271e]">
               <Sliders className="w-4 h-4 text-[#B99470]" />
-              <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+              <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                 Reservation, Deposit & Cancellation Rules
               </h2>
             </div>
@@ -326,11 +326,11 @@ export const OwnerSettingsPage: React.FC = () => {
                     type="checkbox"
                     checked={formData.allowOnlineBooking}
                     onChange={e => setFormData({ ...formData, allowOnlineBooking: e.target.checked })}
-                    className="mt-0.5 rounded border-[#E8D8C7] text-[#41332B]"
+                    className="mt-0.5 rounded border-[#E8DFD5] text-[#2B2118]"
                   />
                   <div>
-                    <span className="font-medium text-[#41332B] dark:text-[#f5eee6] block">Enable Online Guest Booking</span>
-                    <span className="text-[#806B5C] dark:text-[#a89582] text-[11px]">Allow guests to reserve time slots directly via portal.</span>
+                    <span className="font-medium text-[#2B2118] dark:text-[#f5eee6] block">Enable Online Guest Booking</span>
+                    <span className="text-[#7A6658] dark:text-[#a89582] text-[11px]">Allow guests to reserve time slots directly via portal.</span>
                   </div>
                 </label>
 
@@ -339,11 +339,11 @@ export const OwnerSettingsPage: React.FC = () => {
                     type="checkbox"
                     checked={formData.requireDeposit}
                     onChange={e => setFormData({ ...formData, requireDeposit: e.target.checked })}
-                    className="mt-0.5 rounded border-[#E8D8C7] text-[#41332B]"
+                    className="mt-0.5 rounded border-[#E8DFD5] text-[#2B2118]"
                   />
                   <div>
-                    <span className="font-medium text-[#41332B] dark:text-[#f5eee6] block">Require Advance Deposit</span>
-                    <span className="text-[#806B5C] dark:text-[#a89582] text-[11px]">Collect security token upon booking to minimize no-shows.</span>
+                    <span className="font-medium text-[#2B2118] dark:text-[#f5eee6] block">Require Advance Deposit</span>
+                    <span className="text-[#7A6658] dark:text-[#a89582] text-[11px]">Collect security token upon booking to minimize no-shows.</span>
                   </div>
                 </label>
 
@@ -352,47 +352,47 @@ export const OwnerSettingsPage: React.FC = () => {
                     type="checkbox"
                     checked={formData.autoConfirmAppointments}
                     onChange={e => setFormData({ ...formData, autoConfirmAppointments: e.target.checked })}
-                    className="mt-0.5 rounded border-[#E8D8C7] text-[#41332B]"
+                    className="mt-0.5 rounded border-[#E8DFD5] text-[#2B2118]"
                   />
                   <div>
-                    <span className="font-medium text-[#41332B] dark:text-[#f5eee6] block">Auto-Confirm Eligible Bookings</span>
-                    <span className="text-[#806B5C] dark:text-[#a89582] text-[11px]">Bypass pending review for verified returning guests.</span>
+                    <span className="font-medium text-[#2B2118] dark:text-[#f5eee6] block">Auto-Confirm Eligible Bookings</span>
+                    <span className="text-[#7A6658] dark:text-[#a89582] text-[11px]">Bypass pending review for verified returning guests.</span>
                   </div>
                 </label>
               </div>
 
               <div className="space-y-3">
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Deposit Percentage (%)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Deposit Percentage (%)</label>
                   <input
                     type="number"
                     min={0}
                     max={100}
                     value={formData.depositPercentage}
                     onChange={e => setFormData({ ...formData, depositPercentage: Number(e.target.value) })}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
 
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Cancellation Notice Window (Hours)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Cancellation Notice Window (Hours)</label>
                   <input
                     type="number"
                     min={1}
                     max={72}
                     value={formData.cancellationNoticeHours}
                     onChange={e => setFormData({ ...formData, cancellationNoticeHours: Number(e.target.value) })}
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                   />
                 </div>
 
                 <div>
-                  <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Statutory GST Rate (%)</label>
+                  <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Statutory GST Rate (%)</label>
                   <input
                     type="number"
                     value={formData.taxRatePercentage}
                     disabled
-                    className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7]/60 dark:border-white/10 bg-[#FAF7F2]/50 dark:bg-white/5 text-[#806B5C]"
+                    className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5]/60 dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#7A6658]"
                   />
                 </div>
               </div>
@@ -400,7 +400,7 @@ export const OwnerSettingsPage: React.FC = () => {
           </Card>
 
           <div className="flex justify-end">
-            <Button type="submit" variant="primary" size="sm" className="bg-[#41332B] text-white flex items-center gap-1.5">
+            <Button type="submit" variant="primary" size="sm" className="bg-[#2B2118] text-white flex items-center gap-1.5">
               <Save className="w-3.5 h-3.5" />
               Save Atelier Configuration
             </Button>
@@ -413,19 +413,19 @@ export const OwnerSettingsPage: React.FC = () => {
       ═════════════════════════════════════════════ */}
       {activeTab === 'hours' && (
         <div className="space-y-6">
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5]/60 dark:border-[#38271e]">
               <div>
-                <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+                <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                   Weekly Atelier Operating Hours
                 </h2>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                <p className="text-xs text-[#7A6658] dark:text-[#a89582]">
                   Sets the master schedule boundary for staff availability and online customer booking slots.
                 </p>
               </div>
             </div>
 
-            <div className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5 text-xs">
+            <div className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5 text-xs">
               {operatingHours.map((oh, idx) => (
                 <div key={oh.day} className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="w-32 flex items-center gap-2">
@@ -437,9 +437,9 @@ export const OwnerSettingsPage: React.FC = () => {
                         updated[idx].isOpen = e.target.checked;
                         setOperatingHours(updated);
                       }}
-                      className="rounded border-[#E8D8C7] text-[#41332B]"
+                      className="rounded border-[#E8DFD5] text-[#2B2118]"
                     />
-                    <span className="font-medium text-[#41332B] dark:text-[#f5eee6]">{oh.day}</span>
+                    <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{oh.day}</span>
                   </div>
 
                   {oh.isOpen ? (
@@ -452,9 +452,9 @@ export const OwnerSettingsPage: React.FC = () => {
                           updated[idx].open = e.target.value;
                           setOperatingHours(updated);
                         }}
-                        className="p-1.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                        className="p-1.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                       />
-                      <span className="text-[#806B5C]">to</span>
+                      <span className="text-[#7A6658]">to</span>
                       <input
                         type="time"
                         value={oh.close}
@@ -463,11 +463,11 @@ export const OwnerSettingsPage: React.FC = () => {
                           updated[idx].close = e.target.value;
                           setOperatingHours(updated);
                         }}
-                        className="p-1.5 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                        className="p-1.5 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                       />
                     </div>
                   ) : (
-                    <span className="text-[#806B5C] italic">Closed for Deep Atelier Reset</span>
+                    <span className="text-[#7A6658] italic">Closed for Deep Atelier Reset</span>
                   )}
 
                   <Badge variant="outline" className="text-[10px] w-20 text-center">
@@ -478,47 +478,47 @@ export const OwnerSettingsPage: React.FC = () => {
             </div>
           </Card>
 
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-4">
-            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-4">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
               Buffer Times & Booking Advance Limits
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Chair Prep Buffer (Mins)</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Chair Prep Buffer (Mins)</label>
                 <input
                   type="number"
                   min={5}
                   step={5}
                   value={formData.bufferMinutesBetweenAppointments}
                   onChange={e => setFormData({ ...formData, bufferMinutesBetweenAppointments: Number(e.target.value) })}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
-                <p className="text-[10px] text-[#806B5C] mt-1">Automatic station sanitation window between appointments.</p>
+                <p className="text-[10px] text-[#7A6658] mt-1">Automatic station sanitation window between appointments.</p>
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Min Advance Notice (Hours)</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Min Advance Notice (Hours)</label>
                 <input
                   type="number"
                   min={1}
                   value={formData.minAdvanceNoticeHours}
                   onChange={e => setFormData({ ...formData, minAdvanceNoticeHours: Number(e.target.value) })}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
-                <p className="text-[10px] text-[#806B5C] mt-1">Prevents last-minute bookings without artisan prep.</p>
+                <p className="text-[10px] text-[#7A6658] mt-1">Prevents last-minute bookings without artisan prep.</p>
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Max Future Window (Days)</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Max Future Window (Days)</label>
                 <input
                   type="number"
                   min={7}
                   max={180}
                   value={formData.maxAdvanceBookingDays}
                   onChange={e => setFormData({ ...formData, maxAdvanceBookingDays: Number(e.target.value) })}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
-                <p className="text-[10px] text-[#806B5C] mt-1">Limits how far in advance guests can schedule.</p>
+                <p className="text-[10px] text-[#7A6658] mt-1">Limits how far in advance guests can schedule.</p>
               </div>
             </div>
           </Card>
@@ -528,7 +528,7 @@ export const OwnerSettingsPage: React.FC = () => {
               onClick={() => showToast('Operating Schedule Saved', 'Weekly hours and station buffers updated.')}
               variant="primary"
               size="sm"
-              className="bg-[#41332B] text-white"
+              className="bg-[#2B2118] hover:bg-[#1D1610] text-white dark:bg-[#b99470] dark:text-[#18110e]"
             >
               Update Scheduling Engine
             </Button>
@@ -541,13 +541,13 @@ export const OwnerSettingsPage: React.FC = () => {
       ═════════════════════════════════════════════════════════════════════ */}
       {activeTab === 'closures' && (
         <div className="space-y-6">
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8D8C7]/60 dark:border-[#38271e]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E8DFD5]/60 dark:border-[#38271e]">
               <div>
-                <h2 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+                <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                   Schedule Temporary Closure & Conflict Impact Check
                 </h2>
-                <p className="text-xs text-[#806B5C] dark:text-[#a89582]">
+                <p className="text-xs text-[#7A6658] dark:text-[#a89582]">
                   When adding a closure date, Glamouré immediately scans the database for affected client reservations.
                 </p>
               </div>
@@ -555,30 +555,30 @@ export const OwnerSettingsPage: React.FC = () => {
 
             <form onSubmit={handleAddClosure} className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs items-end">
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Closure Event Name</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Closure Event Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Master Artisan Masterclass"
                   value={newClosureName}
                   onChange={e => setNewClosureName(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <label className="font-medium text-[#41332B] dark:text-[#f5eee6]">Closure Date</label>
+                <label className="font-medium text-[#2B2118] dark:text-[#f5eee6]">Closure Date</label>
                 <input
                   type="date"
                   required
                   value={newClosureDate}
                   onChange={e => setNewClosureDate(e.target.value)}
-                  className="w-full mt-1 p-2 rounded-lg border border-[#E8D8C7] dark:border-white/10 bg-[#FAF7F2] dark:bg-white/5 text-[#41332B] dark:text-[#f5eee6]"
+                  className="w-full mt-1 p-2 rounded-lg border border-[#E8DFD5] dark:border-white/10 bg-[#FAF8F5] dark:bg-white/5 text-[#2B2118] dark:text-[#f5eee6]"
                 />
               </div>
 
               <div>
-                <Button type="submit" variant="primary" size="sm" className="w-full bg-[#41332B] text-white">
+                <Button type="submit" variant="primary" size="sm" className="w-full bg-[#2B2118] text-white">
                   Schedule Closure
                 </Button>
               </div>
@@ -613,16 +613,16 @@ export const OwnerSettingsPage: React.FC = () => {
             )}
           </Card>
 
-          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8D8C7]/80 dark:border-[#38271e] space-y-3">
-            <h3 className="font-['Montserrat'] text-base font-light text-[#41332B] dark:text-[#f5eee6]">
+          <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#38271e] space-y-3">
+            <h3 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
               Configured Atelier Closures & Holidays
             </h3>
-            <div className="divide-y divide-[#E8D8C7]/50 dark:divide-white/5 text-xs">
+            <div className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5 text-xs">
               {closures.map(closure => (
                 <div key={closure.id} className="py-3 flex items-center justify-between">
                   <div>
-                    <p className="font-medium text-[#41332B] dark:text-[#f5eee6]">{closure.name}</p>
-                    <p className="text-[11px] text-[#806B5C]">{closure.date}</p>
+                    <p className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{closure.name}</p>
+                    <p className="text-[11px] text-[#7A6658]">{closure.date}</p>
                   </div>
                   <button
                     onClick={() => handleDeleteClosure(closure.id)}

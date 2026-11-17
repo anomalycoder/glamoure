@@ -132,12 +132,12 @@ export const OwnerReportsPage: React.FC = () => {
   return (
     <div className="space-y-6 text-left font-['Plus_Jakarta_Sans']">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#3d2a21]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E8DFD5] dark:border-[#3d2a21]">
         <div>
-          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#f5eee6]">
+          <h1 className="font-['Montserrat'] text-2xl font-light tracking-wide text-[#2B2118] dark:text-[#f5eee6]">
             Intelligence & Executive Reports
           </h1>
-          <p className="text-xs text-[#a89582] mt-0.5">
+          <p className="text-xs text-[#7A6658] dark:text-[#a89582] mt-0.5">
             Empirical revenue attribution, artisan utilization, retention curves, and tariff analytics.
           </p>
         </div>
@@ -146,7 +146,7 @@ export const OwnerReportsPage: React.FC = () => {
           <select
             value={selectedBranchId}
             onChange={(e) => setSelectedBranchId(e.target.value)}
-            className="px-3 py-1.5 bg-[#201511] border border-[#3a2820] rounded-xl text-xs text-[#efc9a5] focus:outline-none"
+            className="px-3 py-1.5 bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-xl text-xs text-[#2B2118] dark:text-[#efc9a5] focus:outline-none"
           >
             <option value="all">All Salon Branches</option>
             {branches.map(b => (
@@ -157,7 +157,7 @@ export const OwnerReportsPage: React.FC = () => {
           <select
             value={reportRange}
             onChange={(e) => setReportRange(e.target.value as any)}
-            className="px-3 py-1.5 bg-[#201511] border border-[#3a2820] rounded-xl text-xs text-[#efc9a5] focus:outline-none"
+            className="px-3 py-1.5 bg-white dark:bg-[#201511] border border-[#E8DFD5] dark:border-[#3a2820] rounded-xl text-xs text-[#2B2118] dark:text-[#efc9a5] focus:outline-none"
           >
             <option value="week">Current Week</option>
             <option value="month">Current Month (Nov 2026)</option>
@@ -167,7 +167,7 @@ export const OwnerReportsPage: React.FC = () => {
 
           <Button
             onClick={handleExportReport}
-            className="flex items-center gap-2 bg-[#b99470] hover:bg-[#a37f5d] text-[#18110e] font-semibold text-xs px-3.5 py-1.5 rounded-xl cursor-pointer"
+            className="flex items-center gap-2 bg-[#2B2118] hover:bg-[#1D1610] text-white font-semibold text-xs px-3.5 py-1.5 rounded-xl cursor-pointer shadow-xs"
           >
             <Download className="w-4 h-4" />
             <span>Export Report</span>
@@ -177,49 +177,49 @@ export const OwnerReportsPage: React.FC = () => {
 
       {/* 4 Macro Domain KPI Banners */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Consolidated Revenue</p>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#efc9a5] mt-1">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Consolidated Revenue</p>
+          <p className="font-['Montserrat'] text-2xl font-light text-[#2B2118] dark:text-[#efc9a5] mt-1">
             ₹{totalRevenue.toLocaleString()}
           </p>
-          <p className="text-[10px] text-emerald-400 mt-1">Verified financial transactions</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">Verified financial transactions</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Total Appointments</p>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#f5eee6] mt-1">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Total Appointments</p>
+          <p className="font-['Montserrat'] text-2xl font-light text-[#2B2118] dark:text-[#f5eee6] mt-1">
             {totalAppointments}
           </p>
-          <p className="text-[10px] text-emerald-400 mt-1">{completionRate}% Completed</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">{completionRate}% Completed</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Client Retention</p>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#efc9a5] mt-1">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Client Retention</p>
+          <p className="font-['Montserrat'] text-2xl font-light text-[#2B2118] dark:text-[#efc9a5] mt-1">
             {retentionRate}%
           </p>
-          <p className="text-[10px] text-[#a89582] mt-1">Repeat visits across quarters</p>
+          <p className="text-[10px] text-[#7A6658] dark:text-[#a89582] mt-1">Repeat visits across quarters</p>
         </Card>
 
-        <Card className="p-4 bg-[#201511] border-[#3a2820]">
-          <p className="text-[11px] uppercase tracking-wider text-[#a89582] font-semibold">Cancellation Rate</p>
-          <p className="font-['Montserrat'] text-2xl font-light text-[#f5eee6] mt-1">
+        <Card className="p-4 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] shadow-xs">
+          <p className="text-[11px] uppercase tracking-wider text-[#7A6658] dark:text-[#a89582] font-semibold">Cancellation Rate</p>
+          <p className="font-['Montserrat'] text-2xl font-light text-[#2B2118] dark:text-[#f5eee6] mt-1">
             {cancellationRate}%
           </p>
-          <p className="text-[10px] text-emerald-400 mt-1">{cancelledAppointments} total cancellations</p>
+          <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-1">{cancelledAppointments} total cancellations</p>
         </Card>
       </div>
 
       {/* Grid: Revenue by Ritual & Artisan Attribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Service Revenue Distribution */}
-        <Card className="p-6 bg-[#201511] border-[#3a2820] space-y-4">
-          <div className="flex justify-between items-center pb-2 border-b border-white/10">
+        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
+          <div className="flex justify-between items-center pb-2 border-b border-[#E8DFD5] dark:border-white/10">
             <div>
-              <h2 className="font-['Montserrat'] text-base font-light text-[#f5eee6]">
+              <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                 Revenue by Service Category
               </h2>
-              <p className="text-xs text-[#a89582]">Gross treatment tariff contribution</p>
+              <p className="text-xs text-[#7A6658] dark:text-[#a89582]">Gross treatment tariff contribution</p>
             </div>
           </div>
 
@@ -229,12 +229,12 @@ export const OwnerReportsPage: React.FC = () => {
               return (
                 <div key={item.serviceName} className="space-y-1">
                   <div className="flex justify-between text-xs">
-                    <span className="font-medium text-[#f5eee6]">{item.serviceName} ({item.count} sessions)</span>
-                    <span className="font-mono font-semibold text-[#efc9a5]">₹{item.total.toLocaleString()} ({pct}%)</span>
+                    <span className="font-medium text-[#2B2118] dark:text-[#f5eee6]">{item.serviceName} ({item.count} sessions)</span>
+                    <span className="font-mono font-semibold text-[#B99470] dark:text-[#efc9a5]">₹{item.total.toLocaleString()} ({pct}%)</span>
                   </div>
-                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-[#FAF8F5] dark:bg-white/5 border border-[#E8DFD5] dark:border-transparent rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-[#806B5C] to-[#efc9a5] rounded-full"
+                      className="h-full bg-gradient-to-r from-[#B99470] to-[#E8D8C7] rounded-full"
                       style={{ width: `${pct}%` }}
                     />
                   </div>
@@ -245,36 +245,36 @@ export const OwnerReportsPage: React.FC = () => {
         </Card>
 
         {/* Artisan Productivity & Commission */}
-        <Card className="p-6 bg-[#201511] border-[#3a2820] space-y-4">
-          <div className="flex justify-between items-center pb-2 border-b border-white/10">
+        <Card className="p-6 bg-white dark:bg-[#201511] border-[#E8DFD5] dark:border-[#3a2820] space-y-4 shadow-xs">
+          <div className="flex justify-between items-center pb-2 border-b border-[#E8DFD5] dark:border-white/10">
             <div>
-              <h2 className="font-['Montserrat'] text-base font-light text-[#f5eee6]">
+              <h2 className="font-['Montserrat'] text-base font-light text-[#2B2118] dark:text-[#f5eee6]">
                 Artisan Productivity & Payroll
               </h2>
-              <p className="text-xs text-[#a89582]">Performance ranking and earned commissions</p>
+              <p className="text-xs text-[#7A6658] dark:text-[#a89582]">Performance ranking and earned commissions</p>
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-[#c2b3a3]">
+            <table className="w-full text-left text-xs text-[#2B2118] dark:text-[#c2b3a3]">
               <thead>
-                <tr className="border-b border-white/10 text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
+                <tr className="border-b border-[#E8DFD5] dark:border-white/10 text-[#7A6658] dark:text-[#a89582] uppercase text-[10px] tracking-wider font-semibold">
                   <th className="pb-2">Artisan</th>
                   <th className="pb-2">Rituals</th>
                   <th className="pb-2">Gross Revenue</th>
                   <th className="pb-2 text-right">Commission</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[#E8DFD5]/60 dark:divide-white/5">
                 {employeePerformance.map(e => (
-                  <tr key={e.id} className="hover:bg-white/[0.02]">
+                  <tr key={e.id} className="hover:bg-[#FAF8F5] dark:hover:bg-white/[0.02] transition-colors">
                     <td className="py-2.5">
-                      <p className="font-semibold text-[#f5eee6]">{e.name}</p>
-                      <p className="text-[10px] text-[#a89582]">{e.title}</p>
+                      <p className="font-semibold text-[#2B2118] dark:text-[#f5eee6]">{e.name}</p>
+                      <p className="text-[10px] text-[#7A6658] dark:text-[#a89582]">{e.title}</p>
                     </td>
-                    <td className="py-2.5 font-semibold text-[#f5eee6]">{e.appointments}</td>
-                    <td className="py-2.5 font-mono text-[#efc9a5]">₹{e.revenue.toLocaleString()}</td>
-                    <td className="py-2.5 font-mono text-emerald-400 text-right">₹{e.commission.toLocaleString()}</td>
+                    <td className="py-2.5 font-semibold text-[#2B2118] dark:text-[#f5eee6]">{e.appointments}</td>
+                    <td className="py-2.5 font-mono text-[#B99470] dark:text-[#efc9a5]">₹{e.revenue.toLocaleString()}</td>
+                    <td className="py-2.5 font-mono text-emerald-600 dark:text-emerald-400 text-right">₹{e.commission.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
