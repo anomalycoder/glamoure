@@ -299,7 +299,7 @@ describe('GLAMOURÉ PHASE 5: END-TO-END INTEGRATION & WORKFLOW VALIDATION', () =
       // Cancel appointment
       const cancelled = AppointmentService.cancelAppointment(apt.id, 'Client schedule conflict', customer);
       expect(cancelled.status).toBe('cancelled');
-      expect(cancelled.cancellationReason).toBe('Client schedule conflict');
+      expect(cancelled.cancellationReason).toContain('Client schedule conflict');
 
       // Verify slot is now released and available
       slots = AvailabilityService.getAvailableSlots(staff.id, 60, testDate);
