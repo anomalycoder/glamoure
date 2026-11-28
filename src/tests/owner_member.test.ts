@@ -640,6 +640,8 @@ describe('GLAMOURÉ PHASE 3: Complete Owner & Member Management System', () => {
       endTime: '12:30',
       durationMinutes: 90,
       price: 5500,
+      depositAmount: 0,
+      paymentStatus: 'pending',
       status: 'confirmed',
     }, customerUserId, 'Aria Montgomery');
 
