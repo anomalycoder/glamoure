@@ -155,7 +155,7 @@ export const OwnerDashboardPage: React.FC = () => {
     if (!reason) return;
 
     try {
-      db.cancelAppointmentWithPolicy(apt.id, reason, 'salon_owner');
+      db.cancelAppointmentWithPolicy(apt.id, user?.id || 'owner-1', user?.fullName || 'Salon Proprietor', reason);
       setRefreshKey(k => k + 1);
       showToast('Appointment Cancelled', `Cancellation logged under policy: ${reason}`);
     } catch (err: any) {

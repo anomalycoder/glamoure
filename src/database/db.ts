@@ -329,6 +329,10 @@ export class AppDatabase {
   // ═════════════════════════════════════════════════════════════════════════
   // STAFF PROFILES & AVAILABILITY
   // ═════════════════════════════════════════════════════════════════════════
+  public getAllStaff(salonId: string): StaffProfile[] {
+    return this.getStaffBySalon(salonId);
+  }
+
   public getStaffBySalon(salonId: string): StaffProfile[] {
     return this.staff.filter(st => st.salonId === salonId && st.isActive);
   }
@@ -560,6 +564,12 @@ export class AppDatabase {
   // ═════════════════════════════════════════════════════════════════════════
   public getInventoryBySalon(salonId: string): InventoryItem[] {
     return this.inventory.filter(i => i.salonId === salonId);
+  }
+
+  public createInventoryItem(item: InventoryItem): InventoryItem {
+    this.inventory.push(item);
+    this.persist('inventory', this.inventory);
+    return item;
   }
 
   public updateInventoryQuantity(id: string, delta: number): InventoryItem {
@@ -1399,6 +1409,10 @@ export class AppDatabase {
       upiTotal,
       totalRevenue,
       appointmentCount: apts.length,
+      openingBalance: 5000,
+      cashReceived: cashTotal,
+      digitalSettled: cardTotal + upiTotal,
+      totalReconciled: 5000 + totalRevenue,
     };
   }
 

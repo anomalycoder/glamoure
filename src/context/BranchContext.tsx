@@ -5,6 +5,7 @@ import { useAuth } from './AuthContext';
 
 interface BranchContextType {
   selectedBranchId: string; // 'all' or branch id
+  activeBranchId: string; // alias for selectedBranchId
   setSelectedBranchId: (branchId: string) => void;
   selectedBranch: SalonBranch | null;
   branches: SalonBranch[];
@@ -28,7 +29,8 @@ export const BranchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   // If member, filter to only the branch(es) they are assigned to
   const permittedBranches = useMemo(() => {
     if (role === 'salon_member' && user) {
-      const staffProfile = db.getAllStaff(salonId).find(s => s.userId === user.id);
+      const staffList = db.getStaffBySalon(salonId);
+      const staffProfile = staffList.find(s => s.userId === user.id);
       if (staffProfile?.branchId) {
         return allSalonBranches.filter(b => b.id === staffProfile.branchId);
       }
@@ -82,6 +84,7 @@ export const BranchProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     <BranchContext.Provider
       value={{
         selectedBranchId,
+        activeBranchId: selectedBranchId,
         setSelectedBranchId,
         selectedBranch,
         branches: permittedBranches,
